@@ -93,8 +93,8 @@ export default class SignInScreen extends React.Component {
   }
 
   login = () => {
-
-     fetch('http://192.168.43.221:8000/rest-auth/login' , {
+    // console.log(this.state.username, this.state.password)
+     fetch('http://192.168.42.124:8000/rest-auth/login/' , {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -105,23 +105,23 @@ export default class SignInScreen extends React.Component {
           password: this.state.password,
         })
      })
-
+     
      .then((response) => response.json())
+     
      .then((res) => {
+      
+      if (res.key === '3b9ada3fa886e815986e52154ec7531c657515f8') {
+        //AsyncStorage.setItem('user', res.user);
+          Actions.home();
+        }
 
-      alert(res.message);
+        else {
+          Actions.product();
+        }
 
-      if (res.success === true) {
-        AsyncStorage.setItem('user', res.user);
-        Actions.home();
-      }
-
-      else {
-        alert(res.message);
-      }
-
-     })
-     .done();
+      })
+        .done();
+    
   }
 
 }

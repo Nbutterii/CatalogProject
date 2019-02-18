@@ -1,9 +1,32 @@
 import React from 'react'
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, AsyncStorage } from 'react-native'
 import { Ionicons } from 'react-native-vector-icons'
 import { Actions } from 'react-native-router-flux'
 
 export default class RegisterScreen extends React.Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      Username: '',
+      Email: '',
+      Password: '',
+      ConfirmPassword: ''
+    }
+  }
+
+  componentDidMount() {
+    this._loadInitialState().done();
+  }
+
+  _loadInitialState = async () => {
+
+    var value = await AsyncStorage.getItem('user');
+    if (value !== null) {
+    Actions.home();
+    }
+
+  }
   render() {
     return (
         <View style={styles.container}>
@@ -13,32 +36,32 @@ export default class RegisterScreen extends React.Component {
                     <View style={{flexDirection: 'row'}}>
                         <Ionicons name="ios-contact"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
                             <View style={{ flex: 1, marginLeft: 8}}>
-                                <TextInput style={styles.textinput} placeholder="Full Name"  />
+                                <TextInput style={styles.textinput} placeholder="Username" onChangeText={ (Username) => this.setState({Username}) } />
                             </View>
                     </View>
 
                     <View style={{flexDirection: 'row'}}>
                         <Ionicons name="ios-mail"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
                             <View style={{ flex: 1, marginLeft: 8}}>
-                                <TextInput style={styles.textinput} placeholder="Email Address"  />
+                                <TextInput style={styles.textinput} placeholder="Email Address" onChangeText={ (Email) => this.setState({Email}) } />
                             </View>
                     </View>
 
                     <View style={{flexDirection: 'row'}}>
                         <Ionicons name="ios-lock"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
                             <View style={{ flex: 1, marginLeft: 8}}>
-                                <TextInput style={styles.textinput} placeholder="Password" secureTextEntry={true} underlineColorAndroid={'transparent'}/>
+                                <TextInput style={styles.textinput} placeholder="Password" secureTextEntry={true} underlineColorAndroid={'transparent'} onChangeText={ (Password) => this.setState({Password}) }/>
                             </View>
                     </View>
 
                     <View style={{flexDirection: 'row'}}>
                         <Ionicons name="ios-lock"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
                             <View style={{ flex: 1, marginLeft: 8}}>
-                                <TextInput style={styles.textinput} placeholder="Confirm password" secureTextEntry={true} underlineColorAndroid={'transparent'}/>
+                                <TextInput style={styles.textinput} placeholder="Confirm password" secureTextEntry={true} underlineColorAndroid={'transparent'} onChangeText={ (ConfirmPassword) => this.setState({ConfirmPassword}) }/>
                             </View>
                     </View>
 
-                    <TouchableOpacity style={styles.buttonRed}>
+                    <TouchableOpacity style={styles.buttonRed} onPress={this.Register} >
                         <Text style={styles.btntextWhite}>Create Account</Text>
                     </TouchableOpacity>
 
@@ -52,6 +75,41 @@ export default class RegisterScreen extends React.Component {
     );
   }
 }
+
+Register = () => {
+   fetch('http://192.168.42.124:8000/rest-auth/registration/' , {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        Username: this.state.Username,
+        Email: this.state.Email,
+        Password: this.state.Password,
+        ConfirmPassword: this.state.ConfirmPassword,
+      })
+   })
+   
+   .then((response) => response.json())
+   
+   .then((res) => {
+    
+    if (res.key !== 0 ) {
+      AsyncStorage.setItem('user', res.user);
+        Actions.home();
+      }
+
+      else {
+        Actions.product();
+      }
+
+    })
+      .done();
+  
+}
+
+
 
 const styles = StyleSheet.create({
   container: {
