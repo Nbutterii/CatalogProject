@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, AsyncStorage } from 'react-native';
 import { Ionicons } from 'react-native-vector-icons'
 import * as firebase from 'firebase';
+import { Router, Scene ,Actions } from 'react-native-router-flux';
 
 const firebaseConfig = {
       apiKey: "AIzaSyDY19gOHkaGHiTdE9eOG8w7zDMyArS8FDc",
@@ -26,6 +27,28 @@ export default class SignInScreen extends React.Component {
           })
         }
       }
+
+    constructor(props){
+      super(props);
+      this.state = {
+        username: '',
+        password: '',
+      }
+    }
+
+    componentDidMount() {
+      this._loadInitialState().done();
+    }
+
+    _loadInitialState = async () => {
+
+      var value = await AsyncStorage.getItem('user');
+      if (value !== null) {
+      Actions.home();
+      }
+
+    }
+
   render() {
     return (
         <View style={styles.container}>
@@ -35,14 +58,14 @@ export default class SignInScreen extends React.Component {
                     <View style={{flexDirection: 'row'}}>
                         <Ionicons name="ios-mail"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
                             <View style={{ flex: 1, marginLeft: 8}}>
-                                <TextInput style={styles.textinput} placeholder="Email Address"  />
+                                <TextInput style={styles.textinput} placeholder="Email Address" onChangeText={ (username) => this.setState({username}) } />
                             </View>
                     </View>
 
                     <View style={{flexDirection: 'row'}}>
                         <Ionicons name="ios-lock"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
                             <View style={{ flex: 1, marginLeft: 8}}>
-                                <TextInput style={styles.textinput} placeholder="Password" secureTextEntry={true} underlineColorAndroid={'transparent'}/>
+                                <TextInput style={styles.textinput} placeholder="Password" secureTextEntry={true} underlineColorAndroid={'transparent'} onChangeText={ (password) => this.setState({password}) }/>
                             </View>
                     </View>
 
@@ -50,7 +73,7 @@ export default class SignInScreen extends React.Component {
                     <Text style={{marginLeft: 230}}>Forgot Password?</Text>
                     </View>
 
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity style={styles.button} onPress={this.login}>
                         <Text style={styles.btntext}>Sign In</Text>
                     </TouchableOpacity>
 
@@ -68,6 +91,39 @@ export default class SignInScreen extends React.Component {
 
     );
   }
+
+  login = () => {
+
+     fetch('http://192.168.43.221:8000/rest-auth/login' , {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: this.state.username,
+          password: this.state.password,
+        })
+     })
+
+     .then((response) => response.json())
+     .then((res) => {
+
+      alert(res.message);
+
+      if (res.success === true) {
+        AsyncStorage.setItem('user', res.user);
+        Actions.home();
+      }
+
+      else {
+        alert(res.message);
+      }
+
+     })
+     .done();
+  }
+
 }
 
 const styles = StyleSheet.create({
