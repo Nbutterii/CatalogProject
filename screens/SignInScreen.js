@@ -56,9 +56,9 @@ export default class SignInScreen extends React.Component {
                 <Text style={styles.header}>Sign In</Text>
 
                     <View style={{flexDirection: 'row'}}>
-                        <Ionicons name="ios-mail"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
+                        <Ionicons name="ios-contact"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
                             <View style={{ flex: 1, marginLeft: 8}}>
-                                <TextInput style={styles.textinput} placeholder="Email Address" onChangeText={ (username) => this.setState({username}) } />
+                                <TextInput style={styles.textinput} placeholder="Username or Email address" onChangeText={ (username) => this.setState({username}) } />
                             </View>
                     </View>
 
@@ -93,8 +93,8 @@ export default class SignInScreen extends React.Component {
   }
 
   login = () => {
-    // console.log(this.state.username, this.state.password)
-     fetch('http://192.168.42.124:8000/rest-auth/login/' , {
+
+     fetch('http://10.66.2.134:8000/rest-auth/login/' , {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -115,9 +115,9 @@ export default class SignInScreen extends React.Component {
           Actions.home();
         }
 
-        else {
-          Actions.product();
-        }
+      else {
+        Actions.product_user();
+      }
 
       })
         .done();
@@ -125,6 +125,8 @@ export default class SignInScreen extends React.Component {
   }
 
 }
+
+
 
 const styles = StyleSheet.create({
   container: {

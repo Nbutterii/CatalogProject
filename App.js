@@ -3,11 +3,13 @@ import { StyleSheet, Text } from 'react-native';
 import { Router, Scene } from 'react-native-router-flux';
 
 import HomeScreen from './screens/HomeScreen';
-import ProductScreen from './screens/ProductScreen';
+import ProductScreenUser from './screens/ProductScreenUser';
+import ProductScreenAdmin from './screens/ProductScreenAdmin';
 import UserScreen from './screens/UserScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import SignInScreen from './screens/SignInScreen';
 import DetailProductScreen from './screens/DetailProductScreen';
+import AddProductScreen from './screens/AddProductScreen';
 
 import TabbarIcon from './screens/TabbarIcon';
 
@@ -45,12 +47,27 @@ const App = () => {
 
           </Scene>
 
-          <Scene key="product" title="PRODUCT" icon={TabbarIcon} iconName="ios-list-box">
+          <Scene key="product_user" title="PRODUCT" icon={TabbarIcon} iconName="ios-list-box">
             <Scene
-            key="ProductPage"
-            component={ProductScreen}
+            key="ProductUserPage"
+            component={ProductScreenUser}
             title="Product"
             />
+          </Scene>
+
+          <Scene key="product_admin" title="PRODUCT" icon={TabbarIcon} iconName="ios-list-box">
+            <Scene
+            key="ProductAdminPage"
+            component={ProductScreenAdmin}
+            title="Product"
+            />
+
+          <Scene
+            key="AddProductPage"
+            component={AddProductScreen}
+            title=""
+            />
+
           </Scene>
 
           <Scene key="user" title="ME" icon={TabbarIcon} iconName="ios-person">

@@ -5,7 +5,7 @@ import RecommendedCardItem from '../components/RecommendedCardItem'
 
 
 
-const ProductScreen = () => {
+const ProductScreenUser = () => {
     return (
     <View style={styles.container}>
 
@@ -93,4 +93,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ProductScreen;
+export default ProductScreenUser;

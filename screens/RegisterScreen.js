@@ -43,7 +43,7 @@ export default class RegisterScreen extends React.Component {
                     <View style={{flexDirection: 'row'}}>
                         <Ionicons name="ios-mail"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
                             <View style={{ flex: 1, marginLeft: 8}}>
-                                <TextInput style={styles.textinput} placeholder="Email Address" onChangeText={ (Email) => this.setState({Email}) } />
+                                <TextInput style={styles.textinput} placeholder="Email Address" onChangeText={ (Email) => this.setState({Email}) } keyboardType={'email-address'} />
                             </View>
                     </View>
 
