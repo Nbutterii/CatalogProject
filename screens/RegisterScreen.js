@@ -77,7 +77,7 @@ export default class RegisterScreen extends React.Component {
 }
 
 Register = () => {
-   fetch('http://192.168.42.124:8000/rest-auth/registration/' , {
+   fetch('http://10.94.6.45:8000/rest-auth/registration/' , {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

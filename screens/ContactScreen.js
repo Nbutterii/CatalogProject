@@ -1,42 +1,43 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Ionicons } from 'react-native-vector-icons'
-import Icon from 'react-native-vector-icons/Ionicons';
 import { Actions } from 'react-native-router-flux';
 
-const UserScreen = () => {
+const ContactScreen = () => {
     return (
         <View style={styles.container}>
-
-                
-            <View header style={{ borderBottomWidth:1, borderBottomColor:'#dee0e2', flexDirection:'row' }}>
-                <Text style={{ flex:1, fontSize: 20, marginLeft: 10, marginTop:20, marginBottom: 20}}>Profile</Text>
-                <Icon name="ios-arrow-forward" style={{ fontSize: 25, paddingTop: 25, marginRight:15 }}/>
-            </View>
-            <View header style={{ borderBottomWidth:1, borderBottomColor:'#dee0e2', flexDirection:'row' }}>
-                <Text style={{ flex:1, fontSize: 20, marginLeft: 10, marginTop:20, marginBottom: 20}}>Wish list</Text>
-                <Icon name="ios-arrow-forward" style={{ fontSize: 25, paddingTop: 25, marginRight:15 }}/>
-            </View>
-
-            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+        
                 <View>
-                    <Text style={styles.btntextBlackContactTitle} >Contact Us</Text>
+                    <Text style={styles.TextBlackTitle}>Access your Wishlist on any of your devices</Text>
+                </View>
+
+                <View style={{ flexDirection: 'row'}} >
+                    <TouchableOpacity style={styles.buttonGray} onPress={() => Actions.RegisterPage()}>
+                        <Text style={styles.btntextBlack}>Create Account</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.buttonRed} onPress={() => Actions.SignInPage()}>
+                        <Text style={styles.btntextWhite}>Sign In</Text>
+                    </TouchableOpacity>
+                </View>
+
+            <View>
+                <Text style={styles.btntextBlackContactTitle} >Contact Us</Text>
+            </View>
+
+            <View>
+                <View style={{flexDirection: 'row'}}>
+                    <Ionicons name="ios-phone-portrait"  style={styles.ColorIcon}/>
+                    <Text style={styles.btntextBlackContact}>Phone: (+66)84-904-8771</Text>
+                </View>
+
+                <View style={{flexDirection: 'row'}}>
+                    <Ionicons name="ios-mail"  style={styles.ColorIcon}/>
+                    <Text style={styles.btntextBlackContact}>Email: admin@catalog.co.th</Text>
                 </View>
 
                 <View>
-                    <View style={{flexDirection: 'row'}}>
-                        <Ionicons name="ios-phone-portrait"  style={styles.ColorIcon}/>
-                        <Text style={styles.btntextBlackContact}>Phone: (+66)84-904-8771</Text>
-                    </View>
-
-                    <View style={{flexDirection: 'row'}}>
-                        <Ionicons name="ios-mail"  style={styles.ColorIcon}/>
-                        <Text style={styles.btntextBlackContact}>Email: admin@catalog.co.th</Text>
-                    </View>
-
-                    <View>
-                        <Text style={styles.btntextBlackContact}>● Available Monday to Friday 9am-4pm ●</Text>
-                    </View>
+                    <Text style={styles.btntextBlackContact}>● Available Monday to Friday 9am-4pm ●</Text>
                 </View>
             </View>
 
@@ -48,6 +49,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     buttonRed: {
         flex: 1,
@@ -95,7 +98,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         marginTop: 30,
         color: '#606060',
-        marginLeft: 10,
+        marginLeft: 10
     },
     TextBlackTitle: {
         fontSize: 18,
@@ -112,4 +115,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default UserScreen;
+export default ContactScreen;

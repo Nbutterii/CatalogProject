@@ -94,7 +94,7 @@ export default class SignInScreen extends React.Component {
 
   login = () => {
 
-     fetch('http://10.66.2.134:8000/rest-auth/login/' , {
+     fetch('http://10.94.6.45:8000/rest-auth/login/' , {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -112,11 +112,11 @@ export default class SignInScreen extends React.Component {
       
       if (res.key === '3b9ada3fa886e815986e52154ec7531c657515f8') {
         //AsyncStorage.setItem('user', res.user);
-          Actions.home();
+          Actions.account_admin();
         }
 
       else {
-        Actions.product_user();
+          Actions.account_user();
       }
 
       })
