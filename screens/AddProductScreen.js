@@ -1,41 +1,82 @@
 import React from "react";
-import { View, Text, StyleSheet, Picker, Alert, TextInput, TouchableOpacity } from "react-native"
-
-
+import { View, Text, StyleSheet, Picker, Alert, TextInput, TouchableOpacity, Button, Image, ScrollView } from "react-native"
+import { ImagePicker } from 'expo';
 
 export default class AddProductScreen extends React.Component {
+
+    state = {
+        image: null,
+      };
 
     constructor(){
         super();
         this.state={
-            PickerSelecteVal : ''
+            ProductName : '',
+            PickerSelecteValCategory : '',
+            PickerSelecteValColor : '',
+            Price : '',
+            Description : ''
         }
     }
 
-    getSelectedPickerValue=()=>{
-        Alert.alert("Selected Category is : " +this.state.PickerSelecteVal);
+    // getSelectedPickerValue=()=>{
+    //     Alert.alert("Selected Category is : " +this.state.PickerSelecteVal);
+    // }
+
+    AddProduct()
+    {
+      let collection={}
+      collection.ProductName=this.state.ProductName,
+      collection.PickerSelecteValCategory=this.state.PickerSelecteValCategory,
+      collection.PickerSelecteValColor=this.state.PickerSelecteValColor,
+      collection.Price=this.state.Price,
+      collection.Description=this.state.Description,
+      console.log(collection);
+    
+      var url = 'http://10.66.2.134:8000/rest-auth/registration/'
+    
+      fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(collection),
+        headers:{
+          'Content-Type' : 'application/json'
+        }
+      }).then(res => res.json())
+      .then(respon => console.log('Success:', JSON.stringify(Response)))
+      .catch(error => console.error('Error:', error));
+    
     }
 
   render() {
+    let { image } = this.state;
     return (
 
             <View style={styles.container}>
+            <ScrollView>
 
-                <Text style={{ marginTop:120, marginLeft:20, fontSize: 17 }}>
+                <View style= {{ flex:1, alignItems: "center" }}>
+                    {image && <Image source={{ uri: image }} style={{ marginTop:5, width: 100, height: 100 }} />}
+                    <TouchableOpacity style={{ backgroundColor: '#891c1c', borderRadius: 5, padding: 10, marginTop: 5 }} onPress={this._pickImage}>
+                        <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 13}}>Add Image</Text>
+                    </TouchableOpacity>
+                </View>
+
+                <Text style={{ marginTop: 10, marginLeft:20, fontSize: 17 }}>
                     Product Name
                 </Text>
                 <TextInput style={{ padding: 7, backgroundColor:'#fff', borderColor: '#e7e7eb', 
                 borderWidth: 1, marginLeft:20, marginRight:20 }} 
-                underlineColorAndroid='transparent' />
+                underlineColorAndroid='transparent' onChangeText={ (ProductName) => this.setState({ProductName}) }/>
 
                 <Text style={{ marginTop:12, marginLeft:20, fontSize: 17 }}>
                     Category
                 </Text>
                 <View style={{ backgroundColor:'#fff', borderColor: '#e7e7eb', borderWidth: 1, marginLeft:20, marginRight:20 }}>
                     <Picker
-                        selectedValue={this.state.PickerSelecteVal}
-                        onValueChange={(itemValue, itemIndex) => this.setState({PickerSelecteVal: itemValue})} >
+                        selectedValue={this.state.PickerSelecteValCategory}
+                        onValueChange={(itemValue1, itemIndex) => this.setState({PickerSelecteValCategory: itemValue1})} >
                         
+                        <Picker.Item label="Please choose a category" value="Please choose a category" />
                         <Picker.Item label="Top" value="Top" />
                         <Picker.Item label="Pant" value="Pant" />
                         <Picker.Item label="Skirt" value="Skirt" />
@@ -49,9 +90,10 @@ export default class AddProductScreen extends React.Component {
                 </Text>
                 <View style={{ backgroundColor:'#fff', borderColor: '#e7e7eb', borderWidth: 1, marginLeft:20, marginRight:20 }}>
                     <Picker
-                        selectedValue={this.state.PickerSelecteVal}
-                        onValueChange={(itemValue, itemIndex) => this.setState({PickerSelecteVal: itemValue})} >
+                        selectedValue={this.state.PickerSelecteValColor}
+                        onValueChange={(itemValue2, itemIndex) => this.setState({PickerSelecteValColor: itemValue2})} >
                         
+                        <Picker.Item label="Please choose a color" value="Please choose a color" />
                         <Picker.Item label="Black" value="Black" />
                         <Picker.Item label="Brown" value="Brown" />
                         <Picker.Item label="Grey" value="Grey" />
@@ -62,7 +104,6 @@ export default class AddProductScreen extends React.Component {
                         <Picker.Item label="Pink" value="Pink" />
                         <Picker.Item label="Purple" value="Purple" />
                         <Picker.Item label="Blue" value="Blue" />
-                        <Picker.Item label="Green" value="Green" />
                         <Picker.Item label="Green" value="Green" />
                         <Picker.Item label="Multicolor" value="Multicolor" />
                         <Picker.Item label="etc." value="etc." />
@@ -75,7 +116,7 @@ export default class AddProductScreen extends React.Component {
                 </Text>
                 <TextInput style={{ padding: 7, backgroundColor:'#fff', borderColor: '#e7e7eb', 
                 borderWidth: 1, marginLeft:20, marginRight:20 }} 
-                underlineColorAndroid='transparent' keyboardType={'numeric'} placeholder="ex.830" />
+                underlineColorAndroid='transparent' keyboardType={'numeric'} placeholder="ex.830"  onChangeText={ (Price) => this.setState({Price}) }/>
 
                 <Text style={{ marginTop:12, marginLeft:20, fontSize: 17 }}>
                     Description
@@ -84,19 +125,36 @@ export default class AddProductScreen extends React.Component {
                 underlineColorAndroid="transparent"
                 placeholder="Type something..."
                 numberOfLines={10}
-                multiline={true} />
+                multiline={true} onChangeText={ (Description) => this.setState({Description}) }/>
 
                 <TouchableOpacity style={{ flex: 1, marginTop:12, backgroundColor: '#891c1c', borderRadius: 5, 
                 marginBottom: 20, alignItems: 'center', padding: 10, marginLeft:50, marginRight:50}}
-                onPress={ this.getSelectedPickerValue } >
+                onPress={() => this.AddProduct()}>
                         <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 15}}>Agree</Text>
                 </TouchableOpacity>
+                </ScrollView>
             </View>
+
 
 
     );
   }
+
+  _pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      this.setState({ image: result.uri });
+    }
+  };
 }
+
+
 
 
 

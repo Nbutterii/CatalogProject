@@ -42,8 +42,7 @@ export default class RegisterScreen extends React.Component {
   fetch(url, {
     method: 'POST',
     body: JSON.stringify(collection),
-    header:{
-      'Accept': 'application/json',
+    headers:{
       'Content-Type' : 'application/json'
     }
   }).then(res => res.json())
@@ -76,14 +75,14 @@ export default class RegisterScreen extends React.Component {
                     <View style={{flexDirection: 'row'}}>
                         <Ionicons name="ios-lock"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
                             <View style={{ flex: 1, marginLeft: 8}}>
-                                <TextInput style={styles.textinput} placeholder="Password" secureTextEntry={true} underlineColorAndroid={'transparent'} onChangeText={ (password1) => this.setState({password1}) }/>
+                                <TextInput style={styles.textinput} placeholder="Password (8 or more characters)" secureTextEntry={true} underlineColorAndroid={'transparent'} onChangeText={ (password1) => this.setState({password1}) }/>
                             </View>
                     </View>
 
                     <View style={{flexDirection: 'row'}}>
                         <Ionicons name="ios-lock"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
                             <View style={{ flex: 1, marginLeft: 8}}>
-                                <TextInput style={styles.textinput} placeholder="Confirm password" secureTextEntry={true} underlineColorAndroid={'transparent'} onChangeText={ (password2) => this.setState({password2}) }/>
+                                <TextInput style={styles.textinput} placeholder="Confirm password (8 or more characters)" secureTextEntry={true} underlineColorAndroid={'transparent'} onChangeText={ (password2) => this.setState({password2}) }/>
                             </View>
                     </View>
 

@@ -40,6 +40,10 @@ const UserScreen = () => {
                 </View>
             </View>
 
+                    <TouchableOpacity style={{ alignSelf: 'stretch', alignItems: 'center', padding: 10, backgroundColor: '#891c1c', marginTop: 80, borderRadius: 5, marginLeft:15, marginRight: 15 }} >
+                        <Text style={{ fontSize: 18, marginTop: 5, color: '#fff', fontWeight: 'bold'}}>Sign out</Text>
+                    </TouchableOpacity>
+ 
         </View>
     );
 };
