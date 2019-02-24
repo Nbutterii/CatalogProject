@@ -27,6 +27,31 @@ export default class RegisterScreen extends React.Component {
     }
 
   }
+
+  Register()
+{
+  let collection={}
+  collection.Username=this.state.Username,
+  collection.Email=this.state.Email,
+  collection.Password=this.state.Password,
+  collection.ConfirmPassword=this.state.ConfirmPassword,
+  console.log(collection);
+
+  var url = 'http://10.66.2.134:8000/rest-auth/registration/'
+
+  fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(collection),
+    header:{
+      'Content-Type' : 'application/json'
+    }
+  }).then(res => res.json())
+  .then(respon => console.log('Success:', JSON.stringify(Response)))
+  .catch(error => console.error('Error:', error));
+
+}
+
+
   render() {
     return (
         <View style={styles.container}>
@@ -61,7 +86,7 @@ export default class RegisterScreen extends React.Component {
                             </View>
                     </View>
 
-                    <TouchableOpacity style={styles.buttonRed} onPress={this.Register} >
+                    <TouchableOpacity style={styles.buttonRed} onPress={() => this.Register()} >
                         <Text style={styles.btntextWhite}>Create Account</Text>
                     </TouchableOpacity>
 
@@ -76,38 +101,39 @@ export default class RegisterScreen extends React.Component {
   }
 }
 
-Register = () => {
-   fetch('http://10.94.6.45:8000/rest-auth/registration/' , {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        Username: this.state.Username,
-        Email: this.state.Email,
-        Password: this.state.Password,
-        ConfirmPassword: this.state.ConfirmPassword,
-      })
-   })
+// Register = () => {
+//    fetch('http://10.66.2.134:8000/rest-auth/registration/' , {
+//       method: 'POST',
+//       headers: {
+//         'Accept': 'application/json',
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify({
+//         Username: this.state.Username,
+//         Email: this.state.Email,
+//         Password: this.state.Password,
+//         ConfirmPassword: this.state.ConfirmPassword,
+//       })
+//    })
    
-   .then((response) => response.json())
+//    .then((response) => response.json())
    
-   .then((res) => {
+//    .then((res) => {
     
-    if (res.key !== 0 ) {
-      AsyncStorage.setItem('user', res.user);
-        Actions.home();
-      }
+//     if (res.key !== 0 ) {
+//       AsyncStorage.setItem('user', res.user);
+//         Actions.home();
+//       }
 
-      else {
-        Actions.product();
-      }
+//       else {
+//         Actions.product();
+//       }
 
-    })
-      .done();
+//     })
+//       .done();
   
-}
+// }
+
 
 
 
