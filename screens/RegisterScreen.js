@@ -8,10 +8,10 @@ export default class RegisterScreen extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      Username: '',
-      Email: '',
-      Password: '',
-      ConfirmPassword: ''
+      username: '',
+      email: '',
+      password1: '',
+      password2: ''
     }
   }
 
@@ -31,10 +31,10 @@ export default class RegisterScreen extends React.Component {
   Register()
 {
   let collection={}
-  collection.Username=this.state.Username,
-  collection.Email=this.state.Email,
-  collection.Password=this.state.Password,
-  collection.ConfirmPassword=this.state.ConfirmPassword,
+  collection.username=this.state.username,
+  collection.email=this.state.email,
+  collection.password1=this.state.password1,
+  collection.password2=this.state.password2,
   console.log(collection);
 
   var url = 'http://10.66.2.134:8000/rest-auth/registration/'
@@ -43,6 +43,7 @@ export default class RegisterScreen extends React.Component {
     method: 'POST',
     body: JSON.stringify(collection),
     header:{
+      'Accept': 'application/json',
       'Content-Type' : 'application/json'
     }
   }).then(res => res.json())
@@ -61,28 +62,28 @@ export default class RegisterScreen extends React.Component {
                     <View style={{flexDirection: 'row'}}>
                         <Ionicons name="ios-contact"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
                             <View style={{ flex: 1, marginLeft: 8}}>
-                                <TextInput style={styles.textinput} placeholder="Username" onChangeText={ (Username) => this.setState({Username}) } />
+                                <TextInput style={styles.textinput} placeholder="Username" onChangeText={ (username) => this.setState({username}) } />
                             </View>
                     </View>
 
                     <View style={{flexDirection: 'row'}}>
                         <Ionicons name="ios-mail"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
                             <View style={{ flex: 1, marginLeft: 8}}>
-                                <TextInput style={styles.textinput} placeholder="Email Address" onChangeText={ (Email) => this.setState({Email}) } keyboardType={'email-address'} />
+                                <TextInput style={styles.textinput} placeholder="Email Address" onChangeText={ (email) => this.setState({email}) } keyboardType={'email-address'} />
                             </View>
                     </View>
 
                     <View style={{flexDirection: 'row'}}>
                         <Ionicons name="ios-lock"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
                             <View style={{ flex: 1, marginLeft: 8}}>
-                                <TextInput style={styles.textinput} placeholder="Password" secureTextEntry={true} underlineColorAndroid={'transparent'} onChangeText={ (Password) => this.setState({Password}) }/>
+                                <TextInput style={styles.textinput} placeholder="Password" secureTextEntry={true} underlineColorAndroid={'transparent'} onChangeText={ (password1) => this.setState({password1}) }/>
                             </View>
                     </View>
 
                     <View style={{flexDirection: 'row'}}>
                         <Ionicons name="ios-lock"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
                             <View style={{ flex: 1, marginLeft: 8}}>
-                                <TextInput style={styles.textinput} placeholder="Confirm password" secureTextEntry={true} underlineColorAndroid={'transparent'} onChangeText={ (ConfirmPassword) => this.setState({ConfirmPassword}) }/>
+                                <TextInput style={styles.textinput} placeholder="Confirm password" secureTextEntry={true} underlineColorAndroid={'transparent'} onChangeText={ (password2) => this.setState({password2}) }/>
                             </View>
                     </View>
 
