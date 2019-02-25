@@ -49,6 +49,36 @@ export default class SignInScreen extends React.Component {
 
     }
 
+    async login() {
+
+      let collection={}
+      collection.username=this.state.username,
+      collection.password=this.state.password,
+      console.log(collection);
+    
+      var url = 'http://10.66.2.134:8000/rest-auth/login/'
+    
+      try{
+          const response = await fetch( url, {
+              method: 'POST',
+              body: JSON.stringify(collection),
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type' : 'application/json'
+              }
+          });
+          console.log(response)
+          if (collection.username === 'admin' && response.ok === true) {
+            Actions.account_admin();
+          }
+          else if (response.ok === true)  {
+            Actions.account_user();
+        }
+      }catch (error){
+          console.log(error);
+      }
+    }
+
   render() {
     return (
         <View style={styles.container}>
@@ -58,7 +88,7 @@ export default class SignInScreen extends React.Component {
                     <View style={{flexDirection: 'row'}}>
                         <Ionicons name="ios-contact"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
                             <View style={{ flex: 1, marginLeft: 8}}>
-                                <TextInput style={styles.textinput} placeholder="Username or Email address" onChangeText={ (username) => this.setState({username}) } />
+                                <TextInput style={styles.textinput} placeholder="Username" onChangeText={ (username) => this.setState({username}) } />
                             </View>
                     </View>
 
@@ -70,10 +100,10 @@ export default class SignInScreen extends React.Component {
                     </View>
 
                     <View>
-                    <Text style={{marginLeft: 230}}>Forgot Password?</Text>
+                    <Text  style={{marginLeft: 230}} onPress={() => Actions.ForgotpasswordPage()} >Forgot Password?</Text>
                     </View>
 
-                    <TouchableOpacity style={styles.button} onPress={this.login}>
+                    <TouchableOpacity style={styles.button} onPress={() => this.login()}>
                         <Text style={styles.btntext}>Sign In</Text>
                     </TouchableOpacity>
 
@@ -91,39 +121,6 @@ export default class SignInScreen extends React.Component {
 
     );
   }
-
-  login = () => {
-
-     fetch('http://10.66.2.134:8000/rest-auth/login/' , {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: this.state.username,
-          password: this.state.password,
-        })
-     })
-     
-     .then((response) => response.json())
-     
-     .then((res) => {
-      
-      if (res.key === '9c1fdd38525a3811f574f3dc15751a916c33129a') {
-        //AsyncStorage.setItem('user', res.user);
-          Actions.account_admin();
-        }
-
-      else {
-          Actions.account_user();
-      }
-
-      })
-        .done();
-    
-  }
-
 }
 
 

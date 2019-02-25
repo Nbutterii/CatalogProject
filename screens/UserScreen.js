@@ -4,12 +4,34 @@ import { Ionicons } from 'react-native-vector-icons'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Actions } from 'react-native-router-flux';
 
-const UserScreen = () => {
-    return (
-        <View style={styles.container}>
 
-                
-            <View header style={{ borderBottomWidth:1, borderBottomColor:'#dee0e2', flexDirection:'row' }}>
+export default class UserScreen extends React.Component {
+
+  async Signout() {
+
+    var url = 'http://10.66.2.134:8000/rest-auth/logout/'
+
+    try{
+        const response = await fetch( url, {
+            method: 'POST',
+            headers: {
+                'Content-Type' : 'application/json'
+            }
+        });
+        console.log(response)
+        if (response.status === 200) {
+                  Actions.visitor();
+        }
+    }catch (error){
+        console.log(error);
+    }
+  }
+  
+  
+    render() {
+      return (
+          <View style={styles.container}>
+             <View header style={{ borderBottomWidth:1, borderBottomColor:'#dee0e2', flexDirection:'row' }}>
                 <Text style={{ flex:1, fontSize: 20, marginLeft: 10, marginTop:20, marginBottom: 20}}>Profile</Text>
                 <Icon name="ios-arrow-forward" style={{ fontSize: 25, paddingTop: 25, marginRight:15 }}/>
             </View>
@@ -40,15 +62,18 @@ const UserScreen = () => {
                 </View>
             </View>
 
-                    <TouchableOpacity style={{ alignSelf: 'stretch', alignItems: 'center', padding: 10, backgroundColor: '#891c1c', marginTop: 80, borderRadius: 5, marginLeft:15, marginRight: 15 }} >
+                    <TouchableOpacity style={{ alignSelf: 'stretch', alignItems: 'center', padding: 10, backgroundColor: '#891c1c', marginTop: 80, borderRadius: 5, marginLeft:15, marginRight: 15 }} onPress={() => this.Signout()} >
                         <Text style={{ fontSize: 18, marginTop: 5, color: '#fff', fontWeight: 'bold'}}>Sign out</Text>
                     </TouchableOpacity>
- 
-        </View>
-    );
-};
+          </View>
+  
+      );
+    }
+  }
+  
 
-const styles = StyleSheet.create({
+  
+  const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
@@ -113,7 +138,6 @@ const styles = StyleSheet.create({
         color:'#606060',
         marginTop: 25,
     }
-
-});
-
-export default UserScreen;
+  
+  });
+  

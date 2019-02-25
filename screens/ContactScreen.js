@@ -3,10 +3,11 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Ionicons } from 'react-native-vector-icons'
 import { Actions } from 'react-native-router-flux';
 
-const ContactScreen = () => {
-    return (
-        <View style={styles.container}>
-        
+export default class ContactScreen extends React.Component {
+    render() {
+        return (
+            <View style={styles.container}>
+            
                 <View>
                     <Text style={styles.TextBlackTitle}>Access your Wishlist on any of your devices</Text>
                 </View>
@@ -20,30 +21,29 @@ const ContactScreen = () => {
                         <Text style={styles.btntextWhite}>Sign In</Text>
                     </TouchableOpacity>
                 </View>
-
-            <View>
-                <Text style={styles.btntextBlackContactTitle} >Contact Us</Text>
-            </View>
-
-            <View>
-                <View style={{flexDirection: 'row'}}>
-                    <Ionicons name="ios-phone-portrait"  style={styles.ColorIcon}/>
-                    <Text style={styles.btntextBlackContact}>Phone: (+66)84-904-8771</Text>
-                </View>
-
-                <View style={{flexDirection: 'row'}}>
-                    <Ionicons name="ios-mail"  style={styles.ColorIcon}/>
-                    <Text style={styles.btntextBlackContact}>Email: admin@catalog.co.th</Text>
-                </View>
-
+    
                 <View>
-                    <Text style={styles.btntextBlackContact}>● Available Monday to Friday 9am-4pm ●</Text>
+                    <Text style={styles.btntextBlackContactTitle} >Contact Us</Text>
                 </View>
+    
+                <View>
+                    <View style={{flexDirection: 'row'}}>
+                        <Ionicons name="ios-phone-portrait"  style={styles.ColorIcon}/>
+                        <Text style={styles.btntextBlackContact}>Phone: (+66)84-904-8771</Text>
+                    </View>
+                    <View style={{flexDirection: 'row'}}>
+                        <Ionicons name="ios-mail"  style={styles.ColorIcon}/>
+                        <Text style={styles.btntextBlackContact}>Email: admin@catalog.co.th</Text>
+                    </View>
+                    <View>
+                        <Text style={styles.btntextBlackContact}>● Available Monday to Friday 9am-4pm ●</Text>
+                    </View>
+                </View>
+    
             </View>
-
-        </View>
-    );
-};
+        );
+    }
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -112,7 +112,5 @@ const styles = StyleSheet.create({
         color:'#606060',
         marginTop: 25,
     }
-
 });
-
-export default ContactScreen;
+  

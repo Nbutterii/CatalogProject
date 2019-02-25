@@ -28,8 +28,9 @@ export default class RegisterScreen extends React.Component {
 
   }
 
-  Register()
-{
+
+async Register() {
+
   let collection={}
   collection.username=this.state.username,
   collection.email=this.state.email,
@@ -39,16 +40,21 @@ export default class RegisterScreen extends React.Component {
 
   var url = 'http://10.66.2.134:8000/rest-auth/registration/'
 
-  fetch(url, {
-    method: 'POST',
-    body: JSON.stringify(collection),
-    headers:{
-      'Content-Type' : 'application/json'
-    }
-  }).then(res => res.json())
-  .then(respon => console.log('Success:', JSON.stringify(Response)))
-  .catch(error => console.error('Error:', error));
-
+  try{
+      const response = await fetch( url, {
+          method: 'POST',
+          body: JSON.stringify(collection),
+          headers: {
+              'Content-Type' : 'application/json'
+          }
+      });
+      console.log(response)
+      if (response.ok === true) {
+        Actions.account_user();
+      }
+  }catch (error){
+      console.log(error);
+  }
 }
 
 
@@ -68,7 +74,7 @@ export default class RegisterScreen extends React.Component {
                     <View style={{flexDirection: 'row'}}>
                         <Ionicons name="ios-mail"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
                             <View style={{ flex: 1, marginLeft: 8}}>
-                                <TextInput style={styles.textinput} placeholder="Email Address" onChangeText={ (email) => this.setState({email}) } keyboardType={'email-address'} />
+                                <TextInput style={styles.textinput} placeholder="Email address" onChangeText={ (email) => this.setState({email}) } keyboardType={'email-address'} />
                             </View>
                     </View>
 

@@ -1,12 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet, Picker, Alert, TextInput, TouchableOpacity, Button, Image, ScrollView } from "react-native"
+import { View, Text, StyleSheet, Picker, TextInput, TouchableOpacity, Image, ScrollView } from "react-native"
 import { ImagePicker } from 'expo';
 
 export default class AddProductScreen extends React.Component {
-
     state = {
         image: null,
-      };
+    };
 
     constructor(){
         super();
@@ -22,7 +21,7 @@ export default class AddProductScreen extends React.Component {
     // getSelectedPickerValue=()=>{
     //     Alert.alert("Selected Category is : " +this.state.PickerSelecteVal);
     // }
-
+    
     AddProduct()
     {
       let collection={}
@@ -47,11 +46,24 @@ export default class AddProductScreen extends React.Component {
     
     }
 
+    _pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+          allowsEditing: true,
+          aspect: [4, 3],
+        });
+    
+        console.log(result);
+    
+        if (!result.cancelled) {
+          this.setState({ image: result.uri });
+        }
+      };
+
   render() {
     let { image } = this.state;
     return (
 
-            <View style={styles.container}>
+        <View style={styles.container}>
             <ScrollView>
 
                 <View style= {{ flex:1, alignItems: "center" }}>
@@ -83,7 +95,6 @@ export default class AddProductScreen extends React.Component {
                         
                     </Picker>
                 </View>
-
                 
                 <Text style={{ marginTop:12, marginLeft:20, fontSize: 17 }}>
                     Color
@@ -132,33 +143,12 @@ export default class AddProductScreen extends React.Component {
                 onPress={() => this.AddProduct()}>
                         <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 15}}>Agree</Text>
                 </TouchableOpacity>
-                </ScrollView>
-            </View>
 
-
-
+            </ScrollView>
+        </View>
     );
   }
-
-  _pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      allowsEditing: true,
-      aspect: [4, 3],
-    });
-
-    console.log(result);
-
-    if (!result.cancelled) {
-      this.setState({ image: result.uri });
-    }
-  };
 }
-
-
-
-
-
-
 
 const styles = StyleSheet.create({
     container: {
