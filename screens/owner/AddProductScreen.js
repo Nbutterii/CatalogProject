@@ -2,24 +2,53 @@ import React from "react";
 import { View, Text, StyleSheet, Picker, TextInput, TouchableOpacity, Image, ScrollView } from "react-native"
 import { ImagePicker } from 'expo';
 
+
+
 export default class AddProductScreen extends React.Component {
+
     state = {
-        image: null,
+        image: [],
+      };
+
+    _renderImages() {
+    let images = [];
+    //let remainder = 4 - (this.state.devices % 4);
+    this.state.image.map((item, index) => {
+        images.push(
+        <Image
+            key={index}
+            source={{ uri: item }}
+            style={{ width: 80, height: 80, margin: 10 }}
+        />
+        );
+    });
+
+    return images;
+    }
+    _pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+        allowsEditing: true,
+        aspect: [1, 1],
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+        this.setState({
+        image: this.state.image.concat([result.uri]),
+        });
+    }
     };
 
-    constructor(){
-        super();
-        this.state={
-            ProductName : '',
-            PickerSelecteValCategory : '',
-            PickerSelecteValColor : '',
-            Price : '',
-            Description : ''
-        }
-    }
-
-    // getSelectedPickerValue=()=>{
-    //     Alert.alert("Selected Category is : " +this.state.PickerSelecteVal);
+    // constructor(){
+    //     super();
+    //     this.state={
+    //         ProductName : '',
+    //         PickerSelecteValCategory : '',
+    //         PickerSelecteValColor : '',
+    //         Price : '',
+    //         Description : ''
+    //     }
     // }
     
     AddProduct()
@@ -43,33 +72,18 @@ export default class AddProductScreen extends React.Component {
       }).then(res => res.json())
       .then(respon => console.log('Success:', JSON.stringify(Response)))
       .catch(error => console.error('Error:', error));
-    
     }
 
-    _pickImage = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-          allowsEditing: true,
-          aspect: [4, 3],
-        });
-    
-        console.log(result);
-    
-        if (!result.cancelled) {
-          this.setState({ image: result.uri });
-        }
-      };
-
   render() {
-    let { image } = this.state;
     return (
 
         <View style={styles.container}>
             <ScrollView>
 
-                <View style= {{ flex:1, alignItems: "center" }}>
-                    {image && <Image source={{ uri: image }} style={{ marginTop:5, width: 100, height: 100 }} />}
-                    <TouchableOpacity style={{ backgroundColor: '#891c1c', borderRadius: 5, padding: 10, marginTop: 5 }} onPress={this._pickImage}>
-                        <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 13}}>Add Image</Text>
+                <View style= {{ flexDirection: 'row', flexWrap: 'wrap', marginLeft: 5 }}>
+                    {this._renderImages()}
+                    <TouchableOpacity onPress={this._pickImage}>
+                        <Image style={{ width: 80, height: 80, margin: 10 }} source={require('../../assets/AddImage.png')} />
                     </TouchableOpacity>
                 </View>
 
@@ -127,7 +141,8 @@ export default class AddProductScreen extends React.Component {
                 </Text>
                 <TextInput style={{ padding: 7, backgroundColor:'#fff', borderColor: '#e7e7eb', 
                 borderWidth: 1, marginLeft:20, marginRight:20 }} 
-                underlineColorAndroid='transparent' keyboardType={'numeric'} placeholder="ex.830"  onChangeText={ (Price) => this.setState({Price}) }/>
+                underlineColorAndroid='transparent' keyboardType={'numeric'} placeholder="ex.830"  
+                onChangeText={ (Price) => this.setState({Price}) }/>
 
                 <Text style={{ marginTop:12, marginLeft:20, fontSize: 17 }}>
                     Description
@@ -165,5 +180,4 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         textAlignVertical: "top"
     },
-    
 });

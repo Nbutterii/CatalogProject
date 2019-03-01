@@ -1,19 +1,20 @@
 import React from 'react';
 import { Router, Scene } from 'react-native-router-flux';
 
-import HomeScreen from './screens/HomeScreen';
-import ProductScreenUser from './screens/ProductScreenUser';
-import ProductScreenAdmin from './screens/ProductScreenAdmin';
 import ContactScreen from './screens/ContactScreen';
+import DetailProductScreen from './screens/DetailProductScreen';
+import ForgotpasswordScreen from './screens/ForgotpasswordScreen';
+import HomeScreen from './screens/HomeScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import SignInScreen from './screens/SignInScreen';
-import DetailProductScreen from './screens/DetailProductScreen';
-import AddProductScreen from './screens/AddProductScreen';
-import UserScreen from './screens/UserScreen';
-import ChartScreen from './screens/ChartScreen';
-import ForgotpasswordScreen from './screens/ForgotpasswordScreen';
-
 import TabbarIcon from './screens/TabbarIcon';
+
+import ProductScreenCustomer from './screens/customer/ProductScreenCustomer';
+import CustomerScreen from './screens/customer/CustomerScreen';
+
+import AddProductScreen from './screens/owner/AddProductScreen';
+import ChartScreen from './screens/owner/ChartScreen';
+import ProductScreenOwner from './screens/owner/ProductScreenOwner';
 
 const App = () => {
   return (
@@ -40,12 +41,17 @@ const App = () => {
               />
             </Scene>
 
-            <Scene key="product_user" title="PRODUCT" icon={TabbarIcon} iconName="ios-list-box">
-              <Scene
-              key="ProductUserPage"
-              component={ProductScreenUser}
-              title="Product"
-              />
+            <Scene key="product_customer" title="PRODUCT" icon={TabbarIcon} iconName="ios-list-box">
+                <Scene
+                key="ProductCustomerPage"
+                component={ProductScreenCustomer}
+                title="Product"
+                />
+                                <Scene
+                                key="AddProductPage"
+                                component={AddProductScreen}
+                                title=""
+                                />
             </Scene>
 
             <Scene key="contact" title="ME" icon={TabbarIcon} iconName="ios-person">
@@ -78,7 +84,7 @@ const App = () => {
 
 
           <Scene 
-              key="account_user" 
+              key="account_customer" 
               tabs={true}
               tabBarStyle={{ backgroundColor: '#FCFCFC' }}
               // showLabel={false}
@@ -96,18 +102,18 @@ const App = () => {
                 />
               </Scene>
 
-              <Scene key="product_user" title="PRODUCT" icon={TabbarIcon} iconName="ios-list-box">
+              <Scene key="product_customer" title="PRODUCT" icon={TabbarIcon} iconName="ios-list-box">
                 <Scene
-                key="ProductUserPage"
-                component={ProductScreenUser}
+                key="ProductCustomerPage"
+                component={ProductScreenCustomer}
                 title="Product"
                 />
               </Scene>
 
-              <Scene key="user" title="ME" icon={TabbarIcon} iconName="ios-person">
+              <Scene key="customer" title="ME" icon={TabbarIcon} iconName="ios-person">
                 <Scene
-                key="UserPage"
-                component={UserScreen}
+                key="CustomerPage"
+                component={CustomerScreen}
                 title="Me"
                 />
               </Scene>
@@ -116,7 +122,7 @@ const App = () => {
 
 
           <Scene 
-              key="account_admin" 
+              key="account_owner" 
               tabs={true}
               tabBarStyle={{ backgroundColor: '#FCFCFC' }}
               // showLabel={false}
@@ -134,17 +140,17 @@ const App = () => {
               />
             </Scene>
 
-            <Scene key="product_admin" title="PRODUCT" icon={TabbarIcon} iconName="ios-list-box">
+            <Scene key="product_owner" title="PRODUCT" icon={TabbarIcon} iconName="ios-list-box">
               <Scene
-              key="ProductAdminPage"
-              component={ProductScreenAdmin}
+              key="ProductOwnerPage"
+              component={ProductScreenOwner}
               title="Product"
               />
 
               <Scene
-                key="AddProductPage"
-                component={AddProductScreen}
-                title=""
+              key="AddProductPage"
+              component={AddProductScreen}
+              title=""
               />
             </Scene>
 

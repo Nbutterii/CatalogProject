@@ -20,12 +20,10 @@ export default class RegisterScreen extends React.Component {
   }
 
   _loadInitialState = async () => {
-
     var value = await AsyncStorage.getItem('user');
     if (value !== null) {
     Actions.home();
     }
-
   }
 
 
@@ -50,98 +48,65 @@ async Register() {
       });
       console.log(response)
       if (response.ok === true) {
-        Actions.account_user();
+        Actions.account_customer();
       }
   }catch (error){
       console.log(error);
-  }
+   } 
 }
-
 
   render() {
     return (
         <View style={styles.container}>
-            <View style={styles.regform}>
-                <Text style={styles.header}>Register</Text>
+        
+          <View style={styles.regform}>
+            <Text style={styles.header}>Register</Text>
 
-                    <View style={{flexDirection: 'row'}}>
-                        <Ionicons name="ios-contact"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
-                            <View style={{ flex: 1, marginLeft: 8}}>
-                                <TextInput style={styles.textinput} placeholder="Username" onChangeText={ (username) => this.setState({username}) } />
-                            </View>
-                    </View>
-
-                    <View style={{flexDirection: 'row'}}>
-                        <Ionicons name="ios-mail"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
-                            <View style={{ flex: 1, marginLeft: 8}}>
-                                <TextInput style={styles.textinput} placeholder="Email address" onChangeText={ (email) => this.setState({email}) } keyboardType={'email-address'} />
-                            </View>
-                    </View>
-
-                    <View style={{flexDirection: 'row'}}>
-                        <Ionicons name="ios-lock"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
-                            <View style={{ flex: 1, marginLeft: 8}}>
-                                <TextInput style={styles.textinput} placeholder="Password (8 or more characters)" secureTextEntry={true} underlineColorAndroid={'transparent'} onChangeText={ (password1) => this.setState({password1}) }/>
-                            </View>
-                    </View>
-
-                    <View style={{flexDirection: 'row'}}>
-                        <Ionicons name="ios-lock"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
-                            <View style={{ flex: 1, marginLeft: 8}}>
-                                <TextInput style={styles.textinput} placeholder="Confirm password (8 or more characters)" secureTextEntry={true} underlineColorAndroid={'transparent'} onChangeText={ (password2) => this.setState({password2}) }/>
-                            </View>
-                    </View>
-
-                    <TouchableOpacity style={styles.buttonRed} onPress={() => this.Register()} >
-                        <Text style={styles.btntextWhite}>Create Account</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.buttonGray} onPress={() => Actions.SignInPage()}>
-                        <Text style={styles.btntextGray}>Already have an account?</Text>
-                    </TouchableOpacity>
-
+            <View style={{flexDirection: 'row'}}>
+              <Ionicons name="ios-contact"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
+                <View style={{ flex: 1, marginLeft: 8}}>
+                  <TextInput style={styles.textinput} placeholder="Username" 
+                  onChangeText={ (username) => this.setState({username}) } />
+                </View>
             </View>
-        </View>
 
+            <View style={{flexDirection: 'row'}}>
+              <Ionicons name="ios-mail"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
+                <View style={{ flex: 1, marginLeft: 8}}>
+                  <TextInput style={styles.textinput} placeholder="Email address" 
+                  onChangeText={ (email) => this.setState({email}) } keyboardType={'email-address'} />
+                </View>
+            </View>
+
+            <View style={{flexDirection: 'row'}}>
+              <Ionicons name="ios-lock"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
+                <View style={{ flex: 1, marginLeft: 8}}>
+                  <TextInput style={styles.textinput} placeholder="Password (8 or more characters)" 
+                  secureTextEntry={true} underlineColorAndroid={'transparent'} onChangeText={ (password1) => this.setState({password1}) }/>
+                </View>
+            </View>
+
+            <View style={{flexDirection: 'row'}}>
+              <Ionicons name="ios-lock"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
+                <View style={{ flex: 1, marginLeft: 8}}>
+                  <TextInput style={styles.textinput} placeholder="Confirm password (8 or more characters)" 
+                  secureTextEntry={true} underlineColorAndroid={'transparent'} onChangeText={ (password2) => this.setState({password2}) }/>
+                </View>
+            </View>
+
+            <TouchableOpacity style={styles.buttonRed} onPress={() => this.Register()} >
+              <Text style={styles.btntextWhite}>Create Account</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.buttonGray} onPress={() => Actions.SignInPage()}>
+              <Text style={styles.btntextGray}>Already have an account?</Text>
+            </TouchableOpacity>
+          </View>
+
+        </View>
     );
   }
 }
-
-// Register = () => {
-//    fetch('http://10.66.2.134:8000/rest-auth/registration/' , {
-//       method: 'POST',
-//       headers: {
-//         'Accept': 'application/json',
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify({
-//         Username: this.state.Username,
-//         Email: this.state.Email,
-//         Password: this.state.Password,
-//         ConfirmPassword: this.state.ConfirmPassword,
-//       })
-//    })
-   
-//    .then((response) => response.json())
-   
-//    .then((res) => {
-    
-//     if (res.key !== 0 ) {
-//       AsyncStorage.setItem('user', res.user);
-//         Actions.home();
-//       }
-
-//       else {
-//         Actions.product();
-//       }
-
-//     })
-//       .done();
-  
-// }
-
-
-
 
 const styles = StyleSheet.create({
   container: {
@@ -203,5 +168,4 @@ const styles = StyleSheet.create({
     color:'#a8a8a8',
     marginTop: 6
   }
-
 });

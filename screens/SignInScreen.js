@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, AsyncStorage } from 'react-native';
 import { Ionicons } from 'react-native-vector-icons'
 import * as firebase from 'firebase';
-import { Router, Scene ,Actions } from 'react-native-router-flux';
+import { Actions } from 'react-native-router-flux';
 
 const firebaseConfig = {
       apiKey: "AIzaSyDY19gOHkaGHiTdE9eOG8w7zDMyArS8FDc",
@@ -17,16 +17,13 @@ firebase.initializeApp(firebaseConfig);
 export default class SignInScreen extends React.Component {
     async loginWithFacebook() {
         const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('229312021285089', { permissions: ['public_profile'] })
-      
         if (type == 'success') {
-      
           const credential = firebase.auth.FacebookAuthProvider.credential(token)
-      
           firebase.auth().signInWithCredential(credential).catch((error) => {
             console.log(error)
           })
         }
-      }
+    }
 
     constructor(props){
       super(props);
@@ -41,16 +38,14 @@ export default class SignInScreen extends React.Component {
     }
 
     _loadInitialState = async () => {
-
       var value = await AsyncStorage.getItem('user');
       if (value !== null) {
       Actions.home();
       }
-
     }
 
     async login() {
-
+      
       let collection={}
       collection.username=this.state.username,
       collection.password=this.state.password,
@@ -69,61 +64,61 @@ export default class SignInScreen extends React.Component {
           });
           console.log(response)
           if (collection.username === 'admin' && response.ok === true) {
-            Actions.account_admin();
+            Actions.account_owner();
           }
           else if (response.ok === true)  {
-            Actions.account_user();
-        }
+            Actions.account_customer();
+          }
       }catch (error){
           console.log(error);
-      }
+       } 
     }
 
   render() {
     return (
         <View style={styles.container}>
-            <View style={styles.regform}>
-                <Text style={styles.header}>Sign In</Text>
 
-                    <View style={{flexDirection: 'row'}}>
-                        <Ionicons name="ios-contact"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
-                            <View style={{ flex: 1, marginLeft: 8}}>
-                                <TextInput style={styles.textinput} placeholder="Username" onChangeText={ (username) => this.setState({username}) } />
-                            </View>
-                    </View>
+          <View style={styles.regform}>
+              <Text style={styles.header}>Sign In</Text>
 
-                    <View style={{flexDirection: 'row'}}>
-                        <Ionicons name="ios-lock"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
-                            <View style={{ flex: 1, marginLeft: 8}}>
-                                <TextInput style={styles.textinput} placeholder="Password" secureTextEntry={true} underlineColorAndroid={'transparent'} onChangeText={ (password) => this.setState({password}) }/>
-                            </View>
-                    </View>
+              <View style={{flexDirection: 'row'}}>
+                <Ionicons name="ios-contact"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
+                  <View style={{ flex: 1, marginLeft: 8}}>
+                    <TextInput style={styles.textinput} placeholder="Username" 
+                    onChangeText={ (username) => this.setState({username}) } />
+                  </View>
+              </View>
 
-                    <View>
-                    <Text  style={{marginLeft: 230}} onPress={() => Actions.ForgotpasswordPage()} >Forgot Password?</Text>
-                    </View>
+              <View style={{flexDirection: 'row'}}>
+                <Ionicons name="ios-lock"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
+                  <View style={{ flex: 1, marginLeft: 8}}>
+                    <TextInput style={styles.textinput} placeholder="Password" secureTextEntry={true} 
+                    underlineColorAndroid={'transparent'} onChangeText={ (password) => this.setState({password}) }/>
+                  </View>
+              </View>
 
-                    <TouchableOpacity style={styles.button} onPress={() => this.login()}>
-                        <Text style={styles.btntext}>Sign In</Text>
-                    </TouchableOpacity>
+              <View>
+                <Text  style={{marginLeft: 230}} onPress={() => Actions.ForgotpasswordPage()} >Forgot Password?</Text>
+              </View>
 
-                    <TouchableOpacity style={styles.buttonFacebook} onPress={ () => this.loginWithFacebook()}>
-                        <View style={{flexDirection: 'row'}}>
-                            <Ionicons name="logo-facebook"  style={styles.ColorIconFacebook} />
-                                <View style={{marginLeft: 8, marginTop: 2}}>
-                                    <Text style={styles.btntext}>Sign in with Facebook</Text>
-                                </View>
-                        </View>
-                    </TouchableOpacity>
+              <TouchableOpacity style={styles.button} onPress={() => this.login()}>
+                <Text style={styles.btntext}>Sign In</Text>
+              </TouchableOpacity>
 
-            </View>
+              <TouchableOpacity style={styles.buttonFacebook} onPress={ () => this.loginWithFacebook()}>
+                <View style={{flexDirection: 'row'}}>
+                    <Ionicons name="logo-facebook"  style={styles.ColorIconFacebook} />
+                      <View style={{marginLeft: 8, marginTop: 2}}>
+                        <Text style={styles.btntext}>Sign in with Facebook</Text>
+                      </View>
+                </View>
+              </TouchableOpacity>
+          </View>
+
         </View>
-
     );
   }
 }
-
-
 
 const styles = StyleSheet.create({
   container: {
@@ -192,5 +187,4 @@ const styles = StyleSheet.create({
     color:'#a8a8a8',
     marginTop: 6
   }
-
 });
