@@ -16,6 +16,7 @@ import AddProductScreen from './screens/owner/AddProductScreen';
 import ChartScreen from './screens/owner/ChartScreen';
 import ProductScreenOwner from './screens/owner/ProductScreenOwner';
 
+
 const App = () => {
   return (
     <Router>
@@ -25,6 +26,9 @@ const App = () => {
               key="visitor" 
               tabs={true}
               tabBarStyle={{ backgroundColor: '#FCFCFC' }}
+              headerLayoutPreset="center"
+              activeTintColor='#891C1C'
+              navBarButtonColor="#891C1C"
               // showLabel={false}
           >
 
@@ -45,7 +49,7 @@ const App = () => {
                 <Scene
                 key="ProductCustomerPage"
                 component={ProductScreenCustomer}
-                title="Product"
+                title="PRODUCT"
                 />
                                 <Scene
                                 key="AddProductPage"
@@ -58,7 +62,7 @@ const App = () => {
               <Scene
               key="ContactPage"
               component={ContactScreen}
-              title="Me"
+              title="ME"
               />
 
               <Scene
@@ -87,6 +91,9 @@ const App = () => {
               key="account_customer" 
               tabs={true}
               tabBarStyle={{ backgroundColor: '#FCFCFC' }}
+              headerLayoutPreset="center"
+              activeTintColor='#891C1C'
+              navBarButtonColor="#891C1C"
               // showLabel={false}
           >
               <Scene key="home" title="HOME" icon={TabbarIcon} iconName="ios-home">
@@ -106,7 +113,7 @@ const App = () => {
                 <Scene
                 key="ProductCustomerPage"
                 component={ProductScreenCustomer}
-                title="Product"
+                title="PRODUCT"
                 />
               </Scene>
 
@@ -114,7 +121,7 @@ const App = () => {
                 <Scene
                 key="CustomerPage"
                 component={CustomerScreen}
-                title="Me"
+                title="ME"
                 />
               </Scene>
 
@@ -125,6 +132,9 @@ const App = () => {
               key="account_owner" 
               tabs={true}
               tabBarStyle={{ backgroundColor: '#FCFCFC' }}
+              headerLayoutPreset="center"
+              activeTintColor='#891C1C'
+              navBarButtonColor="#891C1C"
               // showLabel={false}
           >
             <Scene key="home" title="HOME" icon={TabbarIcon} iconName="ios-home">
@@ -144,7 +154,7 @@ const App = () => {
               <Scene
               key="ProductOwnerPage"
               component={ProductScreenOwner}
-              title="Product"
+              title="PRODUCT"
               />
 
               <Scene

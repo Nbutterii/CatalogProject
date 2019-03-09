@@ -105,14 +105,14 @@ export default class SignInScreen extends React.Component {
                 <Text style={styles.btntext}>Sign In</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.buttonFacebook} onPress={ () => this.loginWithFacebook()}>
+              {/* <TouchableOpacity style={styles.buttonFacebook} onPress={ () => this.loginWithFacebook()}>
                 <View style={{flexDirection: 'row'}}>
                     <Ionicons name="logo-facebook"  style={styles.ColorIconFacebook} />
                       <View style={{marginLeft: 8, marginTop: 2}}>
                         <Text style={styles.btntext}>Sign in with Facebook</Text>
                       </View>
                 </View>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
           </View>
 
         </View>

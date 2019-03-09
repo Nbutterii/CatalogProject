@@ -9,8 +9,8 @@ export default class ProductScreenCustomer extends React.Component {
         return (
             <View style={styles.container}>
         
-                <View  style={{position: 'absolute', left:0, right:0, top:0, height:70, backgroundColor:'#891C1C',
-                flexDirection:'row', alignItems:'center', paddingHorizontal: 5}}>
+                <View  style={{ position: 'absolute', left:0, right:0, top:0, height:70, backgroundColor:'#891C1C',
+                flexDirection:'row', alignItems:'center', paddingHorizontal: 5, position: 'relative' }}>
                     <TouchableOpacity>
                         <View style={{ width: 100, backgroundColor: '#e7e7eb', height:50, borderRadius:4, padding: 10}}>
                             <Text style={{fontSize:15}}>Select</Text>
@@ -27,7 +27,7 @@ export default class ProductScreenCustomer extends React.Component {
                 </View>
         
                 <ScrollView>
-                    <View style={{ marginLeft: 5, marginRight: 5, marginTop: 90 }}>
+                    <View style={{ marginLeft: 5, marginRight: 5, marginTop: 15 }}>
                         <View header style={{borderBottomWidth:1,borderBottomColor:'#dee0e2'}}>
                             <Text style={{fontSize: 20, marginLeft: 10, marginBottom: 20}} onPress={() => Actions.AddProductPage()}>6 ITEMS</Text>
                         </View>
