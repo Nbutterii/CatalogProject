@@ -36,7 +36,7 @@ export default class ContactScreen extends React.Component {
                         <Text style={styles.btntextBlackContact}>Email: admin@catalog.co.th</Text>
                     </View>
                     <View>
-                        <Text style={styles.btntextBlackContact}>● Available Monday to Friday 9am-4pm ●</Text>
+                        <Text style={styles.btntextBlackContact}>Available Monday to Friday 9am-4pm </Text>
                     </View>
                 </View>
     
