@@ -10,6 +10,13 @@ export default class AddProductScreen extends React.Component {
         image: [],
       };
 
+    // constructor(){
+    //     super();
+    //     this.state={
+    //         image: [],
+    //     }
+    // }
+
     _renderImages() {
     let images = [];
     //let remainder = 4 - (this.state.devices % 4);
@@ -22,9 +29,10 @@ export default class AddProductScreen extends React.Component {
         />
         );
     });
-
     return images;
     }
+
+    
     _pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
         allowsEditing: true,
@@ -32,36 +40,33 @@ export default class AddProductScreen extends React.Component {
     });
 
     console.log(result);
-
+    image = []
     if (!result.cancelled) {
         this.setState({
         image: this.state.image.concat([result.uri]),
         });
     }
+
     };
 
-    // constructor(){
-    //     super();
-    //     this.state={
-    //         ProductName : '',
-    //         PickerSelecteValCategory : '',
-    //         PickerSelecteValColor : '',
-    //         Price : '',
-    //         Description : ''
-    //     }
-    // }
-    
     AddProduct()
     {
-      let collection={}
-      collection.ProductName=this.state.ProductName,
-      collection.PickerSelecteValCategory=this.state.PickerSelecteValCategory,
-      collection.PickerSelecteValColor=this.state.PickerSelecteValColor,
-      collection.Price=this.state.Price,
-      collection.Description=this.state.Description,
+
+      let collection={
+          ProductName: this.state.ProductName,
+          PickerSelecteValCategory: this.state.PickerSelecteValCategory,
+          PickerSelecteValColor: this.state.PickerSelecteValColor,
+          Price: this.state.Price,
+          Description: this.state.Description,
+          image: this.state.image
+          }
       console.log(collection);
+      
+
+
+
     
-      var url = 'http://10.66.2.134:8000/rest-auth/registration/'
+      var url = 'http://10.66.2.134:8000/shop/product'
     
       fetch(url, {
         method: 'POST',
@@ -155,7 +160,7 @@ export default class AddProductScreen extends React.Component {
 
                 <TouchableOpacity style={{ flex: 1, marginTop:12, backgroundColor: '#891c1c', borderRadius: 5, 
                 marginBottom: 20, alignItems: 'center', padding: 10, marginLeft:50, marginRight:50}}
-                onPress={() => this.AddProduct()}>
+                onPress={(result) => this.AddProduct(result)}>
                         <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 15}}>Agree</Text>
                 </TouchableOpacity>
 
