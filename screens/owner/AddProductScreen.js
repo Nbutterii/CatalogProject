@@ -1,21 +1,22 @@
 import React from "react";
-import { View, Text, StyleSheet, Picker, TextInput, TouchableOpacity, Image, ScrollView } from "react-native"
+import { View, Text, StyleSheet, Picker, TextInput, TouchableOpacity, Image, ScrollView, Alert } from "react-native"
 import { ImagePicker } from 'expo';
 
 
 
 export default class AddProductScreen extends React.Component {
 
-    state = {
-        image: [],
-      };
-
-    // constructor(){
-    //     super();
-    //     this.state={
-    //         image: [],
-    //     }
-    // }
+    constructor(props){
+        super(props);
+        this.state={
+            image: [],
+            ProductName: '',
+            PickerSelecteValCategory: '',
+            PickerSelecteValColor: '',
+            Price: '',
+            Description: '',
+        }
+    }
 
     _renderImages() {
     let images = [];
@@ -29,10 +30,9 @@ export default class AddProductScreen extends React.Component {
         />
         );
     });
-    return images;
+        return images;
     }
 
-    
     _pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
         allowsEditing: true,
@@ -40,43 +40,59 @@ export default class AddProductScreen extends React.Component {
     });
 
     console.log(result);
+
+    // i = 0
     image = []
     if (!result.cancelled) {
         this.setState({
         image: this.state.image.concat([result.uri]),
         });
     }
-
+    // if ( i < 2 ){
+    //     image[i] = i++;
+    //     alert("True");
+    // }
+    // else {
+    //     alert("Stop");
+    // }
     };
 
     AddProduct()
     {
 
-      let collection={
-          ProductName: this.state.ProductName,
-          PickerSelecteValCategory: this.state.PickerSelecteValCategory,
-          PickerSelecteValColor: this.state.PickerSelecteValColor,
-          Price: this.state.Price,
-          Description: this.state.Description,
-          image: this.state.image
-          }
-      console.log(collection);
+        const { ProductName }  = this.state ;
+        const { PickerSelecteValCategory }  = this.state ;
+        const { PickerSelecteValColor }  = this.state ;
+        const { Price }  = this.state ;
+        const { Description }  = this.state ;
+        const { image }  = this.state ;
       
-
-
-
-    
-      var url = 'http://10.66.2.134:8000/shop/product'
-    
-      fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(collection),
-        headers:{
-          'Content-Type' : 'application/json'
+        if(ProductName == '' || PickerSelecteValCategory == '' || PickerSelecteValColor == '' || Price == '' || Description == '' || image == '')
+        {
+            Alert.alert("Please Enter All the Values.");
         }
-      }).then(res => res.json())
-      .then(respon => console.log('Success:', JSON.stringify(Response)))
-      .catch(error => console.error('Error:', error));
+        else{
+            let collection={
+                ProductName: this.state.ProductName,
+                PickerSelecteValCategory: this.state.PickerSelecteValCategory,
+                PickerSelecteValColor: this.state.PickerSelecteValColor,
+                Price: this.state.Price,
+                Description: this.state.Description,
+                image: this.state.image
+                }
+            console.log(collection);
+            var url = 'http://10.66.2.134:8000/shop/product'
+    
+            fetch(url, {
+              method: 'POST',
+              body: JSON.stringify(collection),
+              headers:{
+                'Content-Type' : 'application/json'
+              }
+            }).then(res => res.json())
+            .then(respon => console.log('Success:', JSON.stringify(Response)))
+            .catch(error => console.error('Error:', error));
+        }
     }
 
   render() {
@@ -97,7 +113,7 @@ export default class AddProductScreen extends React.Component {
                 </Text>
                 <TextInput style={{ padding: 7, backgroundColor:'#fff', borderColor: '#e7e7eb', 
                 borderWidth: 1, marginLeft:20, marginRight:20 }} 
-                underlineColorAndroid='transparent' onChangeText={ (ProductName) => this.setState({ProductName}) }/>
+                underlineColorAndroid='transparent' onChangeText={ ProductName => this.setState({ProductName}) }/>
 
                 <Text style={{ marginTop:12, marginLeft:20, fontSize: 17 }}>
                     Category
@@ -147,7 +163,7 @@ export default class AddProductScreen extends React.Component {
                 <TextInput style={{ padding: 7, backgroundColor:'#fff', borderColor: '#e7e7eb', 
                 borderWidth: 1, marginLeft:20, marginRight:20 }} 
                 underlineColorAndroid='transparent' keyboardType={'numeric'} placeholder="ex.830"  
-                onChangeText={ (Price) => this.setState({Price}) }/>
+                onChangeText={ Price => this.setState({Price}) }/>
 
                 <Text style={{ marginTop:12, marginLeft:20, fontSize: 17 }}>
                     Description
@@ -156,11 +172,11 @@ export default class AddProductScreen extends React.Component {
                 underlineColorAndroid="transparent"
                 placeholder="Type something..."
                 numberOfLines={10}
-                multiline={true} onChangeText={ (Description) => this.setState({Description}) }/>
+                multiline={true} onChangeText={ Description => this.setState({Description}) }/>
 
                 <TouchableOpacity style={{ flex: 1, marginTop:12, backgroundColor: '#891c1c', borderRadius: 5, 
                 marginBottom: 20, alignItems: 'center', padding: 10, marginLeft:50, marginRight:50}}
-                onPress={(result) => this.AddProduct(result)}>
+                onPress={() => this.AddProduct()}>
                         <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 15}}>Agree</Text>
                 </TouchableOpacity>
 
@@ -185,4 +201,17 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         textAlignVertical: "top"
     },
+    MainContainer :{
+        justifyContent: 'center',
+        flex:1,
+        margin: 10
+        },
+    TextInputStyleClass: {
+        textAlign: 'center',
+        marginBottom: 7,
+        height: 40,
+        borderWidth: 1,
+        // Set border Hex Color Code Here.
+        borderColor: '#FF5722', 
+    }
 });
