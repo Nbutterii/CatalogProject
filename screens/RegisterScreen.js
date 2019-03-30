@@ -3,17 +3,93 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, AsyncStorage } fro
 import { Ionicons } from 'react-native-vector-icons'
 import { Actions } from 'react-native-router-flux'
 
+
 export default class RegisterScreen extends React.Component {
 
-  constructor(props){
-    super(props);
+  constructor(){
+    super();
     this.state = {
       username: '',
+      usernameValdate:true,
       email: '',
+      emailValdate:true,
       password1: '',
-      password2: ''
+      password1Valdate:true,
+      password2: '',
+      password2Valdate:true,
     }
   }
+
+  validate(text,type)
+    {
+    alph=/^[a-zA-Z0-9]+$/
+    mail=/^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    num=/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
+      if(type == 'username') 
+      {
+        if(alph.test(text))
+        {
+          this.setState({
+            usernameValdate:true,
+            username: text
+          })
+        }
+        else
+        {
+          this.setState({
+            usernameValdate:false,
+          })
+        }
+      }
+      else if(type == 'email') 
+      {
+        if(mail.test(text))
+        {
+          this.setState({
+            emailValdate:true,
+            email: text
+          })
+        }
+        else
+        {
+          this.setState({
+            emailValdate:false,
+          })
+        }
+      }
+      else if(type == 'password1') 
+      {
+        if(num.test(text))
+        {
+          this.setState({
+            password1Valdate:true,
+            password1: text
+          })
+        }
+        else
+        {
+          this.setState({
+            password1Valdate:false,
+          })
+        }
+      }
+      else if(type == 'password2') 
+      {
+        if(num.test(text))
+        {
+          this.setState({
+            password2Valdate:true,
+            password2: text
+          })
+        }
+        else
+        {
+          this.setState({
+            password2Valdate:false,
+          })
+        }
+      }
+    }
 
   componentDidMount() {
     this._loadInitialState().done();
@@ -34,9 +110,10 @@ async Register() {
   collection.email=this.state.email,
   collection.password1=this.state.password1,
   collection.password2=this.state.password2,
+  collection.user_type="Client"
   console.log(collection);
 
-  var url = 'http://10.66.2.134:8000/rest-auth/registration/'
+  var url = 'http://10.66.4.239:8000/rest-auth/registration/'
 
   try{
       const response = await fetch( url, {
@@ -45,6 +122,7 @@ async Register() {
           headers: {
               'Content-Type' : 'application/json'
           }
+
       });
       console.log(response)
       if (response.ok === true) {
@@ -65,32 +143,32 @@ async Register() {
             <View style={{flexDirection: 'row'}}>
               <Ionicons name="ios-contact"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
                 <View style={{ flex: 1, marginLeft: 8}}>
-                  <TextInput style={styles.textinput} placeholder="Username" 
-                  onChangeText={ (username) => this.setState({username}) } />
+                  <TextInput style={[styles.textinput, !this.state.usernameValdate? styles.error:null]}
+                  onChangeText={ (text) => this.validate(text,'username')} placeholder="Username"/>
                 </View>
             </View>
 
             <View style={{flexDirection: 'row'}}>
               <Ionicons name="ios-mail"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
                 <View style={{ flex: 1, marginLeft: 8}}>
-                  <TextInput style={styles.textinput} placeholder="Email address" 
-                  onChangeText={ (email) => this.setState({email}) } keyboardType={'email-address'} />
+                  <TextInput style={[styles.textinput, !this.state.emailValdate? styles.error:null]} placeholder="Email address" 
+                  onChangeText={ (text) => this.validate(text,'email')} keyboardType={'email-address'} />
                 </View>
             </View>
 
             <View style={{flexDirection: 'row'}}>
               <Ionicons name="ios-lock"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
                 <View style={{ flex: 1, marginLeft: 8}}>
-                  <TextInput style={styles.textinput} placeholder="Password (8 or more characters)" 
-                  secureTextEntry={true} underlineColorAndroid={'transparent'} onChangeText={ (password1) => this.setState({password1}) }/>
+                  <TextInput style={[styles.textinput, !this.state.password1Valdate? styles.error:null]} placeholder="Password (Least 8 characters)" 
+                  secureTextEntry={true} underlineColorAndroid={'transparent'} onChangeText={ (text) => this.validate(text,'password1')}/>
                 </View>
             </View>
 
             <View style={{flexDirection: 'row'}}>
               <Ionicons name="ios-lock"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
                 <View style={{ flex: 1, marginLeft: 8}}>
-                  <TextInput style={styles.textinput} placeholder="Confirm password (8 or more characters)" 
-                  secureTextEntry={true} underlineColorAndroid={'transparent'} onChangeText={ (password2) => this.setState({password2}) }/>
+                  <TextInput style={[styles.textinput, !this.state.password2Valdate? styles.error:null]} placeholder="Password (Least 8 characters)" 
+                  secureTextEntry={true} underlineColorAndroid={'transparent'} onChangeText={ (text) => this.validate(text,'password2')}/>
                 </View>
             </View>
 
@@ -167,5 +245,9 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color:'#a8a8a8',
     marginTop: 6
+  },
+  error:{
+    borderWidth: 1,
+    borderColor:'#891c1c',
   }
 });

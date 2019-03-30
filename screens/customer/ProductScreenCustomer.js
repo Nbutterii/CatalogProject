@@ -1,23 +1,64 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Image } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
-import RecommendedCardItem from '../../components/RecommendedCardItem'
 import { Actions } from 'react-native-router-flux';
+import { Card } from "react-native-elements";
+import axios from 'axios';
 
 export default class ProductScreenCustomer extends React.Component {
+
+    constructor(props){
+        super(props);
+        this.state = {
+            isLoading: false,
+            dataSource: [],
+    }
+}
+
+componentDidMount() {
+    try{
+        axios.get(`http://10.66.4.239:8000/shop/product/`)
+      .then(res => {
+        console.log('pass',res.data)
+        this.setState({ dataSource : res.data});
+      })
+    }
+    catch(err){
+      console.log(err)
+    }
+}
+
+ViewDetailProduct(val){
+    console.log(val)
+}
+
+renderText() {
+    if (this.state.dataSource.length > 0) {
+        return this.state.dataSource.map((val, index) => 
+        <Card key={index}>
+            <TouchableOpacity  onPress={() => this.ViewDetailProduct(val)}>
+                <View style={{ flex: 1, marginTop: 10 }}>
+                    <View style={{flexDirection: 'row'}}>
+                        <Image style={{height: 120, width: 90, marginLeft:10}} source={{uri : val.image1}}/>
+                        <View style={{flex:1,alignItems:'flex-start', height: 90, paddingHorizontal: 20,}}>
+                            <Text style={{ fontSize: 18, fontWeight: 'bold'}}>{val.name}</Text>
+                            <Text style={{ fontSize: 14, color:'grey' }}>{val.category}</Text>
+                            <Text style={{ fontSize: 14, fontWeight: 'bold'}}>{val.price}</Text>
+                        </View>
+                    </View>
+                </View>
+            </TouchableOpacity>
+        </Card>
+        );
+    }
+}
+
     render() {
         return (
             <View style={styles.container}>
         
                 <View  style={{ position: 'absolute', left:0, right:0, top:0, height:70, backgroundColor:'#891C1C',
                 flexDirection:'row', alignItems:'center', paddingHorizontal: 5, position: 'relative' }}>
-                    <TouchableOpacity>
-                        <View style={{ width: 100, backgroundColor: '#e7e7eb', height:50, borderRadius:4, padding: 10}}>
-                            <Text style={{fontSize:15}}>Select</Text>
-                            <Text style={{fontWeight: 'bold'}}>Category ▼</Text>
-                        </View>
-                    </TouchableOpacity>
-        
                     <View style={{ flex: 1, height: "100%", marginLeft: 5, justifyContent: 'center' }}>
                         <View style={{ backgroundColor: 'white',paddingHorizontal: 10, borderRadius: 4, flexDirection: 'row', height:50}}>
                             <Icon name="ios-search" style={{ fontSize: 20, paddingTop: 15}}/>
@@ -31,54 +72,10 @@ export default class ProductScreenCustomer extends React.Component {
                         <View header style={{borderBottomWidth:1,borderBottomColor:'#dee0e2'}}>
                             <Text style={{fontSize: 20, marginLeft: 10, marginBottom: 20}} onPress={() => Actions.AddProductPage()}>6 ITEMS</Text>
                         </View>
-                        <RecommendedCardItem
-                            itemName="Tie-hem top"
-                            itemCreator="TOPS"
-                            itemPrice="$21.38"
-                            savings="7"
-                            imageUri={require("../../assets/recommended_1.jpg") }
-                            rating={5}
-                        />
-                        <RecommendedCardItem 
-                            itemName="Super Skinny Biker Jeans"
-                            itemCreator="JEANS"
-                            itemPrice="$42.79"
-                            savings="12"
-                            imageUri={require("../../assets/recommended_2.jpg")}
-                            rating={4}
-                        />
-                        <RecommendedCardItem 
-                            itemName="Long-sleeved jersey top"
-                            itemCreator="T-SHIRTS&TANKTOPS"
-                            itemPrice="$30.55"
-                            savings="15"
-                            imageUri={require("../../assets/recommended_3.jpg")}
-                            rating={5}
-                        />
-                        <RecommendedCardItem 
-                            itemName="V-neck dress"
-                            itemCreator="DRESSES"
-                            itemPrice="$21.38"
-                            savings="4"
-                            imageUri={require("../../assets/recommended_4.jpg")}
-                            rating={3}
-                        />
-                        <RecommendedCardItem 
-                            itemName="Fine-knit cardigan"
-                            itemCreator="CARDIGANS&JAMPERS"
-                            itemPrice="$15.26"
-                            savings="6"
-                            imageUri={require("../../assets/recommended_5.jpg")}
-                            rating={4}
-                        />
-                        <RecommendedCardItem
-                            itemName="Tie-hem top"
-                            itemCreator="TOPS"
-                            itemPrice="$21.38"
-                            savings="7"
-                            imageUri={require("../../assets/recommended_1.jpg") }
-                            rating={5}
-                        />
+
+                        <View>
+                            { this.renderText() }
+                        </View>
                     </View>
                 </ScrollView>
                 

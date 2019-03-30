@@ -51,7 +51,7 @@ export default class SignInScreen extends React.Component {
       collection.password=this.state.password,
       console.log(collection);
     
-      var url = 'http://10.66.2.134:8000/rest-auth/login/'
+      var url = 'http://10.66.4.239:8000/rest-auth/login/'
     
       try{
           const response = await fetch( url, {

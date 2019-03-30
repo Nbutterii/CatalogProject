@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, Picker, TextInput, TouchableOpacity, Image, ScrollView, Alert } from "react-native"
-import { ImagePicker } from 'expo';
+import { ImagePicker, Constants } from 'expo';
+import { Actions } from 'react-native-router-flux';
 
 
 
@@ -8,103 +9,137 @@ export default class AddProductScreen extends React.Component {
 
     constructor(props){
         super(props);
-        this.state={
-            image: [],
-            ProductName: '',
-            PickerSelecteValCategory: '',
-            PickerSelecteValColor: '',
-            Price: '',
-            Description: '',
+        this.state = {
+            name: '',
+            category: '',
+            color: '',
+            price: '',
+            description: '',
+            pickerResult: null,
         }
-    }
+      }
 
-    _renderImages() {
-    let images = [];
-    //let remainder = 4 - (this.state.devices % 4);
-    this.state.image.map((item, index) => {
-        images.push(
-        <Image
-            key={index}
-            source={{ uri: item }}
-            style={{ width: 80, height: 80, margin: 10 }}
-        />
-        );
-    });
-        return images;
-    }
+    // state = {
+    //     pickerResult: null,
+    //   };
 
-    _pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-        allowsEditing: true,
-        aspect: [1, 1],
-    });
+    // _renderImages() {
+    // let images = [];
+    // //let remainder = 4 - (this.state.devices % 4);
+    // this.state.image.map((item, index) => {
+    //     images.push(
+    //     <Image
+    //         key={index}
+    //         source={{ uri: item }}
+    //         style={{ width: 80, height: 80, margin: 10 }}
+    //     />
+    //     );
+    // });
+    //     return images;
+    // }
 
-    console.log(result);
+    // _pickImage = async () => {
+    // let result = await ImagePicker.launchImageLibraryAsync({
+    //     allowsEditing: true,
+    //     aspect: [1, 1],
+    // });
 
-    // i = 0
-    image = []
-    if (!result.cancelled) {
-        this.setState({
-        image: this.state.image.concat([result.uri]),
+    // console.log(result);
+
+    // // i = 0
+    // image = []
+    // if (!result.cancelled) {
+    //     this.setState({
+    //     image: this.state.image.concat([result.uri]),
+    //     });
+    // }
+    // // if ( i < 2 ){
+    // //     image[i] = i++;
+    // //     alert("True");
+    // // }
+    // // else {
+    // //     alert("Stop");
+    // // }
+    // };
+
+    // _pickImage = async () => {
+    //     let result = await ImagePicker.launchImageLibraryAsync({
+    //       allowsEditing: true,
+    //       aspect: [4, 3],
+    //     });
+    
+    //     console.log(result);
+    
+    //     if (!result.cancelled) {
+    //       this.setState({ image1: result.uri });
+    //     }
+    // }
+
+    _pickImg = async () => {
+        let pickerResult = await ImagePicker.launchImageLibraryAsync({
+          base64: true,
+          allowsEditing: false,
+          aspect: [3, 4],
         });
-    }
-    // if ( i < 2 ){
-    //     image[i] = i++;
-    //     alert("True");
-    // }
-    // else {
-    //     alert("Stop");
-    // }
+    
+        this.setState({
+          pickerResult,
+        });
     };
-
+    
     AddProduct()
     {
 
-        const { ProductName }  = this.state ;
-        const { PickerSelecteValCategory }  = this.state ;
-        const { PickerSelecteValColor }  = this.state ;
-        const { Price }  = this.state ;
-        const { Description }  = this.state ;
-        const { image }  = this.state ;
-      
-        if(ProductName == '' || PickerSelecteValCategory == '' || PickerSelecteValColor == '' || Price == '' || Description == '' || image == '')
-        {
-            Alert.alert("Please Enter All the Values.");
+        const { name }  = this.state ;
+        const { category }  = this.state ;
+        const { color }  = this.state ;
+        const { price }  = this.state ;
+        const { description }  = this.state ;
+        const { pickerResult }  = this.state ;
+        
+        if(name == '' || category == '' || color == '' || price == '' || description == '' || pickerResult == null) {
+            Alert.alert("Please fill up this form.");
         }
         else{
+            // Actions.product_owner();
             let collection={
-                ProductName: this.state.ProductName,
-                PickerSelecteValCategory: this.state.PickerSelecteValCategory,
-                PickerSelecteValColor: this.state.PickerSelecteValColor,
-                Price: this.state.Price,
-                Description: this.state.Description,
-                image: this.state.image
+                name: this.state.name,
+                category: this.state.category,
+                color: this.state.color,
+                price: this.state.price,
+                description: this.state.description,
+                image1: this.state.pickerResult.base64
                 }
             console.log(collection);
-            var url = 'http://10.66.2.134:8000/shop/product'
+            var url = 'http://10.66.4.239:8000/shop/createproduct/'
     
             fetch(url, {
-              method: 'POST',
-              body: JSON.stringify(collection),
-              headers:{
+                method: 'POST',
+                body: JSON.stringify(collection),
+                headers:{
                 'Content-Type' : 'application/json'
-              }
+                }
             }).then(res => res.json())
             .then(respon => console.log('Success:', JSON.stringify(Response)))
             .catch(error => console.error('Error:', error));
         }
     }
+    
 
   render() {
-    return (
 
+    let { pickerResult } = this.state;
+    let imageUri = pickerResult ? `data:image/jpg;base64,${pickerResult.base64}` : null;
+    imageUri && console.log({uri: imageUri.slice(0, 100)});
+
+    return (
         <View style={styles.container}>
             <ScrollView>
 
-                <View style= {{ flexDirection: 'row', flexWrap: 'wrap', marginLeft: 5 }}>
-                    {this._renderImages()}
-                    <TouchableOpacity onPress={this._pickImage}>
-                        <Image style={{ width: 80, height: 80, margin: 10 }} source={require('../../assets/AddImage.png')} />
+                <View style={{ alignItems: 'center' }} >{/* <View style= {{ flexDirection: 'row', flexWrap: 'wrap', marginLeft: 5 }}> */}
+                    {pickerResult ? <Image source={{uri: imageUri}} style={{ width: 100, height: 100 }}/> : null}
+                    <TouchableOpacity onPress={this._pickImg}>
+                        <Image style={{ width: 120, height: 40, margin: 10, alignItems: 'center' }} source={require('../../assets/AddImage2.png')} />
                     </TouchableOpacity>
                 </View>
 
@@ -113,15 +148,15 @@ export default class AddProductScreen extends React.Component {
                 </Text>
                 <TextInput style={{ padding: 7, backgroundColor:'#fff', borderColor: '#e7e7eb', 
                 borderWidth: 1, marginLeft:20, marginRight:20 }} 
-                underlineColorAndroid='transparent' onChangeText={ ProductName => this.setState({ProductName}) }/>
+                underlineColorAndroid='transparent' onChangeText={ name => this.setState({name})}/>
 
                 <Text style={{ marginTop:12, marginLeft:20, fontSize: 17 }}>
                     Category
                 </Text>
                 <View style={{ backgroundColor:'#fff', borderColor: '#e7e7eb', borderWidth: 1, marginLeft:20, marginRight:20 }}>
                     <Picker
-                        selectedValue={this.state.PickerSelecteValCategory}
-                        onValueChange={(itemValue1, itemIndex) => this.setState({PickerSelecteValCategory: itemValue1})} >
+                        selectedValue={this.state.category}
+                        onValueChange={(itemValue1, itemIndex) => this.setState({category: itemValue1})} >
                         
                         <Picker.Item label="Please choose a category" value="Please choose a category" />
                         <Picker.Item label="Top" value="Top" />
@@ -136,8 +171,8 @@ export default class AddProductScreen extends React.Component {
                 </Text>
                 <View style={{ backgroundColor:'#fff', borderColor: '#e7e7eb', borderWidth: 1, marginLeft:20, marginRight:20 }}>
                     <Picker
-                        selectedValue={this.state.PickerSelecteValColor}
-                        onValueChange={(itemValue2, itemIndex) => this.setState({PickerSelecteValColor: itemValue2})} >
+                        selectedValue={this.state.color}
+                        onValueChange={(itemValue2, itemIndex) => this.setState({color: itemValue2})} >
                         
                         <Picker.Item label="Please choose a color" value="Please choose a color" />
                         <Picker.Item label="Black" value="Black" />
@@ -163,7 +198,7 @@ export default class AddProductScreen extends React.Component {
                 <TextInput style={{ padding: 7, backgroundColor:'#fff', borderColor: '#e7e7eb', 
                 borderWidth: 1, marginLeft:20, marginRight:20 }} 
                 underlineColorAndroid='transparent' keyboardType={'numeric'} placeholder="ex.830"  
-                onChangeText={ Price => this.setState({Price}) }/>
+                onChangeText={ price => this.setState({price}) }/>
 
                 <Text style={{ marginTop:12, marginLeft:20, fontSize: 17 }}>
                     Description
@@ -172,7 +207,7 @@ export default class AddProductScreen extends React.Component {
                 underlineColorAndroid="transparent"
                 placeholder="Type something..."
                 numberOfLines={10}
-                multiline={true} onChangeText={ Description => this.setState({Description}) }/>
+                multiline={true} onChangeText={ description => this.setState({description}) }/>
 
                 <TouchableOpacity style={{ flex: 1, marginTop:12, backgroundColor: '#891c1c', borderRadius: 5, 
                 marginBottom: 20, alignItems: 'center', padding: 10, marginLeft:50, marginRight:50}}
@@ -190,6 +225,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
+        paddingTop: Constants.statusBarHeight,
     },
     textArea: {
         height: 100,
