@@ -29,11 +29,7 @@ export default class CustomerScreen extends React.Component {
     render() {
       return (
             <View style={styles.container}>
-
-                <View header style={{ borderBottomWidth:1, borderBottomColor:'#dee0e2', flexDirection:'row' }}>
-                    <Text style={{ flex:1, fontSize: 20, marginLeft: 10, marginTop:20, marginBottom: 20}}>Profile</Text>
-                    <Icon name="ios-arrow-forward" style={{ fontSize: 25, paddingTop: 25, marginRight:15 }}/>
-                </View>
+            
                 <View header style={{ borderBottomWidth:1, borderBottomColor:'#dee0e2', flexDirection:'row' }}>
                     <Text style={{ flex:1, fontSize: 20, marginLeft: 10, marginTop:20, marginBottom: 20}}>Wish list</Text>
                     <Icon name="ios-arrow-forward" style={{ fontSize: 25, paddingTop: 25, marginRight:15 }}/>

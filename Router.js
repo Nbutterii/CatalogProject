@@ -1,21 +1,26 @@
 import React from 'react';
 import { Router, Scene } from 'react-native-router-flux';
-
-import ContactScreen from './screens/ContactScreen';
-import DetailProductScreen from './screens/DetailProductScreen';
-import ForgotpasswordScreen from './screens/ForgotpasswordScreen';
-import HomeScreen from './screens/HomeScreen';
-import RegisterScreen from './screens/RegisterScreen';
-import SignInScreen from './screens/SignInScreen';
 import TabbarIcon from './screens/TabbarIcon';
 
+import HomeScreenVisitor from './screens/HomeScreenVisitor';
+import ProductScreenVisitor from './screens/ProductScreenVisitor';
+import DetailProductScreenVisitor from './screens/DetailProductScreenVisitor';
+import ContactScreen from './screens/ContactScreen';
+import RegisterScreen from './screens/RegisterScreen';
+import SignInScreen from './screens/SignInScreen';
+import ForgotpasswordScreen from './screens/ForgotpasswordScreen';
+
+import HomeScreenCustomer from './screens/customer/HomeScreenCustomer';
 import ProductScreenCustomer from './screens/customer/ProductScreenCustomer';
+import DetailProductScreenCustomer from './screens/customer/DetailProductScreenCustomer';
 import CustomerScreen from './screens/customer/CustomerScreen';
 
-import AddProductScreen from './screens/owner/AddProductScreen';
-import ChartScreen from './screens/owner/ChartScreen';
+import HomeScreenOwner from './screens/owner/HomeScreenOwner';
 import ProductScreenOwner from './screens/owner/ProductScreenOwner';
-
+import DetailProductScreenOwner from './screens/owner/DetailProductScreenOwner';
+import AddProductScreen from './screens/owner/AddProductScreen';
+import EditProductScreen from './screens/owner/EditProductScreen';
+import ChartScreen from './screens/owner/ChartScreen';
 
 export default class App extends React.Component {
   render() {    
@@ -33,30 +38,30 @@ export default class App extends React.Component {
                 // showLabel={false}
             >
 
-              <Scene key="home" title="HOME" icon={TabbarIcon} iconName="ios-home">
+              <Scene key="home_visitor" title="HOME" icon={TabbarIcon} iconName="ios-home">
                 <Scene
-                key="HomePage"
-                component={HomeScreen}
+                key="HomePageVisitor"
+                component={HomeScreenVisitor}
                 title="CATALOG"
                 />
                 <Scene
-                key="DetailProductPage"
-                component={DetailProductScreen}
+                key="DetailProductPageCustomer"
+                component={DetailProductScreenCustomer}
                 title=""
                 />
               </Scene>
 
-              <Scene key="product_customer" title="PRODUCT" icon={TabbarIcon} iconName="ios-list-box">
+              <Scene key="product_visitor" title="PRODUCT" icon={TabbarIcon} iconName="ios-list-box">
                   <Scene
-                  key="ProductCustomerPage"
-                  component={ProductScreenCustomer}
+                  key="ProductVisitorPage"
+                  component={ProductScreenVisitor}
                   title="PRODUCT"
                   />
-                                  <Scene
-                                  key="AddProductPage"
-                                  component={AddProductScreen}
-                                  title=""
-                                  />
+                  <Scene
+                  key="DetailProductPageVisitor"
+                  component={DetailProductScreenVisitor}
+                  title=""
+                  />
               </Scene>
 
               <Scene key="contact" title="ME" icon={TabbarIcon} iconName="ios-person">
@@ -97,16 +102,11 @@ export default class App extends React.Component {
                 navBarButtonColor="#891C1C"
                 // showLabel={false}
             >
-                <Scene key="home" title="HOME" icon={TabbarIcon} iconName="ios-home">
+                <Scene key="home_customer" title="HOME" icon={TabbarIcon} iconName="ios-home">
                   <Scene
-                  key="HomePage"
-                  component={HomeScreen}
+                  key="HomePageCustomer"
+                  component={HomeScreenCustomer}
                   title="CATALOG"
-                  />
-                  <Scene
-                  key="DetailProductPage"
-                  component={DetailProductScreen}
-                  title=""
                   />
                 </Scene>
 
@@ -116,7 +116,12 @@ export default class App extends React.Component {
                   component={ProductScreenCustomer}
                   title="PRODUCT"
                   />
-                </Scene>
+                  <Scene
+                  key="DetailProductPageCustomer"
+                  component={DetailProductScreenCustomer}
+                  title=""
+                  />
+                  </Scene>
 
                 <Scene key="customer" title="ME" icon={TabbarIcon} iconName="ios-person">
                   <Scene
@@ -138,16 +143,11 @@ export default class App extends React.Component {
                 navBarButtonColor="#891C1C"
                 // showLabel={false}
             >
-              <Scene key="home" title="HOME" icon={TabbarIcon} iconName="ios-home">
+              <Scene key="home_owner" title="HOME" icon={TabbarIcon} iconName="ios-home">
                 <Scene
-                key="HomePage"
-                component={HomeScreen}
+                key="HomePageOwner"
+                component={HomeScreenOwner}
                 title="CATALOG"
-                />
-                <Scene
-                key="DetailProductPage"
-                component={DetailProductScreen}
-                title=""
                 />
               </Scene>
 
@@ -157,10 +157,19 @@ export default class App extends React.Component {
                 component={ProductScreenOwner}
                 title="PRODUCT"
                 />
-
+                <Scene
+                key="DetailProductPageOwner"
+                component={DetailProductScreenOwner}
+                title=""
+                />
                 <Scene
                 key="AddProductPage"
                 component={AddProductScreen}
+                title=""
+                />
+                <Scene
+                key="EditProductPage"
+                component={EditProductScreen}
                 title=""
                 />
               </Scene>

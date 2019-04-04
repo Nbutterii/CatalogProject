@@ -2,78 +2,25 @@ import React from "react";
 import { View, Text, StyleSheet, Picker, TextInput, TouchableOpacity, Image, ScrollView, Alert } from "react-native"
 import { ImagePicker, Constants } from 'expo';
 import { Actions } from 'react-native-router-flux';
+import axios from 'axios';
+import { connect } from "react-redux";
 
-
-
-export default class AddProductScreen extends React.Component {
+class EditProductScreen extends React.Component {
 
     constructor(props){
         super(props);
         this.state = {
-            name: '',
-            category: '',
-            color: '',
-            price: '',
-            description: '',
-            pickerResult: null,
+            id: this.props.val.id,
+            name: this.props.val.name,
+            category: this.props.val.category,
+            color: this.props.val.color,
+            price: this.props.val.price,
+            description: this.props.val.description,
+            pickerResult: this.props.val.image1,
+            isLoading: false,
+            dataSource: [],
         }
       }
-
-    // state = {
-    //     pickerResult: null,
-    //   };
-
-    // _renderImages() {
-    // let images = [];
-    // //let remainder = 4 - (this.state.devices % 4);
-    // this.state.image.map((item, index) => {
-    //     images.push(
-    //     <Image
-    //         key={index}
-    //         source={{ uri: item }}
-    //         style={{ width: 80, height: 80, margin: 10 }}
-    //     />
-    //     );
-    // });
-    //     return images;
-    // }
-
-    // _pickImage = async () => {
-    // let result = await ImagePicker.launchImageLibraryAsync({
-    //     allowsEditing: true,
-    //     aspect: [1, 1],
-    // });
-
-    // console.log(result);
-
-    // // i = 0
-    // image = []
-    // if (!result.cancelled) {
-    //     this.setState({
-    //     image: this.state.image.concat([result.uri]),
-    //     });
-    // }
-    // // if ( i < 2 ){
-    // //     image[i] = i++;
-    // //     alert("True");
-    // // }
-    // // else {
-    // //     alert("Stop");
-    // // }
-    // };
-
-    // _pickImage = async () => {
-    //     let result = await ImagePicker.launchImageLibraryAsync({
-    //       allowsEditing: true,
-    //       aspect: [4, 3],
-    //     });
-    
-    //     console.log(result);
-    
-    //     if (!result.cancelled) {
-    //       this.setState({ image1: result.uri });
-    //     }
-    // }
 
     _pickImg = async () => {
         let pickerResult = await ImagePicker.launchImageLibraryAsync({
@@ -81,7 +28,7 @@ export default class AddProductScreen extends React.Component {
           allowsEditing: false,
           aspect: [3, 4],
         });
-        console.log(pickerResult);
+    
         this.setState({
           pickerResult,
         });
@@ -89,7 +36,7 @@ export default class AddProductScreen extends React.Component {
     
     AddProduct()
     {
-        Actions.ProductOwnerPage()
+        // Actions.ProductOwnerPage()
         const { name }  = this.state ;
         const { category }  = this.state ;
         const { color }  = this.state ;
@@ -101,6 +48,7 @@ export default class AddProductScreen extends React.Component {
             Alert.alert("Please fill up this form.");
         }
         else{
+            // Actions.product_owner();
             let collection={
                 name: this.state.name,
                 category: this.state.category,
@@ -122,6 +70,39 @@ export default class AddProductScreen extends React.Component {
         }
     }
     
+    componentDidMount() {
+        try{
+            axios.get(`http://10.66.4.239:8000/shop/product/`)
+          .then(res => {
+            console.log('pass',res.data)
+            this.setState({ dataSource : res.data});
+          })
+        }
+        catch(err){
+          console.log(err)
+        }
+    }
+
+    DeleteProduct() {
+        Alert.alert(
+            'Alert',
+            'Are you sure you want to delete?',
+            [
+                { text: 'No', onPress: () => console.log('Cancel pressed'), style: 'cancel'},
+                {
+                    text: 'Yes', onPress: () => {
+                        console.log('Agree')
+                        Actions.ProductOwnerPage()
+                        return fetch(`http://10.66.4.239:8000/shop/product/${this.props.val.id}/`, {
+                            method: 'delete',
+                            headers: {'Content-Type': 'application/json'},
+                        })
+                        .then(response => response.json());
+                    }
+                },
+            ],
+        )
+    }
 
   render() {
 
@@ -134,7 +115,8 @@ export default class AddProductScreen extends React.Component {
             <ScrollView>
 
                 <View style={{ alignItems: 'center' }} >{/* <View style= {{ flexDirection: 'row', flexWrap: 'wrap', marginLeft: 5 }}> */}
-                    <Image source={{uri: imageUri}} style={{ width: 100, height: 100 }}/>
+                    <Image source={{uri : this.props.val.image1}} style={{ width: 100, height: 100 }}/>
+                    <Image source={{uri: imageUri}} style={{ width: 100, height: 100 , position: 'absolute'}}/>
                     <TouchableOpacity onPress={this._pickImg}>
                         <Image style={{ width: 120, height: 40, margin: 10, alignItems: 'center' }} source={require('../../assets/AddImage2.png')} />
                     </TouchableOpacity>
@@ -145,7 +127,9 @@ export default class AddProductScreen extends React.Component {
                 </Text>
                 <TextInput style={{ padding: 7, backgroundColor:'#fff', borderColor: '#e7e7eb', 
                 borderWidth: 1, marginLeft:20, marginRight:20 }} 
-                underlineColorAndroid='transparent' onChangeText={ name => this.setState({name})}/>
+                underlineColorAndroid='transparent' onChangeText={ name => this.setState({name})}>
+                    {this.props.val.name}
+                </TextInput>
 
                 <Text style={{ marginTop:12, marginLeft:20, fontSize: 17 }}>
                     Category
@@ -155,11 +139,10 @@ export default class AddProductScreen extends React.Component {
                         selectedValue={this.state.category}
                         onValueChange={(itemValue1, itemIndex) => this.setState({category: itemValue1})} >
                         
-                        <Picker.Item label="Please choose a category" value="Please choose a category" />
+                        <Picker.Item label={this.props.val.name} value={this.props.val.name} />
                         <Picker.Item label="Top" value="Top" />
                         <Picker.Item label="Pant" value="Pant" />
                         <Picker.Item label="Skirt" value="Skirt" />
-                        
                     </Picker>
                 </View>
                 
@@ -171,7 +154,7 @@ export default class AddProductScreen extends React.Component {
                         selectedValue={this.state.color}
                         onValueChange={(itemValue2, itemIndex) => this.setState({color: itemValue2})} >
                         
-                        <Picker.Item label="Please choose a color" value="Please choose a color" />
+                        <Picker.Item label={this.props.val.color} value={this.props.val.color} />
                         <Picker.Item label="Black" value="Black" />
                         <Picker.Item label="Brown" value="Brown" />
                         <Picker.Item label="Grey" value="Grey" />
@@ -185,7 +168,6 @@ export default class AddProductScreen extends React.Component {
                         <Picker.Item label="Green" value="Green" />
                         <Picker.Item label="Multicolor" value="Multicolor" />
                         <Picker.Item label="etc." value="etc." />
-                        
                     </Picker>
                 </View>
 
@@ -195,7 +177,9 @@ export default class AddProductScreen extends React.Component {
                 <TextInput style={{ padding: 7, backgroundColor:'#fff', borderColor: '#e7e7eb', 
                 borderWidth: 1, marginLeft:20, marginRight:20 }} 
                 underlineColorAndroid='transparent' keyboardType={'numeric'} placeholder="ex.830"  
-                onChangeText={ price => this.setState({price}) }/>
+                onChangeText={ price => this.setState({price}) }>
+                    {this.props.val.price}
+                </TextInput>
 
                 <Text style={{ marginTop:12, marginLeft:20, fontSize: 17 }}>
                     Description
@@ -204,12 +188,20 @@ export default class AddProductScreen extends React.Component {
                 underlineColorAndroid="transparent"
                 placeholder="Type something..."
                 numberOfLines={10}
-                multiline={true} onChangeText={ description => this.setState({description}) }/>
+                multiline={true} onChangeText={ description => this.setState({description}) }>
+                    {this.props.val.description}
+                </TextInput>
 
                 <TouchableOpacity style={{ flex: 1, marginTop:12, backgroundColor: '#891c1c', borderRadius: 5, 
-                marginBottom: 20, alignItems: 'center', padding: 10, marginLeft:50, marginRight:50}}
+                marginBottom: 5, alignItems: 'center', padding: 10, marginLeft:50, marginRight:50}}
                 onPress={() => this.AddProduct()}>
                         <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 15}}>Submit</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={{ flex: 1, marginTop:5, backgroundColor: '#ffffff', borderRadius: 5, 
+                borderColor: '#891c1c', borderWidth: 1, marginBottom: 20, alignItems: 'center', padding: 10, marginLeft:50, marginRight:50}}
+                onPress={() => this.DeleteProduct()}>
+                        <Text style={{ color: '#891c1c', fontWeight: 'bold', fontSize: 15}}>Delete</Text>
                 </TouchableOpacity>
 
             </ScrollView>
@@ -244,7 +236,12 @@ const styles = StyleSheet.create({
         marginBottom: 7,
         height: 40,
         borderWidth: 1,
-        // Set border Hex Color Code Here.
         borderColor: '#FF5722', 
     }
 });
+
+const mapStateToProps = ({ MenageReducers }) => {
+    const { val } = MenageReducers;
+    return { val };
+}
+export default connect(mapStateToProps)(EditProductScreen);

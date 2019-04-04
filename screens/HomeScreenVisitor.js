@@ -1,11 +1,11 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
-import { Actions } from 'react-native-router-flux';
 import Swiper from 'react-native-swiper'
 import Category from './components/Explore/Category'
 import RecommendedCardItem from '../components/RecommendedCardItem'
+import { Actions } from 'react-native-router-flux';
 
-export default class HomeScreen extends React.Component {
+export default class HomeScreenVisitor extends React.Component {
     render() {
         return (
             <View style={styles.container}>
@@ -44,12 +44,12 @@ export default class HomeScreen extends React.Component {
                     </View>
     
                     <ScrollView>
-                        <Text style={{ fontSize: 24, fontWeight: '700', paddingHorizontal: 20 }} >
+                        <Text style={{ fontSize: 24, fontWeight: '700', paddingHorizontal: 20 }} onPress={() => Actions.DetailProductPageCustomer()}>
                             TOP 5
                         </Text>
     
                         <View style={{ flexDirection: 'row'}} >
-                            <Text style={{ fontSize: 30, paddingHorizontal: 20 , marginTop: 25 , marginLeft: 13}} onPress={() => Actions.DetailProductPage()}>
+                            <Text style={{ fontSize: 30, paddingHorizontal: 20 , marginTop: 25 , marginLeft: 13}}>
                                 1
                             </Text> 
                             <RecommendedCardItem

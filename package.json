@@ -16,8 +16,10 @@
     "react-native-image-crop-picker": "^0.22.0",
     "react-native-image-picker": "^0.28.0",
     "react-native-router-flux": "^4.0.6",
+    "react-native-search-filter": "^0.1.4",
     "react-native-star-rating": "^1.1.0",
     "react-native-swiper": "^1.5.14",
+    "react-redux": "^6.0.1",
     "redux": "^4.0.1"
   },
   "devDependencies": {

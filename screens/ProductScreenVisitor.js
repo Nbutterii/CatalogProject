@@ -5,25 +5,25 @@ import { Actions } from 'react-native-router-flux';
 import { Card } from "react-native-elements";
 import axios from 'axios';
 import SearchInput, { createFilter } from 'react-native-search-filter';
-import { StoreDetailAction } from '../../Action';
+import { StoreDetailAction } from '../Action';
 import { connect } from "react-redux";
 // import Product from './TestProduct';
 // const KEYS_TO_FILTERS = ['val.image','val.name', 'val.category', 'val.price'];
 
-class ProductScreenCustomer extends React.Component {
+class ProductScreenVisitor extends React.Component {
 
     constructor(props){
         super(props);
         this.state = {
             isLoading: false,
             dataSource: [],
-            // searchTerm: ''
+            searchTerm: ''
     }
 }
 
-// searchUpdated(term) {
-//     this.setState({ searchTerm: term })
-//   }
+searchUpdated(term) {
+    this.setState({ searchTerm: term })
+  }
 
 componentDidMount() {
     try{
@@ -41,11 +41,11 @@ componentDidMount() {
 ViewDetailProduct(val){
     this.props.StoreDetailAction(val)
     console.log(val)
-    Actions.DetailProductPageCustomer();
+    Actions.DetailProductPageVisitor();
 }
 
 renderText() {
-    // const filteredProduct = Product.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
+    // const dataSource = filteredProduct.filter(createFilter(this.state.searchTerm, dataSource))
     if (this.state.dataSource.length > 0) {
         return this.state.dataSource.map((val, index) => 
         <Card key={index}>
@@ -76,7 +76,7 @@ renderText() {
                         <View style={{ backgroundColor: 'white',paddingHorizontal: 10, borderRadius: 4, flexDirection: 'row', height:50}}>
                             <Icon name="ios-search" style={{ fontSize: 20, paddingTop: 15}}/>
                             <SearchInput 
-                            // onChangeText={(term) => { this.searchUpdated(term) }} 
+                            onChangeText={(term) => { this.searchUpdated(term) }} 
                             style={styles.searchInput}
                             placeholder="Type a message to search.."
                             />
@@ -135,4 +135,4 @@ const styles = StyleSheet.create({
 const mapDispatchToprops = dispatch => ({
     StoreDetailAction: (val) => dispatch(StoreDetailAction(val))
 })
-export default  connect(null , mapDispatchToprops)(ProductScreenCustomer);
+export default  connect(null , mapDispatchToprops)(ProductScreenVisitor);

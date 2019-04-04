@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, AsyncStorage } from 'react-native'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, AsyncStorage, Alert } from 'react-native'
 import { Ionicons } from 'react-native-vector-icons'
 import { Actions } from 'react-native-router-flux'
 
@@ -127,6 +127,9 @@ async Register() {
       console.log(response)
       if (response.ok === true) {
         Actions.account_customer();
+      }
+      else if (response.ok === false)  {
+        Alert.alert("Please check your password.");
       }
   }catch (error){
       console.log(error);
