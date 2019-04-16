@@ -13,7 +13,6 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 
-
 export default class SignInScreen extends React.Component {
     async loginWithFacebook() {
         const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('229312021285089', { permissions: ['public_profile'] })
@@ -80,7 +79,6 @@ export default class SignInScreen extends React.Component {
   render() {
     return (
         <View style={styles.container}>
-
           <View style={styles.regform}>
               <Text style={styles.header}>Sign In</Text>
 
@@ -117,7 +115,6 @@ export default class SignInScreen extends React.Component {
                 </View>
               </TouchableOpacity> */}
           </View>
-
         </View>
     );
   }

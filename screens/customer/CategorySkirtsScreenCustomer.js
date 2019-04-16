@@ -1,43 +1,30 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from "react-native";
-import Icon from 'react-native-vector-icons/Ionicons';
-import { Actions } from 'react-native-router-flux';
-import { Card } from "react-native-elements";
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from "react-native";
 import axios from 'axios';
-import SearchInput, { createFilter } from 'react-native-search-filter';
-import { StoreDetailAction } from '../Action';
+import { Card } from "react-native-elements";
+import { StoreDetailAction } from '../../Action';
 import { connect } from "react-redux";
+import { Actions } from 'react-native-router-flux';
 
-class ProductScreenVisitor extends React.Component {
+class CategorySkirtsScreenCustomer extends React.Component {
 
     constructor(props){
         super(props);
         this.state = {
             isLoading: false,
             dataSource: [],
-            SearchInput: '',
             dataSourceCount: []
         }
-    }
-
-    SearchProduct() {
-        console.log(this.state.SearchInput)
-        // Actions.SearchProductPageVisitor()
-        return fetch(`http://10.66.4.239:8000/shop/product/?search=${this.state.SearchInput}/`, {
-            method: 'GET',
-            headers: {'Content-Type': 'application/json'},
-        })
-        .then(response => response.json());
-    }
+    }   
 
     componentDidMount() {
         try{
-            axios.get(`http://10.66.4.239:8000/shop/product/`)
+            axios.get(`http://10.66.4.239:8000/shop/product/?category=Skirt`)
         .then(res => {
             console.log('pass',res.data)
             this.setState({ dataSource : res.data});
         }),
-        axios.get(`http://10.66.4.239:8000/shop/product/count/`)
+        axios.get(`http://10.66.4.239:8000/shop/product/count/?category=Skirt`)
         .then(res => {
             console.log('pass',res.data)
             this.setState({ dataSourceCount : res.data});
@@ -48,11 +35,10 @@ class ProductScreenVisitor extends React.Component {
         }
     }
 
-
     ViewDetailProduct(val){
         this.props.StoreDetailAction(val)
         console.log(val)
-        Actions.DetailProductPageVisitor();
+        Actions.DetailProductPageCustomer();
     }
 
     renderText() {
@@ -79,25 +65,6 @@ class ProductScreenVisitor extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <View  style={{ position: 'absolute', left:0, right:0, top:0, height:70, backgroundColor:'#891C1C',
-                flexDirection:'row', alignItems:'center', paddingHorizontal: 5, position: 'relative' }}>
-                    <View style={{ flex: 1, height: "100%", marginLeft: 5, justifyContent: 'center' }}>
-                        <View style={{ backgroundColor: 'white',paddingHorizontal: 10, borderRadius: 4, flexDirection: 'row', height:50}}>
-                            <Icon name="ios-search" style={{ fontSize: 20, paddingTop: 15}}/>
-                            <SearchInput 
-                            onChangeText={ (SearchInput) => this.setState({SearchInput}) } 
-                            style={styles.searchInput}
-                            maxLength = {35}
-                            placeholder="Type a message to search..                                  "
-                            />
-                            <TouchableOpacity style={{ backgroundColor: '#891c1c', borderRadius: 5, padding: 5, marginTop: 3, marginBottom: 3}}
-                            onPress={() => this.SearchProduct()}>
-                                <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 15, marginTop: 4}}>Search</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </View>
-        
                 <ScrollView>
                     <View style={{ marginLeft: 5, marginRight: 5, marginTop: 15 }}>
                         <View header style={{borderBottomWidth:1,borderBottomColor:'#dee0e2'}}>
@@ -107,10 +74,10 @@ class ProductScreenVisitor extends React.Component {
                         </View>
                         <View>
                             { this.renderText() }
-                        </View>
+                        </View> 
                     </View>
                 </ScrollView>
-            </View>
+            </View>  
         );
     }
 }
@@ -119,15 +86,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff'
-    },
-    searchInput:{
-      padding: 10,
-      backgroundColor: 'white',
-      borderRadius: 4
     }
 });
 
 const mapDispatchToprops = dispatch => ({
     StoreDetailAction: (val) => dispatch(StoreDetailAction(val))
 })
-export default  connect(null , mapDispatchToprops)(ProductScreenVisitor);
+export default  connect(null , mapDispatchToprops)(CategorySkirtsScreenCustomer);

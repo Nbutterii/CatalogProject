@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from "react-native";
 import Swiper from 'react-native-swiper'
 import Category from './components/Explore/Category'
 import RecommendedCardItem from '../components/RecommendedCardItem'
@@ -36,9 +36,19 @@ export default class HomeScreenVisitor extends React.Component {
     
                         <View style={{ height: 130, marginTop: 20}}>
                             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                                <Category imageUri={require('../assets/Update1.jpg')} name="Tops" />
+
+                                <TouchableOpacity onPress={() => Actions.CategoryTopsScreenVisitorPage()}>
+                                    <Category imageUri={require('../assets/Update1.jpg')} name="Tops" />
+                                </TouchableOpacity>
+
+                                <TouchableOpacity onPress={() => Actions.CategoryPantsScreenVisitorPage()}>
                                 <Category imageUri={require('../assets/Update2.jpg')} name="Pants" />
-                                <Category imageUri={require('../assets/Update3.jpg')} name="Skirt" />
+                                </TouchableOpacity>
+
+                                <TouchableOpacity onPress={() => Actions.CategorySkirtsScreenVisitorPage()}>
+                                <Category imageUri={require('../assets/Update3.jpg')} name="Skirts" />
+                                </TouchableOpacity>
+                                
                             </ScrollView>
                         </View>
                     </View>

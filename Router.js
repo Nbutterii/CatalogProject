@@ -3,23 +3,33 @@ import { Router, Scene } from 'react-native-router-flux';
 import TabbarIcon from './screens/TabbarIcon';
 
 import HomeScreenVisitor from './screens/HomeScreenVisitor';
+import CategoryTopsScreenVisitor from './screens/CategoryTopsScreenVisitor';
+import CategoryPantsScreenVisitor from './screens/CategoryPantsScreenVisitor';
+import CategorySkirtsScreenVisitor from './screens/CategorySkirtsScreenVisitor';
 import ProductScreenVisitor from './screens/ProductScreenVisitor';
 import DetailProductScreenVisitor from './screens/DetailProductScreenVisitor';
+import SearchProductScreenVisitor from './screens/SearchProductScreenVisitor';
 import ContactScreen from './screens/ContactScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import SignInScreen from './screens/SignInScreen';
 import ForgotpasswordScreen from './screens/ForgotpasswordScreen';
 
 import HomeScreenCustomer from './screens/customer/HomeScreenCustomer';
+import CategoryTopsScreenCustomer from './screens/customer/CategoryTopsScreenCustomer';
+import CategoryPantsScreenCustomer from './screens/customer/CategoryPantsScreenCustomer';
+import CategorySkirtsScreenCustomer from './screens/customer/CategorySkirtsScreenCustomer';
 import ProductScreenCustomer from './screens/customer/ProductScreenCustomer';
 import DetailProductScreenCustomer from './screens/customer/DetailProductScreenCustomer';
 import CustomerScreen from './screens/customer/CustomerScreen';
 
 import HomeScreenOwner from './screens/owner/HomeScreenOwner';
+import CategoryTopsScreenOwner from './screens/owner/CategoryTopsScreenOwner';
+import CategoryPantsScreenOwner from './screens/owner/CategoryPantsScreenOwner';
+import CategorySkirtsScreenOwner from './screens/owner/CategorySkirtsScreenOwner';
 import ProductScreenOwner from './screens/owner/ProductScreenOwner';
 import DetailProductScreenOwner from './screens/owner/DetailProductScreenOwner';
-import AddProductScreen from './screens/owner/AddProductScreen';
 import EditProductScreen from './screens/owner/EditProductScreen';
+import AddProductScreen from './screens/owner/AddProductScreen';
 import ChartScreen from './screens/owner/ChartScreen';
 
 export default class App extends React.Component {
@@ -49,6 +59,21 @@ export default class App extends React.Component {
                 component={DetailProductScreenCustomer}
                 title=""
                 />
+                <Scene
+                key="CategoryTopsScreenVisitorPage"
+                component={CategoryTopsScreenVisitor}
+                title="Tops"
+                />
+                <Scene
+                key="CategoryPantsScreenVisitorPage"
+                component={CategoryPantsScreenVisitor}
+                title="Pants"
+                />
+                <Scene
+                key="CategorySkirtsScreenVisitorPage"
+                component={CategorySkirtsScreenVisitor}
+                title="Skirts"
+                />
               </Scene>
 
               <Scene key="product_visitor" title="PRODUCT" icon={TabbarIcon} iconName="ios-list-box">
@@ -60,6 +85,11 @@ export default class App extends React.Component {
                   <Scene
                   key="DetailProductPageVisitor"
                   component={DetailProductScreenVisitor}
+                  title=""
+                  />
+                  <Scene
+                  key="SearchProductPageVisitor"
+                  component={SearchProductScreenVisitor}
                   title=""
                   />
               </Scene>
@@ -108,6 +138,21 @@ export default class App extends React.Component {
                   component={HomeScreenCustomer}
                   title="CATALOG"
                   />
+                  <Scene
+                  key="CategoryTopsScreenCustomerPage"
+                  component={CategoryTopsScreenCustomer}
+                  title="Tops"
+                  />
+                  <Scene
+                  key="CategoryPantsScreenCustomerPage"
+                  component={CategoryPantsScreenCustomer}
+                  title="Pants"
+                  />
+                  <Scene
+                  key="CategorySkirtsScreenCustomerPage"
+                  component={CategorySkirtsScreenCustomer}
+                  title="Skirts"
+                  />
                 </Scene>
 
                 <Scene key="product_customer" title="PRODUCT" icon={TabbarIcon} iconName="ios-list-box">
@@ -148,6 +193,21 @@ export default class App extends React.Component {
                 key="HomePageOwner"
                 component={HomeScreenOwner}
                 title="CATALOG"
+                />
+                <Scene
+                key="CategoryTopsScreenOwnerPage"
+                component={CategoryTopsScreenOwner}
+                title="Tops"
+                />
+                <Scene
+                key="CategoryPantsScreenOwnerPage"
+                component={CategoryPantsScreenOwner}
+                title="Pants"
+                />
+                <Scene
+                key="CategorySkirtsScreenOwnerPage"
+                component={CategorySkirtsScreenOwner}
+                title="Skirts"
                 />
               </Scene>
 

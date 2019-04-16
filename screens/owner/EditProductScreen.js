@@ -20,7 +20,7 @@ class EditProductScreen extends React.Component {
             isLoading: false,
             dataSource: [],
         }
-      }
+    }
 
     _pickImg = async () => {
         let pickerResult = await ImagePicker.launchImageLibraryAsync({
@@ -58,10 +58,9 @@ class EditProductScreen extends React.Component {
                 image1: this.state.pickerResult.base64
                 }
             console.log(collection);
-            var url = 'http://10.66.4.239:8000/shop/product/'
     
-            fetch(url, {
-                method: 'POST',
+            fetch(`http://10.66.4.239:8000/shop/product/${this.props.val.id}/`, {
+                method: 'PUT',
                 body: JSON.stringify(collection),
                 headers:{
                 'Content-Type' : 'application/json'

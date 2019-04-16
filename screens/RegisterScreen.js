@@ -102,39 +102,37 @@ export default class RegisterScreen extends React.Component {
     }
   }
 
+  async Register() {
+    let collection={}
+    collection.username=this.state.username,
+    collection.email=this.state.email,
+    collection.password1=this.state.password1,
+    collection.password2=this.state.password2,
+    collection.user_type="Client"
+    console.log(collection);
 
-async Register() {
+    var url = 'http://10.66.4.239:8000/rest-auth/registration/'
 
-  let collection={}
-  collection.username=this.state.username,
-  collection.email=this.state.email,
-  collection.password1=this.state.password1,
-  collection.password2=this.state.password2,
-  collection.user_type="Client"
-  console.log(collection);
+    try{
+        const response = await fetch( url, {
+            method: 'POST',
+            body: JSON.stringify(collection),
+            headers: {
+                'Content-Type' : 'application/json'
+            }
 
-  var url = 'http://10.66.4.239:8000/rest-auth/registration/'
-
-  try{
-      const response = await fetch( url, {
-          method: 'POST',
-          body: JSON.stringify(collection),
-          headers: {
-              'Content-Type' : 'application/json'
-          }
-
-      });
-      console.log(response)
-      if (response.ok === true) {
-        Actions.account_customer();
-      }
-      else if (response.ok === false)  {
-        Alert.alert("Please check your password.");
-      }
-  }catch (error){
-      console.log(error);
-   } 
-}
+        });
+        console.log(response)
+        if (response.ok === true) {
+          Actions.account_customer();
+        }
+        else if (response.ok === false)  {
+          Alert.alert("Please check your password.");
+        }
+    }catch (error){
+        console.log(error);
+    } 
+  }
 
   render() {
     return (

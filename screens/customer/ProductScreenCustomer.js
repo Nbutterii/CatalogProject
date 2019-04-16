@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Image } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Actions } from 'react-native-router-flux';
 import { Card } from "react-native-elements";
@@ -7,8 +7,6 @@ import axios from 'axios';
 import SearchInput, { createFilter } from 'react-native-search-filter';
 import { StoreDetailAction } from '../../Action';
 import { connect } from "react-redux";
-// import Product from './TestProduct';
-// const KEYS_TO_FILTERS = ['val.image','val.name', 'val.category', 'val.price'];
 
 class ProductScreenCustomer extends React.Component {
 
@@ -17,54 +15,54 @@ class ProductScreenCustomer extends React.Component {
         this.state = {
             isLoading: false,
             dataSource: [],
-            // searchTerm: ''
+            dataSourceCount: []
+        }
     }
-}
 
-// searchUpdated(term) {
-//     this.setState({ searchTerm: term })
-//   }
-
-componentDidMount() {
-    try{
-        axios.get(`http://10.66.4.239:8000/shop/product/`)
-      .then(res => {
-        console.log('pass',res.data)
-        this.setState({ dataSource : res.data});
-      })
+    componentDidMount() {
+        try{
+            axios.get(`http://10.66.4.239:8000/shop/product/`)
+        .then(res => {
+            console.log('pass',res.data)
+            this.setState({ dataSource : res.data});
+        }),
+        axios.get(`http://10.66.4.239:8000/shop/product/count/`)
+        .then(res => {
+            console.log('pass',res.data)
+            this.setState({ dataSourceCount : res.data});
+        })
+        }
+        catch(err){
+        console.log(err)
+        }
     }
-    catch(err){
-      console.log(err)
+
+    ViewDetailProduct(val){
+        this.props.StoreDetailAction(val)
+        console.log(val)
+        Actions.DetailProductPageCustomer();
     }
-}
 
-ViewDetailProduct(val){
-    this.props.StoreDetailAction(val)
-    console.log(val)
-    Actions.DetailProductPageCustomer();
-}
-
-renderText() {
-    // const filteredProduct = Product.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
-    if (this.state.dataSource.length > 0) {
-        return this.state.dataSource.map((val, index) => 
-        <Card key={index}>
-            <TouchableOpacity  onPress={() => this.ViewDetailProduct(val)}>
-                <View style={{ flex: 1, marginTop: 10 }}>
-                    <View style={{flexDirection: 'row'}}>
-                        <Image style={{height: 120, width: 90, marginLeft:10}} source={{uri : val.image1}}/>
-                        <View style={{flex:1,alignItems:'flex-start', height: 90, paddingHorizontal: 20,}}>
-                            <Text style={{ fontSize: 18, fontWeight: 'bold'}}>{val.name}</Text>
-                            <Text style={{ fontSize: 14, color:'grey' }}>{val.category}</Text>
-                            <Text style={{ fontSize: 14, fontWeight: 'bold'}}>{val.price}</Text>
+    renderText() {
+        if (this.state.dataSource.length > 0) {
+            return this.state.dataSource.map((val, index) => 
+            <Card key={index}>
+                <TouchableOpacity  onPress={() => this.ViewDetailProduct(val)}>
+                    <View style={{ flex: 1, marginTop: 10 }}>
+                        <View style={{flexDirection: 'row'}}>
+                            <Image style={{height: 120, width: 90, marginLeft:10}} source={{uri : val.image1}}/>
+                            <View style={{flex:1,alignItems:'flex-start', height: 90, paddingHorizontal: 20,}}>
+                                <Text style={{ fontSize: 18, fontWeight: 'bold'}}>{val.name}</Text>
+                                <Text style={{ fontSize: 14, color:'grey' }}>{val.category}</Text>
+                                <Text style={{ fontSize: 14, fontWeight: 'bold'}}>{val.price}</Text>
+                            </View>
                         </View>
                     </View>
-                </View>
-            </TouchableOpacity>
-        </Card>
-        );
+                </TouchableOpacity>
+            </Card>
+            );
+        }
     }
-}
 
     render() {
         return (
@@ -76,7 +74,6 @@ renderText() {
                         <View style={{ backgroundColor: 'white',paddingHorizontal: 10, borderRadius: 4, flexDirection: 'row', height:50}}>
                             <Icon name="ios-search" style={{ fontSize: 20, paddingTop: 15}}/>
                             <SearchInput 
-                            // onChangeText={(term) => { this.searchUpdated(term) }} 
                             style={styles.searchInput}
                             placeholder="Type a message to search.."
                             />
@@ -87,30 +84,14 @@ renderText() {
                 <ScrollView>
                     <View style={{ marginLeft: 5, marginRight: 5, marginTop: 15 }}>
                         <View header style={{borderBottomWidth:1,borderBottomColor:'#dee0e2'}}>
-                            <Text style={{fontSize: 20, marginLeft: 10, marginBottom: 20, marginTop: 10, fontWeight: 'bold'}}>6 ITEMS</Text>
+                            <Text style={{fontSize: 20, marginLeft: 10, marginBottom: 20, marginTop: 10, fontWeight: 'bold'}}>
+                                {this.state.dataSourceCount} ITEMS
+                            </Text>
                         </View>
 
                         <View>
                             { this.renderText() }
                         </View>
-{/* 
-                        {filteredProduct.map(val => {
-                            return (
-                            <Card>
-                                <TouchableOpacity onPress={()=>alert(val.product.name)} key={val.id}>
-                                    <View style={{flexDirection: 'row'}} >
-                                        <Image style={{height: 120, width: 90, marginLeft:10}} source={val.product.image}/>
-                                            <View style={{flex:1,alignItems:'flex-start', height: 90, paddingHorizontal: 20,}}>
-                                                <Text style={{ fontSize: 18, fontWeight: 'bold'}}>{val.product.name}</Text>
-                                                <Text style={{ fontSize: 14, color:'grey' }}>{val.product.category}</Text>
-                                                <Text style={{ fontSize: 14, fontWeight: 'bold'}}>{val.product.price}</Text>
-                                            </View>
-                                    </View>
-                                </TouchableOpacity>
-                            </Card>
-                            )
-                        })} */}
-
                     </View>
                 </ScrollView>
                 
@@ -130,7 +111,6 @@ const styles = StyleSheet.create({
       borderRadius: 4
     }
 });
-
 
 const mapDispatchToprops = dispatch => ({
     StoreDetailAction: (val) => dispatch(StoreDetailAction(val))

@@ -4,7 +4,6 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-nativ
 export default class AddProductScreen extends React.Component {
     render() {
         return (
-
             <View style={styles.container}>
 
                 <Text style={{ marginLeft:50, fontSize:30, marginTop: 30, color:'#891C1C' }}>Forgot your password?</Text>

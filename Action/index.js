@@ -1,4 +1,5 @@
 export * from './StoreDetailAction'
+export * from './SearchProductAction'
 
 //Delete existing product
 export const deleteItemAction = (deleteProductId) => {

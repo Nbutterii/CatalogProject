@@ -3,8 +3,6 @@ import { View, Text, StyleSheet, Picker, TextInput, TouchableOpacity, Image, Scr
 import { ImagePicker, Constants } from 'expo';
 import { Actions } from 'react-native-router-flux';
 
-
-
 export default class AddProductScreen extends React.Component {
 
     constructor(props){
@@ -244,7 +242,6 @@ const styles = StyleSheet.create({
         marginBottom: 7,
         height: 40,
         borderWidth: 1,
-        // Set border Hex Color Code Here.
         borderColor: '#FF5722', 
     }
 });
