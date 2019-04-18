@@ -4,6 +4,7 @@ import { ImagePicker, Constants } from 'expo';
 import { Actions } from 'react-native-router-flux';
 import axios from 'axios';
 import { connect } from "react-redux";
+import { GetTokenAction } from '../../Action';
 
 class EditProductScreen extends React.Component {
 
@@ -58,12 +59,14 @@ class EditProductScreen extends React.Component {
                 image1: this.state.pickerResult.base64
                 }
             console.log(collection);
+            Actions.ProductOwnerPage()
     
             fetch(`http://10.66.4.239:8000/shop/product/${this.props.val.id}/`, {
-                method: 'PUT',
+                method: 'PATCH',
                 body: JSON.stringify(collection),
                 headers:{
-                'Content-Type' : 'application/json'
+                    'Content-Type': 'application/json',
+                    Authorization : `Token ${this.props.token}`
                 }
             }).then(res => res.json())
         }
@@ -94,7 +97,10 @@ class EditProductScreen extends React.Component {
                         Actions.ProductOwnerPage()
                         return fetch(`http://10.66.4.239:8000/shop/product/${this.props.val.id}/`, {
                             method: 'delete',
-                            headers: {'Content-Type': 'application/json'},
+                            headers: {
+                                'Content-Type': 'application/json',
+                                Authorization : `Token ${this.props.token}`
+                            }
                         })
                         .then(response => response.json());
                     }
@@ -104,6 +110,7 @@ class EditProductScreen extends React.Component {
     }
 
   render() {
+    console.log('ON EditProductScreen', this.props.token)
 
     let { pickerResult } = this.state;
     let imageUri = pickerResult ? `data:image/jpg;base64,${pickerResult.base64}` : null;
@@ -239,8 +246,9 @@ const styles = StyleSheet.create({
     }
 });
 
-const mapStateToProps = ({ MenageReducers }) => {
+const mapStateToProps = ({ MenageReducers,MenageLogin }) => {
     const { val } = MenageReducers;
-    return { val };
+    const { token } = MenageLogin;
+    return { val,token };
 }
 export default connect(mapStateToProps)(EditProductScreen);

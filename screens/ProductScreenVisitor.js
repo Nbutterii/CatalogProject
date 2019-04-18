@@ -7,6 +7,7 @@ import axios from 'axios';
 import SearchInput, { createFilter } from 'react-native-search-filter';
 import { StoreDetailAction } from '../Action';
 import { connect } from "react-redux";
+import { SearchProductAction } from '../Action';
 
 class ProductScreenVisitor extends React.Component {
 
@@ -16,18 +17,21 @@ class ProductScreenVisitor extends React.Component {
             isLoading: false,
             dataSource: [],
             SearchInput: '',
-            dataSourceCount: []
+            dataSourceCount: [],
         }
     }
 
     SearchProduct() {
-        console.log(this.state.SearchInput)
-        // Actions.SearchProductPageVisitor()
-        return fetch(`http://10.66.4.239:8000/shop/product/?search=${this.state.SearchInput}/`, {
+        Actions.SearchProductPageVisitor()
+        return fetch(`http://10.66.4.239:8000/shop/product/?search=${this.state.SearchInput}`, {
             method: 'GET',
             headers: {'Content-Type': 'application/json'},
         })
-        .then(response => response.json());
+        .then(response => response.json())
+        .then((responseData) => {
+            console.log('===ProductScreenVisitor===',responseData)
+            this.props.SearchProductAction(responseData)
+          })
     }
 
     componentDidMount() {
@@ -128,6 +132,7 @@ const styles = StyleSheet.create({
 });
 
 const mapDispatchToprops = dispatch => ({
+    SearchProductAction: (search) => dispatch(SearchProductAction(search)),
     StoreDetailAction: (val) => dispatch(StoreDetailAction(val))
 })
 export default  connect(null , mapDispatchToprops)(ProductScreenVisitor);

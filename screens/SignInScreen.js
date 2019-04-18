@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, AsyncStorage, Aler
 import { Ionicons } from 'react-native-vector-icons'
 import * as firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
+import { GetTokenAction } from '../Action';
+import { connect } from 'react-redux'
 
 const firebaseConfig = {
       apiKey: "AIzaSyDY19gOHkaGHiTdE9eOG8w7zDMyArS8FDc",
@@ -13,7 +15,7 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 
-export default class SignInScreen extends React.Component {
+class SignInScreen extends React.Component {
     async loginWithFacebook() {
         const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('229312021285089', { permissions: ['public_profile'] })
         if (type == 'success') {
@@ -27,8 +29,8 @@ export default class SignInScreen extends React.Component {
     constructor(props){
       super(props);
       this.state = {
-        username: '',
-        password: '',
+        username: 'NoeyN',
+        password: 'Nn12345678',
       }
     }
 
@@ -52,28 +54,27 @@ export default class SignInScreen extends React.Component {
     
       var url = 'http://10.66.4.239:8000/rest-auth/login/'
     
-      try{
-          const response = await fetch( url, {
-              method: 'POST',
-              body: JSON.stringify(collection),
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type' : 'application/json'
-              }
-          });
-          console.log(response)
-          if (collection.username === 'admin' && response.ok === true) {
+      fetch(url, {
+        method: 'POST', 
+        body: JSON.stringify(collection),
+        headers:{
+            'Content-Type': 'application/json' ,
+            // 'Authorization': 'Token ${this.state.getToken}',
+        }
+        }).then(res => res.json())
+        .then((responseData) => {
+          console.log(responseData)
+          this.props.GetTokenAction(responseData.key)
+          if (responseData.user.user_type === 'Owner') {
             Actions.account_owner();
           }
-          else if (response.ok === true)  {
-            Actions.account_customer();
-          }
-          else if (response.ok === false)  {
-            Alert.alert("Please check your username and password.");
-          }
-      }catch (error){
-          console.log(error);
-       } 
+          else if (responseData.user.user_type === 'Client') {
+              Actions.account_customer();
+            }
+          else{
+              Alert.alert("Please check your username and password.");
+            }
+        })
     }
 
   render() {
@@ -188,3 +189,5 @@ const styles = StyleSheet.create({
     marginTop: 6
   }
 });
+
+export default connect(null, { GetTokenAction })(SignInScreen);

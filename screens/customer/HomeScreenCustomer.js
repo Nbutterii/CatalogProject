@@ -3,9 +3,12 @@ import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from "rea
 import Swiper from 'react-native-swiper'
 import Category from '../components/Explore/Category'
 import { Actions } from 'react-native-router-flux';
+import { GetTokenAction } from '../../Action';
+import { connect } from 'react-redux'
 
-export default class HomeScreenCustomer extends React.Component {
+class HomeScreenCustomer extends React.Component {
     render() {
+        console.log('ON HomescreenCustomer', this.props.token)
         return (
             <View style={styles.container}>
                 <ScrollView scrollEventThrottle={16}>
@@ -78,3 +81,9 @@ const styles = StyleSheet.create({
         color: '#ffffff',
     },
 });
+
+const mapStateToProps = ({  MenageLogin }) => {
+    const { token } = MenageLogin;
+        return { token };
+  }
+export default connect(mapStateToProps)(HomeScreenCustomer);

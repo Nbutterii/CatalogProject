@@ -90,9 +90,6 @@ class DetailProductScreenCustomer extends React.Component {
                 <Card>
                     <View header style={{ borderBottomWidth: 1, borderBottomColor:'#dee0e2', flexDirection: 'row' }}>
                         <Text style={{fontSize: 24, marginLeft: 2, marginBottom: 20, fontWeight: '700'}}>{this.props.val.name}</Text>
-                        <TouchableOpacity onPress={() => Actions.EditProductPage()}>
-                            <Icon name="ios-more" style={{ fontSize: 24, paddingTop: 8, marginLeft: 280}}/>
-                        </TouchableOpacity>
                     </View>
                     
                     <View header style={{borderBottomWidth:1,borderBottomColor:'#dee0e2'}}>

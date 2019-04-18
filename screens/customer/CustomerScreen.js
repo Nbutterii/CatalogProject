@@ -3,38 +3,67 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Ionicons } from 'react-native-vector-icons'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Actions } from 'react-native-router-flux';
+import { GetTokenAction } from '../../Action';
+import { connect } from 'react-redux'
 
-export default class CustomerScreen extends React.Component {
+class CustomerScreen extends React.Component {
 
-  async Signout() {
+//   async Signout() {
 
-    var url = 'http://10.66.4.239:8000/rest-auth/logout/'
+//     var url = 'http://10.66.4.239:8000/rest-auth/logout/'
 
-    try{
-        const response = await fetch( url, {
-            method: 'POST',
-            headers: {
-                'Content-Type' : 'application/json'
-            }
-        });
+//     try{
+//         const response = await fetch( url, {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type' : 'application/json'
+//             }
+//         });
+//         console.log(response)
+//         if (response.status === 200) {
+//                   Actions.visitor();
+//         }
+//     }catch (error){
+//         console.log(error);
+//     }
+//   }
+
+  async Signout(token) {
+    console.log(this.props.token)
+    const response = await fetch(`http://10.66.4.239:8000/rest-auth/logout/` , {
+        method: 'POST',
+        headers: {
+            Authorization : `Token ${this.props.token}`,
+        }   
+            
+    });
+        this.props.dispatch({
+            type: 'Logout'
+        })
         console.log(response)
-        if (response.status === 200) {
-                  Actions.visitor();
-        }
-    }catch (error){
-        console.log(error);
-    }
-  }
+            if (response.status === 200) {
+                Actions.visitor();
+            }
+
+}
   
     render() {
+        console.log('ON CustomerScreen', this.props.token)
       return (
             <View style={styles.container}>
             
-                <View header style={{ borderBottomWidth:1, borderBottomColor:'#dee0e2', flexDirection:'row' }}>
-                    <Text style={{ flex:1, fontSize: 20, marginLeft: 10, marginTop:20, marginBottom: 20}}>Wish list</Text>
-                    <Icon name="ios-arrow-forward" style={{ fontSize: 25, paddingTop: 25, marginRight:15 }}/>
-                </View>
-                
+                <TouchableOpacity>
+                    <View header style={{ borderBottomWidth:1, borderBottomColor:'#dee0e2', flexDirection:'row' }}>
+                        <Text style={{ flex:1, fontSize: 20, marginLeft: 10, marginTop:20, marginBottom: 20}}>Wishlist "Wow"</Text>
+                        <Icon name="ios-arrow-forward" style={{ fontSize: 25, paddingTop: 25, marginRight:15 }}/>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <View header style={{ borderBottomWidth:1, borderBottomColor:'#dee0e2', flexDirection:'row' }}>
+                        <Text style={{ flex:1, fontSize: 20, marginLeft: 10, marginTop:20, marginBottom: 20}}>Wishlist "Happy"</Text>
+                        <Icon name="ios-arrow-forward" style={{ fontSize: 25, paddingTop: 25, marginRight:15 }}/>
+                    </View>
+                </TouchableOpacity>
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                     <View>
                         <Text style={styles.btntextBlackContactTitle} >Contact Us</Text>
@@ -131,4 +160,9 @@ ColorIcon: {
 }
 
 });
-  
+
+const mapStateToProps = ({  MenageLogin }) => {
+    const { token } = MenageLogin;
+        return { token };
+  }
+export default connect(mapStateToProps)(CustomerScreen);

@@ -2,8 +2,10 @@ import React from "react";
 import { View, Text, StyleSheet, Picker, TextInput, TouchableOpacity, Image, ScrollView, Alert } from "react-native"
 import { ImagePicker, Constants } from 'expo';
 import { Actions } from 'react-native-router-flux';
+import { GetTokenAction } from '../../Action';
+import { connect } from 'react-redux'
 
-export default class AddProductScreen extends React.Component {
+class AddProductScreen extends React.Component {
 
     constructor(props){
         super(props);
@@ -114,7 +116,8 @@ export default class AddProductScreen extends React.Component {
                 method: 'POST',
                 body: JSON.stringify(collection),
                 headers:{
-                'Content-Type' : 'application/json'
+                'Content-Type' : 'application/json',
+                Authorization : `Token ${this.props.token}`
                 }
             }).then(res => res.json())
         }
@@ -245,3 +248,8 @@ const styles = StyleSheet.create({
         borderColor: '#FF5722', 
     }
 });
+const mapStateToProps = ({  MenageLogin }) => {
+    const { token } = MenageLogin;
+        return { token };
+  }
+export default connect(mapStateToProps)(AddProductScreen);

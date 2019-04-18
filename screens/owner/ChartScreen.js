@@ -1,29 +1,32 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Actions } from 'react-native-router-flux';
+import { GetTokenAction } from '../../Action';
+import { connect } from 'react-redux'
 
-export default class ChartScreen extends React.Component {
+class ChartScreen extends React.Component {
 
-    async Signout() {
-        var url = 'http://10.66.2.134:8000/rest-auth/logout/'
-        try{
-            const response = await fetch( url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type' : 'application/json'
-                }
-            });
+    async Signout(token) {
+        console.log(this.props.token)
+        const response = await fetch(`http://10.66.4.239:8000/rest-auth/logout/` , {
+            method: 'POST',
+            headers: {
+                Authorization : `Token ${this.props.token}`,
+            }   
+                
+        });
+            this.props.dispatch({
+                type: 'Logout'
+            })
             console.log(response)
-            if (response.status === 200) {
-                Actions.visitor();
-            }
-        }
-        catch (error){
-            console.log(error);
-        }
+                if (response.status === 200) {
+                    Actions.visitor();
+                }
+    
     }
 
     render() {
+        console.log('ON ChartScreen', this.props.token)
         return (
             <View style={styles.container}>
 
@@ -44,4 +47,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     }
 });
+const mapStateToProps = ({  MenageLogin }) => {
+    const { token } = MenageLogin;
+        return { token };
+  }
+export default connect(mapStateToProps)(ChartScreen);
   

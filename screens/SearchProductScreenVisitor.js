@@ -1,72 +1,64 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from "react-native";
-import { SearchProductAction } from '../Action';
-import { connect } from "react-redux";
-import axios from 'axios';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from "react-native";
+import Icon from 'react-native-vector-icons/Ionicons';
+import { Actions } from 'react-native-router-flux';
 import { Card } from "react-native-elements";
+import axios from 'axios';
+import SearchInput, { createFilter } from 'react-native-search-filter';
+import { StoreDetailAction } from '../Action';
+import { connect } from "react-redux";
+import { SearchProductAction } from '../Action';
 
-class SearchProductScreenVisitor extends React.Component {
+class ProductScreenVisitor extends React.Component {
 
     constructor(props){
         super(props);
         this.state = {
             isLoading: false,
             dataSource: [],
+            SearchInput: '',
+            dataSourceCount: []
+        }
     }
-}
 
-componentDidMount() {
-    try{
-        axios.get(`http://10.66.4.239:8000/shop/product/`)
-      .then(res => {
-        console.log('pass',res.data)
-        this.setState({ dataSource : res.data});
-      })
+    ViewDetailProduct(val){
+        this.props.StoreDetailAction(val)
+        console.log(val)
+        Actions.DetailProductPageVisitor();
     }
-    catch(err){
-      console.log(err)
-    }
-}
 
-
-
-renderText() {
-    if (this.state.dataSource.length > 0) {
-        return this.state.dataSource.map((val, index) => 
-        <Card key={index}>
-            <TouchableOpacity  onPress={() => this.ViewDetailProduct(val)}>
-                <View style={{ flex: 1, marginTop: 10 }}>
-                    <View style={{flexDirection: 'row'}}>
-                        <Image style={{height: 120, width: 90, marginLeft:10}} source={{uri : val.image1}}/>
-                        <View style={{flex:1,alignItems:'flex-start', height: 90, paddingHorizontal: 20,}}>
-                            <Text style={{ fontSize: 18, fontWeight: 'bold'}}>{val.name}</Text>
-                            <Text style={{ fontSize: 14, color:'grey' }}>{val.category}</Text>
-                            <Text style={{ fontSize: 14, fontWeight: 'bold'}}>{val.price}</Text>
+    renderText() {
+        if (this.props.search.length > 0) {
+            return this.props.search.map((val, index) => 
+                <Card key={index}>
+                    <TouchableOpacity  onPress={() => this.ViewDetailProduct(val)}>
+                        <View style={{ flex: 1, marginTop: 10 }}>
+                            <View style={{flexDirection: 'row'}}>
+                                <Image style={{height: 120, width: 90, marginLeft:10}} source={{uri : val.image1}}/>
+                                <View style={{flex:1,alignItems:'flex-start', height: 90, paddingHorizontal: 20,}}>
+                                    <Text style={{ fontSize: 18, fontWeight: 'bold'}}>{val.name}</Text>
+                                    <Text style={{ fontSize: 14, color:'grey' }}>{val.category}</Text>
+                                    <Text style={{ fontSize: 14, fontWeight: 'bold'}}>{val.price}</Text>
+                                </View>
+                            </View>
                         </View>
-                    </View>
-                </View>
-            </TouchableOpacity>
-        </Card>
-        );
+                    </TouchableOpacity>
+                </Card>
+            );
+        }
     }
-}
 
     render() {
+        console.log('===SEARCH===', this.props.search)
         return (
             <View style={styles.container}>
                 <ScrollView>
                     <View style={{ marginLeft: 5, marginRight: 5, marginTop: 15 }}>
-                        <View header style={{borderBottomWidth:1,borderBottomColor:'#dee0e2'}}>
-                            <Text style={{fontSize: 20, marginLeft: 10, marginBottom: 20, marginTop: 10, fontWeight: 'bold'}}>6 ITEMS</Text>
-                        </View>
-
                         <View>
                             { this.renderText() }
                         </View>
-
                     </View>
                 </ScrollView>
-                
             </View>
         );
     }
@@ -75,17 +67,20 @@ renderText() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#fff'
     },
-      welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
-        color: '#ffffff',
-    },
+    searchInput:{
+      padding: 10,
+      backgroundColor: 'white',
+      borderRadius: 4
+    }
 });
 
+const mapStateToProps = ({  SearchProductReducers }) => {
+    const { search } = SearchProductReducers;
+        return { search };
+  }
 const mapDispatchToprops = dispatch => ({
-    SearchProductAction: (val) => dispatch(SearchProductAction(val))
+StoreDetailAction: (val) => dispatch(StoreDetailAction(val))
 })
-export default  connect(null , mapDispatchToprops)(SearchProductScreenVisitor);
+export default connect(mapStateToProps,mapDispatchToprops)(ProductScreenVisitor);

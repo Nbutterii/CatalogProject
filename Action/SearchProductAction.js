@@ -1,6 +1,6 @@
-export const SearchProductAction = (val) => {
+export const SearchProductAction = (search) => {
     return {
         type: 'SEARCH_PRODUCT',
-        payload : val
+        payload : search
     };
 }

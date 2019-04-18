@@ -4,9 +4,12 @@ import Swiper from 'react-native-swiper'
 import Category from './components/Explore/Category'
 import RecommendedCardItem from '../components/RecommendedCardItem'
 import { Actions } from 'react-native-router-flux';
+import { GetTokenAction } from '../Action';
+import { connect } from 'react-redux'
 
-export default class HomeScreenVisitor extends React.Component {
+class HomeScreenVisitor extends React.Component {
     render() {
+        console.log('ON HomescreenVisitor', this.props.token)
         return (
             <View style={styles.container}>
                 <ScrollView scrollEventThrottle={16}>
@@ -149,3 +152,8 @@ const styles = StyleSheet.create({
         color: '#ffffff',
     },
 });
+const mapStateToProps = ({  MenageLogin }) => {
+    const { token } = MenageLogin;
+        return { token };
+  }
+export default connect(mapStateToProps)(HomeScreenVisitor);

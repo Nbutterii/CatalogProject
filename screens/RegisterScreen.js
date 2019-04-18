@@ -127,7 +127,7 @@ export default class RegisterScreen extends React.Component {
           Actions.account_customer();
         }
         else if (response.ok === false)  {
-          Alert.alert("Please check your password.");
+          Alert.alert("Please check your information.");
         }
     }catch (error){
         console.log(error);

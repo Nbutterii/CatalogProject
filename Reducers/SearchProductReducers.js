@@ -1,5 +1,5 @@
 const INITIAL_STATE = {
-    val: {},
+    search: {},
 };
 
 const SearchProductReducers = ( state = INITIAL_STATE, action ) => {
@@ -7,7 +7,7 @@ const SearchProductReducers = ( state = INITIAL_STATE, action ) => {
         case 'SEARCH_PRODUCT' :
             return {
                 ...state,
-                val: action.payload
+                search: action.payload
             };
         default:
             return state;
