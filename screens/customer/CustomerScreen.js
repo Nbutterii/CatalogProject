@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import { Ionicons } from 'react-native-vector-icons'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Actions } from 'react-native-router-flux';
@@ -51,43 +51,45 @@ class CustomerScreen extends React.Component {
         console.log('ON CustomerScreen', this.props.token)
       return (
             <View style={styles.container}>
+                <ScrollView>
             
-                <TouchableOpacity>
-                    <View header style={{ borderBottomWidth:1, borderBottomColor:'#dee0e2', flexDirection:'row' }}>
-                        <Text style={{ flex:1, fontSize: 20, marginLeft: 10, marginTop:20, marginBottom: 20}}>Wishlist "Wow"</Text>
-                        <Icon name="ios-arrow-forward" style={{ fontSize: 25, paddingTop: 25, marginRight:15 }}/>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <View header style={{ borderBottomWidth:1, borderBottomColor:'#dee0e2', flexDirection:'row' }}>
-                        <Text style={{ flex:1, fontSize: 20, marginLeft: 10, marginTop:20, marginBottom: 20}}>Wishlist "Happy"</Text>
-                        <Icon name="ios-arrow-forward" style={{ fontSize: 25, paddingTop: 25, marginRight:15 }}/>
-                    </View>
-                </TouchableOpacity>
-                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                    <View>
-                        <Text style={styles.btntextBlackContactTitle} >Contact Us</Text>
-                    </View>
-                    <View>
-                        <View style={{flexDirection: 'row'}}>
-                            <Ionicons name="ios-phone-portrait"  style={styles.ColorIcon}/>
-                            <Text style={styles.btntextBlackContact}>Phone: (+66)84-904-8771</Text>
+                    <TouchableOpacity>
+                        <View header style={{ borderBottomWidth:1, borderBottomColor:'#dee0e2', flexDirection:'row' }}>
+                            <Text style={{ flex:1, fontSize: 20, marginLeft: 10, marginTop:20, marginBottom: 20}}>Wishlist "Wow"</Text>
+                            <Icon name="ios-arrow-forward" style={{ fontSize: 25, paddingTop: 25, marginRight:15 }}/>
                         </View>
-                        <View style={{flexDirection: 'row'}}>
-                            <Ionicons name="ios-mail"  style={styles.ColorIcon}/>
-                            <Text style={styles.btntextBlackContact}>Email: admin@catalog.co.th</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <View header style={{ borderBottomWidth:1, borderBottomColor:'#dee0e2', flexDirection:'row' }}>
+                            <Text style={{ flex:1, fontSize: 20, marginLeft: 10, marginTop:20, marginBottom: 20}}>Wishlist "Happy"</Text>
+                            <Icon name="ios-arrow-forward" style={{ fontSize: 25, paddingTop: 25, marginRight:15 }}/>
+                        </View>
+                    </TouchableOpacity>
+                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                        <View>
+                            <Text style={styles.btntextBlackContactTitle} >Contact Us</Text>
                         </View>
                         <View>
-                            <Text style={styles.btntextBlackContact}>Available Monday to Friday 9am-4pm</Text>
+                            <View style={{flexDirection: 'row'}}>
+                                <Ionicons name="ios-phone-portrait"  style={styles.ColorIcon}/>
+                                <Text style={styles.btntextBlackContact}>Phone: (+66)84-904-8771</Text>
+                            </View>
+                            <View style={{flexDirection: 'row'}}>
+                                <Ionicons name="ios-mail"  style={styles.ColorIcon}/>
+                                <Text style={styles.btntextBlackContact}>Email: admin@catalog.co.th</Text>
+                            </View>
+                            <View>
+                                <Text style={styles.btntextBlackContact}>Available Monday to Friday 9am-4pm</Text>
+                            </View>
                         </View>
                     </View>
-                </View>
 
-                <TouchableOpacity style={{ alignSelf: 'stretch', alignItems: 'center', padding: 10, backgroundColor: '#891c1c', 
-                marginTop: 80, borderRadius: 5, marginLeft:15, marginRight: 15 }} onPress={() => this.Signout()} >
-                    <Text style={{ fontSize: 18, marginTop: 5, color: '#fff', fontWeight: 'bold'}}>Sign out</Text>
-                </TouchableOpacity>
+                    <TouchableOpacity style={{ alignSelf: 'stretch', alignItems: 'center', padding: 10, backgroundColor: '#891c1c', 
+                    marginTop: 80, borderRadius: 5, marginLeft:15, marginRight: 15 }} onPress={() => this.Signout()} >
+                        <Text style={{ fontSize: 18, marginTop: 5, color: '#fff', fontWeight: 'bold'}}>Sign out</Text>
+                    </TouchableOpacity>
 
+                </ScrollView>
             </View>
         );
     }

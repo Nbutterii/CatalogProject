@@ -20,6 +20,7 @@ import CategoryPantsScreenCustomer from './screens/customer/CategoryPantsScreenC
 import CategorySkirtsScreenCustomer from './screens/customer/CategorySkirtsScreenCustomer';
 import ProductScreenCustomer from './screens/customer/ProductScreenCustomer';
 import DetailProductScreenCustomer from './screens/customer/DetailProductScreenCustomer';
+import SearchProductScreenCustomer from './screens/customer/SearchProductScreenCustomer';
 import CustomerScreen from './screens/customer/CustomerScreen';
 
 import HomeScreenOwner from './screens/owner/HomeScreenOwner';
@@ -29,7 +30,9 @@ import CategorySkirtsScreenOwner from './screens/owner/CategorySkirtsScreenOwner
 import ProductScreenOwner from './screens/owner/ProductScreenOwner';
 import DetailProductScreenOwner from './screens/owner/DetailProductScreenOwner';
 import EditProductScreen from './screens/owner/EditProductScreen';
+import SearchProductScreenOwner from './screens/owner/SearchProductScreenOwner';
 import AddProductScreen from './screens/owner/AddProductScreen';
+
 import ChartScreen from './screens/owner/ChartScreen';
 
 export default class App extends React.Component {
@@ -166,6 +169,11 @@ export default class App extends React.Component {
                   component={DetailProductScreenCustomer}
                   title=""
                   />
+                  <Scene
+                  key="SearchProductPageCustomer"
+                  component={SearchProductScreenCustomer}
+                  title=""
+                  />
                   </Scene>
 
                 <Scene key="customer" title="ME" icon={TabbarIcon} iconName="ios-person">
@@ -230,6 +238,11 @@ export default class App extends React.Component {
                 <Scene
                 key="EditProductPage"
                 component={EditProductScreen}
+                title=""
+                />
+                <Scene
+                key="SearchProductPageOwner"
+                component={SearchProductScreenOwner}
                 title=""
                 />
               </Scene>

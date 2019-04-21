@@ -44,13 +44,6 @@ class DetailProductScreenVisitor extends React.Component {
                 </View>
 
                 <Card>
-                    <View header style={{ borderBottomWidth: 1, borderBottomColor:'#dee0e2', flexDirection: 'row' }}>
-                        <Text style={{fontSize: 24, marginLeft: 2, marginBottom: 20, fontWeight: '700'}}>{this.props.val.name}</Text>
-                        <TouchableOpacity onPress={() => Actions.EditProductPage()}>
-                            <Icon name="ios-more" style={{ fontSize: 24, paddingTop: 8, marginLeft: 280}}/>
-                        </TouchableOpacity>
-                    </View>
-                    
                     <View header style={{borderBottomWidth:1,borderBottomColor:'#dee0e2'}}>
                         <Text style={{ fontSize: 18, fontWeight: '500', marginTop: 10 }}>CATEGORY</Text>
                         <Text style={{ fontSize: 16, fontWeight: '200', marginTop: 2}}>{this.props.val.category}</Text>

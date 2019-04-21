@@ -5,11 +5,11 @@ import { Actions } from 'react-native-router-flux';
 import { Card } from "react-native-elements";
 import axios from 'axios';
 import SearchInput, { createFilter } from 'react-native-search-filter';
-import { StoreDetailAction } from '../Action';
+import { StoreDetailAction } from '../../Action';
 import { connect } from "react-redux";
-import { SearchProductAction } from '../Action';
+import { SearchProductAction } from '../../Action';
 
-class SearchProductScreenVisitor extends React.Component {
+class SearchProductScreenOwner extends React.Component {
 
     constructor(props){
         super(props);
@@ -24,7 +24,7 @@ class SearchProductScreenVisitor extends React.Component {
     ViewDetailProduct(val){
         this.props.StoreDetailAction(val)
         console.log(val)
-        Actions.DetailProductPageVisitor();
+        Actions.DetailProductPageOwner();
     }
 
     renderText() {
@@ -83,4 +83,4 @@ const mapStateToProps = ({  SearchProductReducers }) => {
 const mapDispatchToprops = dispatch => ({
 StoreDetailAction: (val) => dispatch(StoreDetailAction(val))
 })
-export default connect(mapStateToProps,mapDispatchToprops)(SearchProductScreenVisitor);
+export default connect(mapStateToProps,mapDispatchToprops)(SearchProductScreenOwner);
