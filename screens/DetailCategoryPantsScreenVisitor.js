@@ -6,7 +6,7 @@ import axios from 'axios';
 import { connect } from "react-redux";
 import { Actions } from 'react-native-router-flux';
 
-class DetailProductScreenOwner extends React.Component {
+class DetailCategoryPantsScreenVisitor extends React.Component {
 
     constructor(props){
         super(props);
@@ -32,6 +32,7 @@ class DetailProductScreenOwner extends React.Component {
     render() {
         return (
             <ScrollView scrollEventThrottle={16}>
+
                 <View style={{ backgroundColor: '#fff' }}>
                     <View  style={{ height: 400, marginBottom: 50 }}> 
                         <View style={{  width: 300, height: 400, marginTop:20, marginLeft:55, backgroundColor: 'white'}}>
@@ -43,11 +44,8 @@ class DetailProductScreenOwner extends React.Component {
                 </View>
 
                 <Card>
-                    <View header style={{ borderBottomWidth: 1, borderBottomColor:'#dee0e2'}}>
-                        <TouchableOpacity onPress={() => Actions.EditProductPage()}>
-                            <Icon name="ios-more" style={{ fontSize: 24, paddingTop: 8, marginLeft: 320 }}/>
-                        </TouchableOpacity>
-                        <Text style={{ fontSize: 24, marginLeft: 2, marginBottom: 20, fontWeight: '700' }}>{this.props.val.name}</Text>
+                    <View header style={{ borderBottomWidth: 1, borderBottomColor:'#dee0e2', flexDirection: 'row' }}>
+                        <Text style={{fontSize: 24, marginLeft: 2, marginBottom: 20, fontWeight: '700'}}>{this.props.val.name}</Text>
                     </View>
                     
                     <View header style={{borderBottomWidth:1,borderBottomColor:'#dee0e2'}}>
@@ -66,7 +64,7 @@ class DetailProductScreenOwner extends React.Component {
                         <View style={{width: 80, height: 80, marginTop:20, backgroundColor: 'white'}}>
                             <Image
                             style={{flex:1, height: null, width: null, resizeMode: 'cover', borderRadius: 5, borderWidth: 1}}
-                                source={require('../../assets/emotionwow_icom.png')} />
+                                source={require('../assets/emotionwow_icom.png')} />
                         </View>
                         <View>
                             <Text style={{ fontSize: 35, fontWeight: '500', marginTop: 35, marginLeft: 5 }}>{ this.props.val.total_Wow }</Text>
@@ -76,7 +74,7 @@ class DetailProductScreenOwner extends React.Component {
                         <View style={{width: 80, height: 80, marginTop:23, marginLeft: 15, backgroundColor: 'white'}}>
                                 <Image
                                 style={{flex:1, height: null, width: null, resizeMode: 'cover', borderRadius: 5, borderWidth: 1}}
-                                    source={require('../../assets/emotionhappy_icom.png')} />
+                                    source={require('../assets/emotionhappy_icom.png')} />
                         </View>
                         <View>
                             <Text style={{ fontSize: 35, fontWeight: '500', marginTop: 35, marginLeft: 5 }}>{ this.props.val.total_Happy }</Text>
@@ -86,13 +84,14 @@ class DetailProductScreenOwner extends React.Component {
                         <View style={{width: 80, height: 80, marginTop:20, marginLeft: 15, backgroundColor: 'white'}}>
                                 <Image
                                 style={{flex:1, height: null, width: null, resizeMode: 'cover', borderRadius: 5, borderWidth: 1}}
-                                source={require('../../assets/emotionbad_icom.png')} />
+                                source={require('../assets/emotionbad_icom.png')} />
                         </View>
                         <View>
                             <Text style={{ fontSize: 35, fontWeight: '500', marginTop: 35, marginLeft: 5 }}>{ this.props.val.total_Dislike }</Text>
                         </View>
                     </View>
                 </Card>
+    
             </ScrollView>
         );
     }
@@ -111,4 +110,4 @@ const mapStateToProps = ({ MenageReducers }) => {
     const { val } = MenageReducers;
     return { val };
 }
-export default connect(mapStateToProps)(DetailProductScreenOwner);
+export default connect(mapStateToProps)(DetailCategoryPantsScreenVisitor);

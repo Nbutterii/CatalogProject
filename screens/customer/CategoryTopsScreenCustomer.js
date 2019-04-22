@@ -38,7 +38,7 @@ class CategoryTopsScreenCustomer extends React.Component {
     ViewDetailProduct(val){
         this.props.StoreDetailAction(val)
         console.log(val)
-        Actions.DetailProductPageCustomer();
+        Actions.DetailCategoryTopsPageCustomer();
     }
 
     renderText() {

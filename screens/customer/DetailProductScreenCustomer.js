@@ -1,11 +1,13 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, Button, Alert  } from "react-native"
+import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, Button, Alert } from "react-native"
 import Icon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 import { connect } from "react-redux";
 import { Actions } from 'react-native-router-flux';
 import { Card } from "react-native-elements";
 import CardRecommend from '../components/Explore/CardRecommend'
+import { GetTokenAction } from '../../Action';
+import { RecommendProductAction } from '../../Action';
 
 class DetailProductScreenCustomer extends React.Component {
 
@@ -14,36 +16,81 @@ class DetailProductScreenCustomer extends React.Component {
         this.state = {
             isLoading: false,
             dataSource: [],
-            clickWow:0,
-            clickHappy:0,
-            clickDislike:0,
+            clickWow:this.props.val.total_Wow,
+            clickHappy:this.props.val.total_Happy,
+            clickDislike:this.props.val.total_Dislike,
             show:true,
             ShowCardList : false
         }
     }
 
+    RecommendProduct() {
+        return fetch(`http://10.66.4.239:8000/shop/product/?category=${this.props.val.category}&color=${this.props.val.color}`, {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'},
+        })
+        .then(response => response.json())
+        .then((responseData) => {
+            console.log('===RecommendProduct===',responseData)
+            this.props.RecommendProductAction(responseData)
+          })
+    }
+
     IncrementItemWow() {
         this.setState({ clickWow: this.state.clickWow + 1 });
-        if(this.state.clickWow > -1)
-        {
+        // if(this.state.clickWow > -1)
+        // {
             console.log("Wow");
             this.setState({ShowCardList : true})
             
-        }
+        // }
+
+        fetch(url ='http://10.66.4.239:8000/emotion/express/', {
+          method: 'POST',
+          body: JSON.stringify({
+              'product_id' : this.props.val.id,
+              'emotion' : 'Wow'
+          }),
+          headers:{
+          'Content-Type' : 'application/json',
+          Authorization : `Token ${this.props.token}`
+          }
+      }).then(res => res.json())
     }
 
     IncrementItemHappy = () => {
-        this.setState({ clickHappy: this.state.clickHappy + 1 });
-        if(this.state.clickHappy > -1)
-        {
+            this.setState({ clickHappy: this.state.clickHappy + 1 });
             console.log("Happy");
             this.setState({ShowCardList : true})
-            
-        }
+        
+    
+        fetch(url ='http://10.66.4.239:8000/emotion/express/', {
+          method: 'POST',
+          body: JSON.stringify({
+              'product_id' : this.props.val.id,
+              'emotion' : 'Happy'
+          }),
+          headers:{
+          'Content-Type' : 'application/json',
+          Authorization : `Token ${this.props.token}`
+          }
+      }).then(res => res.json())
     }
 
     IncrementItemDislike = () => {
         this.setState({ clickDislike: this.state.clickDislike + 1 });
+
+        fetch(url ='http://10.66.4.239:8000/emotion/express/', {
+          method: 'POST',
+          body: JSON.stringify({
+              'product_id' : this.props.val.id,
+              'emotion' : 'Dislike'
+          }),
+          headers:{
+          'Content-Type' : 'application/json',
+          Authorization : `Token ${this.props.token}`
+          }
+      }).then(res => res.json())
     }
 
     OpenCamera() {
@@ -73,8 +120,9 @@ class DetailProductScreenCustomer extends React.Component {
         console.log(err)
         }
     }
-
+    
     render() {
+        console.log('ON DetailProductScreenCustomer', this.props.token)
         return (
             <ScrollView scrollEventThrottle={16}>
                 <View style={{ backgroundColor: '#fff' }}>
@@ -111,7 +159,7 @@ class DetailProductScreenCustomer extends React.Component {
 
                     <View style={{flexDirection: 'row'}}>
                         <View style={ {marginTop:21, backgroundColor: 'white' }}>
-                            <TouchableOpacity onPress={() => this.IncrementItemWow()}>
+                            <TouchableOpacity onPress={() => { this.IncrementItemWow(); this.RecommendProduct()}}>
                                 <Image
                                 style={{flex:1, height: 80, width: 80, resizeMode: 'cover', borderRadius: 5, borderWidth: 1}}
                                     source={require('../../assets/emotionwow_icom.png')} />
@@ -123,7 +171,7 @@ class DetailProductScreenCustomer extends React.Component {
     
 
                         <View style={{ marginLeft: 10, marginTop:25, backgroundColor: 'white' }}>
-                            <TouchableOpacity onPress={() => this.IncrementItemHappy()}>
+                            <TouchableOpacity onPress={() => { this.IncrementItemHappy(); this.RecommendProduct()}}>
                                 <Image
                                 style={{flex:1, height: 80, width: 80, resizeMode: 'cover', borderRadius: 5, borderWidth: 1}}
                                     source={require('../../assets/emotionhappy_icom.png')} />
@@ -145,8 +193,14 @@ class DetailProductScreenCustomer extends React.Component {
                             <Text style={{ fontSize: 35, fontWeight: '500', marginTop: 35, marginLeft: 5 }}>{ this.state.clickDislike }</Text>
                         </View>
                     </View>
-                    { this.state.ShowCardList && <CardRecommend/> }
                 </Card>
+
+                <View style={{ marginTop: 5, marginBottom: 5 }}>
+                            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                                { this.state.ShowCardList && <CardRecommend/> }
+                            </ScrollView>
+                </View>
+
             </ScrollView>
         );
     }
@@ -161,8 +215,12 @@ const styles = StyleSheet.create({
     },
 });
   
-const mapStateToProps = ({ MenageReducers }) => {
+const mapStateToProps = ({ MenageReducers, MenageLogin }) => {
     const { val } = MenageReducers;
-    return { val };
+    const { token } = MenageLogin;
+    return { val, token };
 }
-export default connect(mapStateToProps)(DetailProductScreenCustomer);
+const mapDispatchToprops = dispatch => ({
+    RecommendProductAction: (recommend) => dispatch(RecommendProductAction(recommend)),
+})
+export default connect(mapStateToProps,mapDispatchToprops)(DetailProductScreenCustomer);

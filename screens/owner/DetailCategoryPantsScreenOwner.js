@@ -6,7 +6,7 @@ import axios from 'axios';
 import { connect } from "react-redux";
 import { Actions } from 'react-native-router-flux';
 
-class DetailProductScreenOwner extends React.Component {
+class DetailCategoryPantsScreenOwner extends React.Component {
 
     constructor(props){
         super(props);
@@ -111,4 +111,4 @@ const mapStateToProps = ({ MenageReducers }) => {
     const { val } = MenageReducers;
     return { val };
 }
-export default connect(mapStateToProps)(DetailProductScreenOwner);
+export default connect(mapStateToProps)(DetailCategoryPantsScreenOwner);

@@ -38,7 +38,7 @@ class CategorySkirtsScreenVisitor extends React.Component {
     ViewDetailProduct(val){
         this.props.StoreDetailAction(val)
         console.log(val)
-        Actions.DetailProductPageVisitor();
+        Actions.DetailCategorySkirtsPageVisitor();
     }
 
     renderText() {

@@ -3,9 +3,13 @@ import { Router, Scene } from 'react-native-router-flux';
 import TabbarIcon from './screens/TabbarIcon';
 
 import HomeScreenVisitor from './screens/HomeScreenVisitor';
+import HomeScreenDetailProductVisitor from './screens/HomeScreenDetailProductVisitor';
 import CategoryTopsScreenVisitor from './screens/CategoryTopsScreenVisitor';
+import DetailCategoryTopsScreenVisitor from './screens/DetailCategoryTopsScreenVisitor';
 import CategoryPantsScreenVisitor from './screens/CategoryPantsScreenVisitor';
+import DetailCategoryPantsScreenVisitor from './screens/DetailCategoryPantsScreenVisitor';
 import CategorySkirtsScreenVisitor from './screens/CategorySkirtsScreenVisitor';
+import DetailCategorySkirtsScreenVisitor from './screens/DetailCategorySkirtsScreenVisitor';
 import ProductScreenVisitor from './screens/ProductScreenVisitor';
 import DetailProductScreenVisitor from './screens/DetailProductScreenVisitor';
 import SearchProductScreenVisitor from './screens/SearchProductScreenVisitor';
@@ -15,18 +19,26 @@ import SignInScreen from './screens/SignInScreen';
 import ForgotpasswordScreen from './screens/ForgotpasswordScreen';
 
 import HomeScreenCustomer from './screens/customer/HomeScreenCustomer';
+import HomeScreenDetailProductCustomer from './screens/customer/HomeScreenDetailProductCustomer';
 import CategoryTopsScreenCustomer from './screens/customer/CategoryTopsScreenCustomer';
+import DetailCategoryTopsScreenCustomer from './screens/customer/DetailCategoryTopsScreenCustomer';
 import CategoryPantsScreenCustomer from './screens/customer/CategoryPantsScreenCustomer';
+import DetailCategoryPantsScreenCustomer from './screens/customer/DetailCategoryPantsScreenCustomer';
 import CategorySkirtsScreenCustomer from './screens/customer/CategorySkirtsScreenCustomer';
+import DetailCategorySkirtsScreenCustomer from './screens/customer/DetailCategorySkirtsScreenCustomer';
 import ProductScreenCustomer from './screens/customer/ProductScreenCustomer';
 import DetailProductScreenCustomer from './screens/customer/DetailProductScreenCustomer';
 import SearchProductScreenCustomer from './screens/customer/SearchProductScreenCustomer';
 import CustomerScreen from './screens/customer/CustomerScreen';
 
 import HomeScreenOwner from './screens/owner/HomeScreenOwner';
+import HomeScreenDetailProductOwner from './screens/owner/HomeScreenDetailProductOwner';
 import CategoryTopsScreenOwner from './screens/owner/CategoryTopsScreenOwner';
+import DetailCategoryTopsScreenOwner from './screens/owner/DetailCategoryTopsScreenOwner';
 import CategoryPantsScreenOwner from './screens/owner/CategoryPantsScreenOwner';
+import DetailCategoryPantsScreenOwner from './screens/owner/DetailCategoryPantsScreenOwner';
 import CategorySkirtsScreenOwner from './screens/owner/CategorySkirtsScreenOwner';
+import DetailCategorySkirtsScreenOwner from './screens/owner/DetailCategorySkirtsScreenOwner';
 import ProductScreenOwner from './screens/owner/ProductScreenOwner';
 import DetailProductScreenOwner from './screens/owner/DetailProductScreenOwner';
 import EditProductScreen from './screens/owner/EditProductScreen';
@@ -58,6 +70,11 @@ export default class App extends React.Component {
                 title="CATALOG"
                 />
                 <Scene
+                key="HomePageDetailProductVisitor"
+                component={HomeScreenDetailProductVisitor}
+                title=""
+                />
+                <Scene
                 key="DetailProductPageCustomer"
                 component={DetailProductScreenCustomer}
                 title=""
@@ -68,14 +85,29 @@ export default class App extends React.Component {
                 title="Tops"
                 />
                 <Scene
+                key="DetailCategoryTopsPageVisitor"
+                component={DetailCategoryTopsScreenVisitor}
+                title=""
+                />
+                <Scene
                 key="CategoryPantsScreenVisitorPage"
                 component={CategoryPantsScreenVisitor}
                 title="Pants"
                 />
                 <Scene
+                key="DetailCategoryPantsPageVisitor"
+                component={DetailCategoryPantsScreenVisitor}
+                title=""
+                />
+                <Scene
                 key="CategorySkirtsScreenVisitorPage"
                 component={CategorySkirtsScreenVisitor}
                 title="Skirts"
+                />
+                <Scene
+                key="DetailCategorySkirtsPageVisitor"
+                component={DetailCategorySkirtsScreenVisitor}
+                title=""
                 />
               </Scene>
 
@@ -142,9 +174,19 @@ export default class App extends React.Component {
                   title="CATALOG"
                   />
                   <Scene
+                  key="HomePageDetailProductCustomer"
+                  component={HomeScreenDetailProductCustomer}
+                  title=""
+                  />
+                  <Scene
                   key="CategoryTopsScreenCustomerPage"
                   component={CategoryTopsScreenCustomer}
                   title="Tops"
+                  />
+                  <Scene
+                  key="DetailCategoryTopsPageCustomer"
+                  component={DetailCategoryTopsScreenCustomer}
+                  title=""
                   />
                   <Scene
                   key="CategoryPantsScreenCustomerPage"
@@ -152,9 +194,19 @@ export default class App extends React.Component {
                   title="Pants"
                   />
                   <Scene
+                  key="DetailCategoryPantsPageCustomer"
+                  component={DetailCategoryPantsScreenCustomer}
+                  title=""
+                  />
+                  <Scene
                   key="CategorySkirtsScreenCustomerPage"
                   component={CategorySkirtsScreenCustomer}
                   title="Skirts"
+                  />
+                  <Scene
+                  key="DetailCategorySkirtsPageCustomer"
+                  component={DetailCategorySkirtsScreenCustomer}
+                  title=""
                   />
                 </Scene>
 
@@ -203,9 +255,19 @@ export default class App extends React.Component {
                 title="CATALOG"
                 />
                 <Scene
+                key="HomePageDetailProductOwner"
+                component={HomeScreenDetailProductOwner}
+                title=""
+                />
+                <Scene
                 key="CategoryTopsScreenOwnerPage"
                 component={CategoryTopsScreenOwner}
                 title="Tops"
+                />
+                <Scene
+                key="DetailCategoryTopsPageOwner"
+                component={DetailCategoryTopsScreenOwner}
+                title=""
                 />
                 <Scene
                 key="CategoryPantsScreenOwnerPage"
@@ -213,9 +275,19 @@ export default class App extends React.Component {
                 title="Pants"
                 />
                 <Scene
+                key="DetailCategoryPantsPageOwner"
+                component={DetailCategoryPantsScreenOwner}
+                title=""
+                />
+                <Scene
                 key="CategorySkirtsScreenOwnerPage"
                 component={CategorySkirtsScreenOwner}
                 title="Skirts"
+                />
+                <Scene
+                key="DetailCategorySkirtsPageOwner"
+                component={DetailCategorySkirtsScreenOwner}
+                title=""
                 />
               </Scene>
 

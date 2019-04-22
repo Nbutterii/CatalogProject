@@ -102,7 +102,7 @@ class EditProductScreen extends React.Component {
                                 Authorization : `Token ${this.props.token}`
                             }
                         })
-                        .then(response => response.json());
+                        // .then(response => response.json());
                     }
                 },
             ],

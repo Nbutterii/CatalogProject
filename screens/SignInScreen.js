@@ -99,9 +99,9 @@ class SignInScreen extends React.Component {
                   </View>
               </View>
 
-              <View>
+              {/* <View>
                 <Text  style={{marginLeft: 230}} onPress={() => Actions.ForgotpasswordPage()} >Forgot Password?</Text>
-              </View>
+              </View> */}
 
               <TouchableOpacity style={styles.button} onPress={() => this.login()}>
                 <Text style={styles.btntext}>Sign In</Text>

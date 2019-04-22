@@ -38,7 +38,7 @@ class CategoryTopsScreenOwner extends React.Component {
     ViewDetailProduct(val){
         this.props.StoreDetailAction(val)
         console.log(val)
-        Actions.DetailProductPageOwner();
+        Actions.DetailCategoryTopsPageOwner();
     }
 
     renderText() {

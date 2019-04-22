@@ -2,12 +2,64 @@ import React from "react";
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from "react-native";
 import Swiper from 'react-native-swiper'
 import Category from './components/Explore/Category'
-import RecommendedCardItem from '../components/RecommendedCardItem'
+import { Card } from "react-native-elements";
 import { Actions } from 'react-native-router-flux';
 import { GetTokenAction } from '../Action';
 import { connect } from 'react-redux'
+import axios from 'axios';
+import { StoreDetailAction } from '../Action';
 
 class HomeScreenVisitor extends React.Component {
+
+    constructor(props){
+        super(props);
+        this.state = {
+            isLoading: false,
+            dataSource: [],
+        }
+    }
+
+    componentDidMount() {
+        try{
+                axios.get(`http://10.66.4.239:8000/shop/product/top5/`)
+            .then(res => {
+                console.log('pass',res.data)
+                this.setState({ dataSource : res.data});
+            })
+        }
+        catch(err){
+        console.log(err)
+        }
+    }
+
+    
+    ViewDetailProduct(val){
+        this.props.StoreDetailAction(val)
+        console.log(val)
+        Actions.HomePageDetailProductVisitor();
+    }
+
+    renderText() {
+        if (this.state.dataSource.length > 0) {
+            return this.state.dataSource.map((val, index) => 
+                <Card key={index}>
+                    <TouchableOpacity  onPress={() => this.ViewDetailProduct(val)}>
+                        <View style={{ flex: 1, marginTop: 10 }}>
+                            <View style={{flexDirection: 'row'}}>
+                                <Image style={{height: 120, width: 90, marginLeft:10}} source={{uri : val.image1}}/>
+                                <View style={{flex:1,alignItems:'flex-start', height: 90, paddingHorizontal: 20,}}>
+                                    <Text style={{ fontSize: 18, fontWeight: 'bold'}}>{val.name}</Text>
+                                    <Text style={{ fontSize: 14, color:'grey' }}>{val.category}</Text>
+                                    <Text style={{ fontSize: 14, fontWeight: 'bold'}}>{val.price}</Text>
+                                </View>
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+                </Card>
+            );
+        }
+    }
+
     render() {
         console.log('ON HomescreenVisitor', this.props.token)
         return (
@@ -55,82 +107,13 @@ class HomeScreenVisitor extends React.Component {
                             </ScrollView>
                         </View>
                     </View>
-    
-                    <ScrollView>
-                        <Text style={{ fontSize: 24, fontWeight: '700', paddingHorizontal: 20 }} onPress={() => Actions.DetailProductPageCustomer()}>
-                            TOP 5
-                        </Text>
-    
-                        <View style={{ flexDirection: 'row'}} >
-                            <Text style={{ fontSize: 30, paddingHorizontal: 20 , marginTop: 25 , marginLeft: 13}}>
-                                1
-                            </Text> 
-                            <RecommendedCardItem
-                                itemName="Tie-hem top"
-                                itemCreator="TOPS"
-                                itemPrice="$21.38"
-                                savings="7"
-                                imageUri={require("../assets/recommended_1.jpg") }
-                                rating={5}
-                            />
-                        </View>
-    
-                        <View style={{ flexDirection: 'row'}} >
-                            <Text style={{ fontSize: 30, paddingHorizontal: 20 , marginTop: 25 , marginLeft: 13}}>
-                                2
-                            </Text> 
-                            <RecommendedCardItem 
-                                itemName="Long-sleeved jersey top"
-                                itemCreator="T-SHIRTS&TANKTOPS"
-                                itemPrice="$30.55"
-                                savings="15"
-                                imageUri={require("../assets/recommended_3.jpg")}
-                                rating={5}
-                            />
-                        </View>
-    
-                        <View style={{ flexDirection: 'row'}} >
-                            <Text style={{ fontSize: 30, paddingHorizontal: 20 , marginTop: 25 , marginLeft: 13}}>
-                                3
-                            </Text> 
-                            <RecommendedCardItem 
-                                itemName="Super Skinny Biker Jeans"
-                                itemCreator="JEANS"
-                                itemPrice="$42.79"
-                                savings="12"
-                                imageUri={require("../assets/recommended_2.jpg")}
-                                rating={4}
-                            />
-                        </View>
-    
-                        <View style={{ flexDirection: 'row'}} >
-                            <Text style={{ fontSize: 30, paddingHorizontal: 20 , marginTop: 25 , marginLeft: 13}}>
-                                4
-                            </Text> 
-                            <RecommendedCardItem 
-                                itemName="Fine-knit cardigan"
-                                itemCreator="CARDIGANS&JAMPERS"
-                                itemPrice="$15.26"
-                                savings="6"
-                                imageUri={require("../assets/recommended_5.jpg")}
-                                rating={4}
-                            />
-                        </View>
-    
-                        <View style={{ flexDirection: 'row'}} >
-                            <Text style={{ fontSize: 30, paddingHorizontal: 20 , marginTop: 25 , marginLeft: 13}}>
-                                5
-                            </Text> 
-                            <RecommendedCardItem 
-                                itemName="V-neck dress"
-                                itemCreator="DRESSES"
-                                itemPrice="$21.38"
-                                savings="4"
-                                imageUri={require("../assets/recommended_4.jpg")}
-                                rating={3}
-                            />
-                        </View>
-                    </ScrollView>
+
+                    <Text style={{ fontSize: 24, fontWeight: '700', paddingHorizontal: 20, color:'#891C1C' }}>
+                        TOP 5
+                    </Text>
+                    <View style={{ marginBottom: 10 }}>
+                        { this.renderText() }
+                    </View>
 
                 </ScrollView>
             </View>    
@@ -156,4 +139,7 @@ const mapStateToProps = ({  MenageLogin }) => {
     const { token } = MenageLogin;
         return { token };
   }
-export default connect(mapStateToProps)(HomeScreenVisitor);
+const mapDispatchToprops = dispatch => ({
+StoreDetailAction: (val) => dispatch(StoreDetailAction(val))
+})
+export default connect(mapStateToProps,mapDispatchToprops)(HomeScreenVisitor);

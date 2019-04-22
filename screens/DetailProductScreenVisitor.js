@@ -44,6 +44,10 @@ class DetailProductScreenVisitor extends React.Component {
                 </View>
 
                 <Card>
+                    <View header style={{ borderBottomWidth: 1, borderBottomColor:'#dee0e2', flexDirection: 'row' }}>
+                        <Text style={{fontSize: 24, marginLeft: 2, marginBottom: 20, fontWeight: '700'}}>{this.props.val.name}</Text>
+                    </View>
+
                     <View header style={{borderBottomWidth:1,borderBottomColor:'#dee0e2'}}>
                         <Text style={{ fontSize: 18, fontWeight: '500', marginTop: 10 }}>CATEGORY</Text>
                         <Text style={{ fontSize: 16, fontWeight: '200', marginTop: 2}}>{this.props.val.category}</Text>
@@ -63,7 +67,7 @@ class DetailProductScreenVisitor extends React.Component {
                                 source={require('../assets/emotionwow_icom.png')} />
                         </View>
                         <View>
-                            <Text style={{ fontSize: 35, fontWeight: '500', marginTop: 35, marginLeft: 5 }}>1</Text>
+                            <Text style={{ fontSize: 35, fontWeight: '500', marginTop: 35, marginLeft: 5 }}>{ this.props.val.total_Wow }</Text>
                         </View>
     
     
@@ -73,7 +77,7 @@ class DetailProductScreenVisitor extends React.Component {
                                     source={require('../assets/emotionhappy_icom.png')} />
                         </View>
                         <View>
-                            <Text style={{ fontSize: 35, fontWeight: '500', marginTop: 35, marginLeft: 5 }}>2</Text>
+                            <Text style={{ fontSize: 35, fontWeight: '500', marginTop: 35, marginLeft: 5 }}>{ this.props.val.total_Happy }</Text>
                         </View>
     
     
@@ -83,7 +87,7 @@ class DetailProductScreenVisitor extends React.Component {
                                 source={require('../assets/emotionbad_icom.png')} />
                         </View>
                         <View>
-                            <Text style={{ fontSize: 35, fontWeight: '500', marginTop: 35, marginLeft: 5 }}>3</Text>
+                            <Text style={{ fontSize: 35, fontWeight: '500', marginTop: 35, marginLeft: 5 }}>{ this.props.val.total_Dislike }</Text>
                         </View>
                     </View>
                 </Card>
