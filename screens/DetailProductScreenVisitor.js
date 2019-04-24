@@ -35,7 +35,7 @@ class DetailProductScreenVisitor extends React.Component {
 
                 <View style={{ backgroundColor: '#fff' }}>
                     <View  style={{ height: 400, marginBottom: 50 }}> 
-                        <View style={{  width: 300, height: 400, marginTop:20, marginLeft:55, backgroundColor: 'white'}}>
+                        <View style={{  width: 300, height: 400, marginTop:20, marginLeft: 32, backgroundColor: 'white'}}>
                             <Image
                             style={{flex:1, height: null, width: null, resizeMode: 'cover', borderRadius: 3, borderWidth: 1, borderColor: '#dddddd'}}
                             source={{uri : this.props.val.image1}} />
@@ -47,7 +47,7 @@ class DetailProductScreenVisitor extends React.Component {
                     <View header style={{ borderBottomWidth: 1, borderBottomColor:'#dee0e2', flexDirection: 'row' }}>
                         <Text style={{fontSize: 24, marginLeft: 2, marginBottom: 20, fontWeight: '700'}}>{this.props.val.name}</Text>
                     </View>
-
+                    
                     <View header style={{borderBottomWidth:1,borderBottomColor:'#dee0e2'}}>
                         <Text style={{ fontSize: 18, fontWeight: '500', marginTop: 10 }}>CATEGORY</Text>
                         <Text style={{ fontSize: 16, fontWeight: '200', marginTop: 2}}>{this.props.val.category}</Text>
@@ -61,33 +61,33 @@ class DetailProductScreenVisitor extends React.Component {
 
 
                     <View style={{flexDirection: 'row'}}>
-                        <View style={{width: 80, height: 80, marginTop:20, backgroundColor: 'white'}}>
+                        <View style={{width: 80, height: 80, marginTop:20, backgroundColor: 'white', marginLeft: -3}}>
                             <Image
                             style={{flex:1, height: null, width: null, resizeMode: 'cover', borderRadius: 5, borderWidth: 1}}
                                 source={require('../assets/emotionwow_icom.png')} />
                         </View>
                         <View>
-                            <Text style={{ fontSize: 35, fontWeight: '500', marginTop: 35, marginLeft: 5 }}>{ this.props.val.total_Wow }</Text>
+                            <Text style={{ fontSize: 35, fontWeight: '500', marginTop: 35 }}>{ this.props.val.total_Wow }</Text>
                         </View>
     
     
-                        <View style={{width: 80, height: 80, marginTop:23, marginLeft: 15, backgroundColor: 'white'}}>
+                        <View style={{width: 80, height: 80, marginTop:23, backgroundColor: 'white'}}>
                                 <Image
                                 style={{flex:1, height: null, width: null, resizeMode: 'cover', borderRadius: 5, borderWidth: 1}}
                                     source={require('../assets/emotionhappy_icom.png')} />
                         </View>
                         <View>
-                            <Text style={{ fontSize: 35, fontWeight: '500', marginTop: 35, marginLeft: 5 }}>{ this.props.val.total_Happy }</Text>
+                            <Text style={{ fontSize: 35, fontWeight: '500', marginTop: 35 }}>{ this.props.val.total_Happy }</Text>
                         </View>
     
     
-                        <View style={{width: 80, height: 80, marginTop:20, marginLeft: 15, backgroundColor: 'white'}}>
+                        <View style={{width: 80, height: 80, marginTop:20, backgroundColor: 'white'}}>
                                 <Image
                                 style={{flex:1, height: null, width: null, resizeMode: 'cover', borderRadius: 5, borderWidth: 1}}
                                 source={require('../assets/emotionbad_icom.png')} />
                         </View>
                         <View>
-                            <Text style={{ fontSize: 35, fontWeight: '500', marginTop: 35, marginLeft: 5 }}>{ this.props.val.total_Dislike }</Text>
+                            <Text style={{ fontSize: 35, fontWeight: '500', marginTop: 35 }}>{ this.props.val.total_Dislike }</Text>
                         </View>
                     </View>
                 </Card>

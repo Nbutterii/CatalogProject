@@ -34,7 +34,7 @@ class SearchProductScreenCustomer extends React.Component {
                     <TouchableOpacity  onPress={() => this.ViewDetailProduct(val)}>
                         <View style={{ flex: 1, marginTop: 10 }}>
                             <View style={{flexDirection: 'row'}}>
-                                <Image style={{height: 120, width: 90, marginLeft:10}} source={{uri : val.image1}}/>
+                                <Image style={{height: 120, width: 90, marginLeft:10, borderRadius: 3}} source={{uri : val.image1}}/>
                                 <View style={{flex:1,alignItems:'flex-start', height: 90, paddingHorizontal: 20,}}>
                                     <Text style={{ fontSize: 18, fontWeight: 'bold'}}>{val.name}</Text>
                                     <Text style={{ fontSize: 14, color:'grey' }}>{val.category}</Text>

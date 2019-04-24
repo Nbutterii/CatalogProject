@@ -1,10 +1,13 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from "react-native"
+import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, Button, Alert } from "react-native"
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Card } from "react-native-elements";
 import axios from 'axios';
 import { connect } from "react-redux";
 import { Actions } from 'react-native-router-flux';
+import { Card } from "react-native-elements";
+import CardRecommend from '../components/Explore/CardRecommend'
+import { GetTokenAction } from '../../Action';
+import { RecommendProductAction } from '../../Action';
 
 class DetailCategoryPantsScreenCustomer extends React.Component {
 
@@ -13,7 +16,96 @@ class DetailCategoryPantsScreenCustomer extends React.Component {
         this.state = {
             isLoading: false,
             dataSource: [],
+            clickWow:this.props.val.total_Wow,
+            clickHappy:this.props.val.total_Happy,
+            clickDislike:this.props.val.total_Dislike,
+            show:true,
+            ShowCardList : false
         }
+    }
+
+    RecommendProduct() {
+        return fetch(`http://10.66.4.239:8000/shop/product/?category=${this.props.val.category}&color=${this.props.val.color}`, {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'},
+        })
+        .then(response => response.json())
+        .then((responseData) => {
+            console.log('===RecommendProduct===',responseData)
+            this.props.RecommendProductAction(responseData)
+          })
+    }
+
+    IncrementItemWow() {
+        // this.setState({ clickWow: this.state.clickWow + 1 });
+        // if(this.state.clickWow > -1)
+        // {
+            console.log("Wow");
+            this.setState({ShowCardList : true})
+            
+        // }
+
+        fetch(url ='http://10.66.4.239:8000/emotion/express/', {
+          method: 'POST',
+          body: JSON.stringify({
+              'product_id' : this.props.val.id,
+              'emotion' : 'Wow'
+          }),
+          headers:{
+          'Content-Type' : 'application/json',
+          Authorization : `Token ${this.props.token}`
+          }
+      }).then(res => res.json())
+    }
+
+    IncrementItemHappy = () => {
+            // this.setState({ clickHappy: this.state.clickHappy + 1 });
+            console.log("Happy");
+            this.setState({ShowCardList : true})
+        
+    
+        fetch(url ='http://10.66.4.239:8000/emotion/express/', {
+          method: 'POST',
+          body: JSON.stringify({
+              'product_id' : this.props.val.id,
+              'emotion' : 'Happy'
+          }),
+          headers:{
+          'Content-Type' : 'application/json',
+          Authorization : `Token ${this.props.token}`
+          }
+      }).then(res => res.json())
+    }
+
+    IncrementItemDislike = () => {
+        // this.setState({ clickDislike: this.state.clickDislike + 1 });
+
+        fetch(url ='http://10.66.4.239:8000/emotion/express/', {
+          method: 'POST',
+          body: JSON.stringify({
+              'product_id' : this.props.val.id,
+              'emotion' : 'Dislike'
+          }),
+          headers:{
+          'Content-Type' : 'application/json',
+          Authorization : `Token ${this.props.token}`
+          }
+      }).then(res => res.json())
+    }
+
+    OpenCamera() {
+        Alert.alert(
+            'Alert',
+            'Open camera?',
+            [
+                { text: 'No', onPress: () => console.log('Cancel open'), style: 'cancel'},
+                {
+                    text: 'Yes', onPress: () => {
+                        console.log('Open camera')
+                    }
+                },
+            ],
+        )
     }
 
     componentDidMount() {
@@ -28,14 +120,13 @@ class DetailCategoryPantsScreenCustomer extends React.Component {
         console.log(err)
         }
     }
-
+    
     render() {
         return (
             <ScrollView scrollEventThrottle={16}>
-
                 <View style={{ backgroundColor: '#fff' }}>
                     <View  style={{ height: 400, marginBottom: 50 }}> 
-                        <View style={{  width: 300, height: 400, marginTop:20, marginLeft:55, backgroundColor: 'white'}}>
+                        <View style={{  width: 300, height: 400, marginTop:20, marginLeft:32, backgroundColor: 'white'}}>
                             <Image
                             style={{flex:1, height: null, width: null, resizeMode: 'cover', borderRadius: 3, borderWidth: 1, borderColor: '#dddddd'}}
                             source={{uri : this.props.val.image1}} />
@@ -59,39 +150,56 @@ class DetailCategoryPantsScreenCustomer extends React.Component {
                         <Text style={{ fontSize: 16, fontWeight: '200', marginTop: 2 , marginBottom: 10 }}>{this.props.val.description}</Text>
                     </View>
 
+                    <TouchableOpacity style={{ flex: 1,backgroundColor: '#891c1c', borderRadius: 10, marginTop: 10, alignItems: 'center', 
+                            padding: 10, marginLeft:230, marginRight:2}}  onPress={() => this.OpenCamera()}>
+                                <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 10}}>+Review</Text>
+                    </TouchableOpacity>
+
 
                     <View style={{flexDirection: 'row'}}>
-                        <View style={{width: 80, height: 80, marginTop:20, backgroundColor: 'white'}}>
-                            <Image
-                            style={{flex:1, height: null, width: null, resizeMode: 'cover', borderRadius: 5, borderWidth: 1}}
-                                source={require('../../assets/emotionwow_icom.png')} />
+                        <View style={ {marginTop:21, backgroundColor: 'white', marginLeft: -3 }}>
+                            <TouchableOpacity onPress={() => { this.IncrementItemWow(); this.RecommendProduct()}}>
+                                <Image
+                                style={{flex:1, height: 80, width: 80, resizeMode: 'cover', borderRadius: 5, borderWidth: 1}}
+                                    source={require('../../assets/emotionwow_icom.png')} />
+                            </TouchableOpacity>
                         </View>
                         <View>
-                            <Text style={{ fontSize: 35, fontWeight: '500', marginTop: 35, marginLeft: 5 }}>{ this.props.val.total_Wow }</Text>
+                            <Text style={{ fontSize: 35, fontWeight: '500', marginTop: 35 }}>{ this.state.clickWow }</Text>
                         </View>
     
-    
-                        <View style={{width: 80, height: 80, marginTop:23, marginLeft: 15, backgroundColor: 'white'}}>
+
+                        <View style={{ marginTop:25, backgroundColor: 'white' }}>
+                            <TouchableOpacity onPress={() => { this.IncrementItemHappy(); this.RecommendProduct()}}>
                                 <Image
-                                style={{flex:1, height: null, width: null, resizeMode: 'cover', borderRadius: 5, borderWidth: 1}}
+                                style={{flex:1, height: 80, width: 80, resizeMode: 'cover', borderRadius: 5, borderWidth: 1}}
                                     source={require('../../assets/emotionhappy_icom.png')} />
+                            </TouchableOpacity>
                         </View>
                         <View>
-                            <Text style={{ fontSize: 35, fontWeight: '500', marginTop: 35, marginLeft: 5 }}>{ this.props.val.total_Happy }</Text>
+                            <Text style={{ fontSize: 35, fontWeight: '500', marginTop: 35 }}>{ this.state.clickHappy }</Text>
                         </View>
     
     
-                        <View style={{width: 80, height: 80, marginTop:20, marginLeft: 15, backgroundColor: 'white'}}>
+                        <View style={{ marginTop:22, backgroundColor: 'white' }}>
+                            <TouchableOpacity onPress={() => this.IncrementItemDislike()}>
                                 <Image
-                                style={{flex:1, height: null, width: null, resizeMode: 'cover', borderRadius: 5, borderWidth: 1}}
+                                style={{flex:1, height: 80, width: 80, resizeMode: 'cover', borderRadius: 5, borderWidth: 1}}
                                 source={require('../../assets/emotionbad_icom.png')} />
+                            </TouchableOpacity>
                         </View>
                         <View>
-                            <Text style={{ fontSize: 35, fontWeight: '500', marginTop: 35, marginLeft: 5 }}>{ this.props.val.total_Dislike }</Text>
+                            <Text style={{ fontSize: 35, fontWeight: '500', marginTop: 35 }}>{ this.state.clickDislike }</Text>
                         </View>
                     </View>
                 </Card>
-    
+
+                <View style={{ marginTop: 5, marginBottom: 5 }}>
+                            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                                { this.state.ShowCardList && <CardRecommend/> }
+                            </ScrollView>
+                </View>
+
             </ScrollView>
         );
     }
@@ -106,8 +214,12 @@ const styles = StyleSheet.create({
     },
 });
   
-const mapStateToProps = ({ MenageReducers }) => {
+const mapStateToProps = ({ MenageReducers, MenageLogin }) => {
     const { val } = MenageReducers;
-    return { val };
+    const { token } = MenageLogin;
+    return { val, token };
 }
-export default connect(mapStateToProps)(DetailCategoryPantsScreenCustomer);
+const mapDispatchToprops = dispatch => ({
+    RecommendProductAction: (recommend) => dispatch(RecommendProductAction(recommend)),
+})
+export default connect(mapStateToProps,mapDispatchToprops)(DetailCategoryPantsScreenCustomer);

@@ -5,29 +5,26 @@ import { Card } from "react-native-elements";
 import { StoreDetailAction } from '../../Action';
 import { connect } from "react-redux";
 import { Actions } from 'react-native-router-flux';
+import { GetTokenAction } from '../../Action';
 
-class CategoryPantsScreenCustomer extends React.Component {
+class WishlistHappy extends React.Component {
 
     constructor(props){
         super(props);
         this.state = {
             isLoading: false,
             dataSource: [],
-            dataSourceCount: []
         }
     }   
 
     componentDidMount() {
         try{
-            axios.get(`http://10.66.4.239:8000/shop/product/?category=Pant`)
+            axios({ method: 'get', 
+            url: 'http://10.66.4.239:8000/shop/product/myhappy/', 
+            headers: { Authorization: `Token ${this.props.token}` } })
         .then(res => {
             console.log('pass',res.data)
             this.setState({ dataSource : res.data});
-        }),
-        axios.get(`http://10.66.4.239:8000/shop/product/count/?category=Pant`)
-        .then(res => {
-            console.log('pass',res.data)
-            this.setState({ dataSourceCount : res.data});
         })
         }
         catch(err){
@@ -38,7 +35,7 @@ class CategoryPantsScreenCustomer extends React.Component {
     ViewDetailProduct(val){
         this.props.StoreDetailAction(val)
         console.log(val)
-        Actions.DetailCategoryPantsPageCustomer();
+        Actions.DetailProductWishlistHappyPage();
     }
 
     renderText() {
@@ -63,15 +60,11 @@ class CategoryPantsScreenCustomer extends React.Component {
     }
 
     render() {
+        console.log('ON WishlistHappy', this.props.token)
         return (
             <View style={styles.container}>
                 <ScrollView>
                     <View style={{ marginLeft: 5, marginRight: 5, marginTop: 15 }}>
-                        <View header style={{borderBottomWidth:1,borderBottomColor:'#dee0e2'}}>
-                            <Text style={{fontSize: 20, marginLeft: 10, marginBottom: 20, marginTop: 10, fontWeight: 'bold'}}>
-                                {this.state.dataSourceCount} ITEMS
-                            </Text>
-                        </View>
                         <View>
                             { this.renderText() }
                         </View> 
@@ -89,7 +82,11 @@ const styles = StyleSheet.create({
     }
 });
 
+const mapStateToProps = ({  MenageLogin }) => {
+    const { token } = MenageLogin;
+        return { token };
+}
 const mapDispatchToprops = dispatch => ({
     StoreDetailAction: (val) => dispatch(StoreDetailAction(val))
 })
-export default  connect(null , mapDispatchToprops)(CategoryPantsScreenCustomer);
+export default  connect(mapStateToProps , mapDispatchToprops)(WishlistHappy);

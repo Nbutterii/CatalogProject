@@ -29,8 +29,8 @@ class SignInScreen extends React.Component {
     constructor(props){
       super(props);
       this.state = {
-        username: 'NoeyN',
-        password: 'Nn12345678',
+        username: 'NoeyO',
+        password: 'No123456',
       }
     }
 
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
   button: {
     alignSelf: 'stretch',
     alignItems: 'center',
-    padding: 15,
+    padding: 8,
     backgroundColor: '#891c1c',
     marginTop: 30,
     borderRadius: 5
@@ -175,7 +175,6 @@ const styles = StyleSheet.create({
   },
   btntext: {
     fontSize: 18,
-    marginTop: 5,
     color: '#fff',
     fontWeight: 'bold'
   },

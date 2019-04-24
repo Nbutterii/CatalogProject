@@ -9,7 +9,7 @@ import CardRecommend from '../components/Explore/CardRecommend'
 import { GetTokenAction } from '../../Action';
 import { RecommendProductAction } from '../../Action';
 
-class DetailCategorySkirtsScreenCustomer extends React.Component {
+class DetailProductWishlistWow extends React.Component {
 
     constructor(props){
         super(props);
@@ -222,4 +222,4 @@ const mapStateToProps = ({ MenageReducers, MenageLogin }) => {
 const mapDispatchToprops = dispatch => ({
     RecommendProductAction: (recommend) => dispatch(RecommendProductAction(recommend)),
 })
-export default connect(mapStateToProps,mapDispatchToprops)(DetailCategorySkirtsScreenCustomer);
+export default connect(mapStateToProps,mapDispatchToprops)(DetailProductWishlistWow);

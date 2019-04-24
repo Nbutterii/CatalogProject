@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, AsyncStorage, Alert } from 'react-native'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, AsyncStorage, Alert, ScrollView } from 'react-native'
 import { Ionicons } from 'react-native-vector-icons'
 import { Actions } from 'react-native-router-flux'
 
@@ -136,53 +136,55 @@ export default class RegisterScreen extends React.Component {
 
   render() {
     return (
-        <View style={styles.container}>
-        
-          <View style={styles.regform}>
-            <Text style={styles.header}>Register</Text>
+        <ScrollView>
+          <View style={styles.container}>
+          
+            <View style={styles.regform}>
+              <Text style={styles.header}>Register</Text>
 
-            <View style={{flexDirection: 'row'}}>
-              <Ionicons name="ios-contact"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
-                <View style={{ flex: 1, marginLeft: 8}}>
-                  <TextInput style={[styles.textinput, !this.state.usernameValdate? styles.error:null]}
-                  onChangeText={ (text) => this.validate(text,'username')} placeholder="Username"/>
-                </View>
+              <View style={{flexDirection: 'row'}}>
+                <Ionicons name="ios-contact"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
+                  <View style={{ flex: 1, marginLeft: 8}}>
+                    <TextInput style={[styles.textinput, !this.state.usernameValdate? styles.error:null]}
+                    onChangeText={ (text) => this.validate(text,'username')} placeholder="Username"/>
+                  </View>
+              </View>
+
+              <View style={{flexDirection: 'row'}}>
+                <Ionicons name="ios-mail"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
+                  <View style={{ flex: 1, marginLeft: 8}}>
+                    <TextInput style={[styles.textinput, !this.state.emailValdate? styles.error:null]} placeholder="Email address" 
+                    onChangeText={ (text) => this.validate(text,'email')} keyboardType={'email-address'} />
+                  </View>
+              </View>
+
+              <View style={{flexDirection: 'row'}}>
+                <Ionicons name="ios-lock"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
+                  <View style={{ flex: 1, marginLeft: 8}}>
+                    <TextInput style={[styles.textinput, !this.state.password1Valdate? styles.error:null]} placeholder="Password (Least 8 characters)" 
+                    secureTextEntry={true} underlineColorAndroid={'transparent'} onChangeText={ (text) => this.validate(text,'password1')}/>
+                  </View>
+              </View>
+
+              <View style={{flexDirection: 'row'}}>
+                <Ionicons name="ios-lock"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
+                  <View style={{ flex: 1, marginLeft: 8}}>
+                    <TextInput style={[styles.textinput, !this.state.password2Valdate? styles.error:null]} placeholder="Password (Least 8 characters)" 
+                    secureTextEntry={true} underlineColorAndroid={'transparent'} onChangeText={ (text) => this.validate(text,'password2')}/>
+                  </View>
+              </View>
+
+              <TouchableOpacity style={styles.buttonRed} onPress={() => this.Register()} >
+                <Text style={styles.btntextWhite}>Create Account</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.buttonGray} onPress={() => Actions.SignInPage()}>
+                <Text style={styles.btntextGray}>Already have an account?</Text>
+              </TouchableOpacity>
             </View>
 
-            <View style={{flexDirection: 'row'}}>
-              <Ionicons name="ios-mail"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
-                <View style={{ flex: 1, marginLeft: 8}}>
-                  <TextInput style={[styles.textinput, !this.state.emailValdate? styles.error:null]} placeholder="Email address" 
-                  onChangeText={ (text) => this.validate(text,'email')} keyboardType={'email-address'} />
-                </View>
-            </View>
-
-            <View style={{flexDirection: 'row'}}>
-              <Ionicons name="ios-lock"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
-                <View style={{ flex: 1, marginLeft: 8}}>
-                  <TextInput style={[styles.textinput, !this.state.password1Valdate? styles.error:null]} placeholder="Password (Least 8 characters)" 
-                  secureTextEntry={true} underlineColorAndroid={'transparent'} onChangeText={ (text) => this.validate(text,'password1')}/>
-                </View>
-            </View>
-
-            <View style={{flexDirection: 'row'}}>
-              <Ionicons name="ios-lock"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
-                <View style={{ flex: 1, marginLeft: 8}}>
-                  <TextInput style={[styles.textinput, !this.state.password2Valdate? styles.error:null]} placeholder="Password (Least 8 characters)" 
-                  secureTextEntry={true} underlineColorAndroid={'transparent'} onChangeText={ (text) => this.validate(text,'password2')}/>
-                </View>
-            </View>
-
-            <TouchableOpacity style={styles.buttonRed} onPress={() => this.Register()} >
-              <Text style={styles.btntextWhite}>Create Account</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.buttonGray} onPress={() => Actions.SignInPage()}>
-              <Text style={styles.btntextGray}>Already have an account?</Text>
-            </TouchableOpacity>
           </View>
-
-        </View>
+        </ScrollView>
     );
   }
 }
@@ -204,7 +206,8 @@ const styles = StyleSheet.create({
     fontSize: 35,
     color: '#891c1c',
     paddingBottom: 10,
-    marginBottom: 40,
+    marginBottom: 20,
+    marginTop: 10
 
   },
   textinput: {
@@ -218,7 +221,7 @@ const styles = StyleSheet.create({
   buttonRed: {
     alignSelf: 'stretch',
     alignItems: 'center',
-    padding: 20,
+    padding: 10,
     backgroundColor: '#891c1c',
     marginTop: 30,
     borderRadius: 5
@@ -226,20 +229,19 @@ const styles = StyleSheet.create({
   buttonGray: {
     alignSelf: 'stretch',
     alignItems: 'center',
-    padding: 10,
+    padding: 8,
     backgroundColor: '#efefef',
-    marginTop: 30,
-    borderRadius: 5
+    marginTop: 20,
+    borderRadius: 5,
+    marginBottom: 20
   },
   btntextWhite: {
     fontSize: 18,
-    marginTop: 5,
     color: '#fff',
     fontWeight: 'bold'
   },
   btntextGray: {
-    fontSize: 18,
-    marginTop: 5,
+    fontSize: 15,
     color: '#a8a8a8',
   },
   ColorIcon: {

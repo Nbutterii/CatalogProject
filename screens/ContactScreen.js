@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { Ionicons } from 'react-native-vector-icons'
 import { Actions } from 'react-native-router-flux';
 
@@ -7,9 +7,13 @@ export default class ContactScreen extends React.Component {
     render() {
         return (
             <View style={styles.container}>
+                
+                <Image
+                style={{height:100, width:200}}
+                source={require('../assets/CatalogCon.png')} />
             
                 <View>
-                    <Text style={styles.TextBlackTitle}>Access your Wishlist on any of your devices</Text>
+                    <Text style={styles.TextBlackTitle}>Access your Wishlist on any of your devices.</Text>
                 </View>
 
                 <View style={{ flexDirection: 'row'}} >
@@ -22,7 +26,7 @@ export default class ContactScreen extends React.Component {
                     </TouchableOpacity>
                 </View>
     
-                <View>
+                {/* <View>
                     <Text style={styles.btntextBlackContactTitle} >Contact Us</Text>
                 </View>
     
@@ -38,7 +42,7 @@ export default class ContactScreen extends React.Component {
                     <View>
                         <Text style={styles.btntextBlackContact}>Available Monday to Friday 9am-4pm </Text>
                     </View>
-                </View>
+                </View> */}
     
             </View>
         );
@@ -49,14 +53,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        justifyContent: 'center',
         alignItems: 'center',
     },
     buttonRed: {
         flex: 1,
         alignSelf: 'stretch',
         alignItems: 'center',
-        padding: 20,
+        padding: 15,
         backgroundColor: '#891c1c',
         marginTop: 30,
         marginLeft: 10,
@@ -67,21 +70,19 @@ const styles = StyleSheet.create({
         flex: 1,
         alignSelf: 'stretch',
         alignItems: 'center',
-        padding: 20,
+        padding: 15,
         backgroundColor: '#efefef',
         marginTop: 30,
         marginLeft:10,
         borderRadius: 7
     },
     btntextWhite: {
-        fontSize: 18,
-        marginTop: 5,
+        fontSize: 15,
         color: '#fff',
         fontWeight: 'bold'
     },
     btntextBlack: {
-        fontSize: 18,
-        marginTop: 5,
+        fontSize: 15,
         color: '#000',
         fontWeight: 'bold'
     },
@@ -95,13 +96,13 @@ const styles = StyleSheet.create({
         marginTop: 150
     },
     btntextBlackContact: {
-        fontSize: 18,
+        fontSize: 15,
         marginTop: 30,
         color: '#606060',
         marginLeft: 10
     },
     TextBlackTitle: {
-        fontSize: 18,
+        fontSize: 15,
         marginTop: 30,
         color: '#000',
         marginLeft: 10,

@@ -37,7 +37,7 @@ class DetailProductScreenCustomer extends React.Component {
     }
 
     IncrementItemWow() {
-        this.setState({ clickWow: this.state.clickWow + 1 });
+        // this.setState({ clickWow: this.state.clickWow + 1 });
         // if(this.state.clickWow > -1)
         // {
             console.log("Wow");
@@ -59,7 +59,7 @@ class DetailProductScreenCustomer extends React.Component {
     }
 
     IncrementItemHappy = () => {
-            this.setState({ clickHappy: this.state.clickHappy + 1 });
+            // this.setState({ clickHappy: this.state.clickHappy + 1 });
             console.log("Happy");
             this.setState({ShowCardList : true})
         
@@ -78,7 +78,7 @@ class DetailProductScreenCustomer extends React.Component {
     }
 
     IncrementItemDislike = () => {
-        this.setState({ clickDislike: this.state.clickDislike + 1 });
+        // this.setState({ clickDislike: this.state.clickDislike + 1 });
 
         fetch(url ='http://10.66.4.239:8000/emotion/express/', {
           method: 'POST',
@@ -122,12 +122,11 @@ class DetailProductScreenCustomer extends React.Component {
     }
     
     render() {
-        console.log('ON DetailProductScreenCustomer', this.props.token)
         return (
             <ScrollView scrollEventThrottle={16}>
                 <View style={{ backgroundColor: '#fff' }}>
                     <View  style={{ height: 400, marginBottom: 50 }}> 
-                        <View style={{  width: 300, height: 400, marginTop:20, marginLeft:55, backgroundColor: 'white'}}>
+                        <View style={{  width: 300, height: 400, marginTop:20, marginLeft:32, backgroundColor: 'white'}}>
                             <Image
                             style={{flex:1, height: null, width: null, resizeMode: 'cover', borderRadius: 3, borderWidth: 1, borderColor: '#dddddd'}}
                             source={{uri : this.props.val.image1}} />
@@ -153,12 +152,12 @@ class DetailProductScreenCustomer extends React.Component {
 
                     <TouchableOpacity style={{ flex: 1,backgroundColor: '#891c1c', borderRadius: 10, marginTop: 10, alignItems: 'center', 
                             padding: 10, marginLeft:230, marginRight:2}}  onPress={() => this.OpenCamera()}>
-                                <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 15}}>+Review</Text>
+                                <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 10}}>+Review</Text>
                     </TouchableOpacity>
 
 
                     <View style={{flexDirection: 'row'}}>
-                        <View style={ {marginTop:21, backgroundColor: 'white' }}>
+                        <View style={ {marginTop:21, backgroundColor: 'white', marginLeft: -3 }}>
                             <TouchableOpacity onPress={() => { this.IncrementItemWow(); this.RecommendProduct()}}>
                                 <Image
                                 style={{flex:1, height: 80, width: 80, resizeMode: 'cover', borderRadius: 5, borderWidth: 1}}
@@ -166,11 +165,11 @@ class DetailProductScreenCustomer extends React.Component {
                             </TouchableOpacity>
                         </View>
                         <View>
-                            <Text style={{ fontSize: 35, fontWeight: '500', marginTop: 35, marginLeft: 5 }}>{ this.state.clickWow }</Text>
+                            <Text style={{ fontSize: 35, fontWeight: '500', marginTop: 35 }}>{ this.state.clickWow }</Text>
                         </View>
     
 
-                        <View style={{ marginLeft: 10, marginTop:25, backgroundColor: 'white' }}>
+                        <View style={{ marginTop:25, backgroundColor: 'white' }}>
                             <TouchableOpacity onPress={() => { this.IncrementItemHappy(); this.RecommendProduct()}}>
                                 <Image
                                 style={{flex:1, height: 80, width: 80, resizeMode: 'cover', borderRadius: 5, borderWidth: 1}}
@@ -178,11 +177,11 @@ class DetailProductScreenCustomer extends React.Component {
                             </TouchableOpacity>
                         </View>
                         <View>
-                            <Text style={{ fontSize: 35, fontWeight: '500', marginTop: 35, marginLeft: 5 }}>{ this.state.clickHappy }</Text>
+                            <Text style={{ fontSize: 35, fontWeight: '500', marginTop: 35 }}>{ this.state.clickHappy }</Text>
                         </View>
     
     
-                        <View style={{ marginLeft: 10, marginTop:22, backgroundColor: 'white' }}>
+                        <View style={{ marginTop:22, backgroundColor: 'white' }}>
                             <TouchableOpacity onPress={() => this.IncrementItemDislike()}>
                                 <Image
                                 style={{flex:1, height: 80, width: 80, resizeMode: 'cover', borderRadius: 5, borderWidth: 1}}
@@ -190,7 +189,7 @@ class DetailProductScreenCustomer extends React.Component {
                             </TouchableOpacity>
                         </View>
                         <View>
-                            <Text style={{ fontSize: 35, fontWeight: '500', marginTop: 35, marginLeft: 5 }}>{ this.state.clickDislike }</Text>
+                            <Text style={{ fontSize: 35, fontWeight: '500', marginTop: 35 }}>{ this.state.clickDislike }</Text>
                         </View>
                     </View>
                 </Card>

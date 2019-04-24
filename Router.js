@@ -30,6 +30,10 @@ import ProductScreenCustomer from './screens/customer/ProductScreenCustomer';
 import DetailProductScreenCustomer from './screens/customer/DetailProductScreenCustomer';
 import SearchProductScreenCustomer from './screens/customer/SearchProductScreenCustomer';
 import CustomerScreen from './screens/customer/CustomerScreen';
+import WishlistWow from './screens/customer/WishlistWow';
+import DetailProductWishlistWow from './screens/customer/DetailProductWishlistWow';
+import WishlistHappy from './screens/customer/WishlistHappy';
+import DetailProductWishlistHappy from './screens/customer/DetailProductWishlistHappy';
 
 import HomeScreenOwner from './screens/owner/HomeScreenOwner';
 import HomeScreenDetailProductOwner from './screens/owner/HomeScreenDetailProductOwner';
@@ -44,8 +48,13 @@ import DetailProductScreenOwner from './screens/owner/DetailProductScreenOwner';
 import EditProductScreen from './screens/owner/EditProductScreen';
 import SearchProductScreenOwner from './screens/owner/SearchProductScreenOwner';
 import AddProductScreen from './screens/owner/AddProductScreen';
-
 import ChartScreen from './screens/owner/ChartScreen';
+import TopTopsScreen from './screens/owner/TopTopsScreen';
+import DetailTopTopsScreen from './screens/owner/DetailTopTopsScreen';
+import TopPantsScreen from './screens/owner/TopPantsScreen';
+import DetailTopPantsScreen from './screens/owner/DetailTopPantsScreen';
+import TopSkirtsScreen from './screens/owner/TopSkirtsScreen';
+import DetailTopSkirtsScreen from './screens/owner/DetailTopSkirtsScreen';
 
 export default class App extends React.Component {
   render() {    
@@ -234,6 +243,26 @@ export default class App extends React.Component {
                   component={CustomerScreen}
                   title="ME"
                   />
+                  <Scene
+                  key="WishlistWowPage"
+                  component={WishlistWow}
+                  title=""
+                  />
+                  <Scene
+                  key="DetailProductWishlistWowPage"
+                  component={DetailProductWishlistWow}
+                  title=""
+                  />
+                  <Scene
+                  key="WishlistHappyPage"
+                  component={WishlistHappy}
+                  title=""
+                  />
+                  <Scene
+                  key="DetailProductWishlistHappyPage"
+                  component={DetailProductWishlistHappy}
+                  title=""
+                  />
                 </Scene>
 
             </Scene>
@@ -324,6 +353,36 @@ export default class App extends React.Component {
                 key="ChartPage"
                 component={ChartScreen}
                 title="CHART"
+                />
+                <Scene
+                key="TopTopsPage"
+                component={TopTopsScreen}
+                title=""
+                />
+                <Scene
+                key="DetailTopTopsPage"
+                component={DetailTopTopsScreen}
+                title=""
+                />
+                <Scene
+                key="TopPantsPage"
+                component={TopPantsScreen}
+                title=""
+                />
+                <Scene
+                key="DetailTopPantsPage"
+                component={DetailTopPantsScreen}
+                title=""
+                />
+                <Scene
+                key="TopSkirtsPage"
+                component={TopSkirtsScreen}
+                title=""
+                />
+                <Scene
+                key="DetailTopSkirtsPage"
+                component={DetailTopSkirtsScreen}
+                title=""
                 />
               </Scene>
 
