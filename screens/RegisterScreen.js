@@ -136,8 +136,8 @@ export default class RegisterScreen extends React.Component {
 
   render() {
     return (
+      <View style={styles.container}>
         <ScrollView>
-          <View style={styles.container}>
           
             <View style={styles.regform}>
               <Text style={styles.header}>Register</Text>
@@ -183,8 +183,8 @@ export default class RegisterScreen extends React.Component {
               </TouchableOpacity>
             </View>
 
-          </View>
         </ScrollView>
+      </View>
     );
   }
 }
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+    // alignItems: 'center',
     backgroundColor: '#fff',
   },
   regform: {

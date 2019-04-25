@@ -60,7 +60,6 @@ class EditProductScreen extends React.Component {
                 }
             console.log(collection);
             Actions.ProductOwnerPage()
-    
             fetch(`http://10.66.4.239:8000/shop/product/${this.props.val.id}/`, {
                 method: 'PATCH',
                 body: JSON.stringify(collection),

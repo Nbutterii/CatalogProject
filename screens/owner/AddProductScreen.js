@@ -89,7 +89,7 @@ class AddProductScreen extends React.Component {
     
     AddProduct()
     {
-        Actions.ProductOwnerPage()
+        
         const { name }  = this.state ;
         const { category }  = this.state ;
         const { color }  = this.state ;
@@ -110,6 +110,7 @@ class AddProductScreen extends React.Component {
                 image1: this.state.pickerResult.base64
                 }
             console.log(collection);
+            Actions.ProductOwnerPage()
             var url = 'http://10.66.4.239:8000/shop/product/'
     
             fetch(url, {
@@ -119,7 +120,15 @@ class AddProductScreen extends React.Component {
                 'Content-Type' : 'application/json',
                 Authorization : `Token ${this.props.token}`
                 }
-            }).then(res => res.json())
+
+            })//.then(res => res.json())
+            //   .then((res) => {
+            //     console.log(res.ok)
+            //     if (res.ok === 'true') {
+            //         console.log("INNNNNNNNNNNNNNNNNNNNNNNNNN")
+            //         Actions.ProductOwnerPage()
+            //     }
+            //   })
         }
     }
     

@@ -44,7 +44,7 @@ class CustomerScreen extends React.Component {
             if (response.status === 200) {
                 Actions.visitor();
             }
-
+    Actions.replace()
 }
   
     render() {

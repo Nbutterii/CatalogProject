@@ -18,7 +18,7 @@ class DetailCategorySkirtsScreenVisitor extends React.Component {
 
     componentDidMount() {
         try{
-            axios.get(`http://10.66.4.239:8000/shop/product/`)
+            axios.get(`http://10.206.15.15:8000/shop/product/`)
         .then(res => {
             console.log('pass',res.data)
             this.setState({ dataSource : res.data});
@@ -33,9 +33,9 @@ class DetailCategorySkirtsScreenVisitor extends React.Component {
         return (
             <ScrollView scrollEventThrottle={16}>
 
-                <View style={{ backgroundColor: '#fff' }}>
-                    <View  style={{ height: 400, marginBottom: 50 }}> 
-                        <View style={{  width: 300, height: 400, marginTop:20, marginLeft: 32, backgroundColor: 'white'}}>
+                <View style={{ backgroundColor: '#fff', height: 450, marginBottom: 10 }}>
+                    <View style={{  alignItems: 'center' }}>
+                        <View style={{  width: 300, height: 400, marginTop:25 }}>
                             <Image
                             style={{flex:1, height: null, width: null, resizeMode: 'cover', borderRadius: 3, borderWidth: 1, borderColor: '#dddddd'}}
                             source={{uri : this.props.val.image1}} />
@@ -60,8 +60,8 @@ class DetailCategorySkirtsScreenVisitor extends React.Component {
                     </View>
 
 
-                    <View style={{flexDirection: 'row'}}>
-                        <View style={{width: 80, height: 80, marginTop:20, backgroundColor: 'white', marginLeft: -3}}>
+                    <View style={{flexDirection: 'row',justifyContent: 'center'}}>
+                        <View style={{width: 80, height: 80, marginTop:20, backgroundColor: 'white'}}>
                             <Image
                             style={{flex:1, height: null, width: null, resizeMode: 'cover', borderRadius: 5, borderWidth: 1}}
                                 source={require('../assets/emotionwow_icom.png')} />

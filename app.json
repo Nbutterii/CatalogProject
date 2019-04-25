@@ -1,29 +1,16 @@
-{
-  "expo": {
-    "name": "Catalog",
-    "slug": "Catalog",
-    "privacy": "public",
-    "sdkVersion": "32.0.0",
-    "platforms": [
-      "ios",
-      "android"
-    ],
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/IconCatalog.png",
-    "splash": {
-      "image": "./assets/SplashCatalog.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
+
+    {
+      "expo": {
+        "name": "Catalog",
+        "icon": "./assets/IconCatalog.png",
+        "version": "1.0.0",
+        "slug": "Catalog",
+        "sdkVersion": "32.0.0",
+        "ios": {
+          "bundleIdentifier": "com.kmitl.Catalog"
+        },
+        "android": {
+          "package": "com.kmitl.Catalog"
+        }
+      }
     }
-  }
-}

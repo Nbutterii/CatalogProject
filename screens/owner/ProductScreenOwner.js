@@ -91,11 +91,11 @@ class ProductScreenOwner extends React.Component {
                             onChangeText={ (SearchInput) => this.setState({SearchInput}) } 
                             style={styles.searchInput}
                             maxLength = {35}
-                            placeholder="Type a message to search..                   "
+                            placeholder="Type a message to search..                        "
                             />
-                            <TouchableOpacity style={{ backgroundColor: '#891c1c', borderRadius: 5, padding: 5, marginTop: 3, marginBottom: 3}}
+                            <TouchableOpacity style={{ backgroundColor: '#891c1c', borderRadius: 5, padding: 12, position: 'absolute', right:3, top:3 }}
                             onPress={() => this.SearchProduct()}>
-                                <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 15, marginTop: 4}}>Search</Text>
+                                <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 15 }}>Search</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -107,9 +107,9 @@ class ProductScreenOwner extends React.Component {
                             <Text style={{fontSize: 20, marginLeft: 10, marginBottom: 20, marginTop: 10, fontWeight: 'bold'}}>
                                 {this.state.dataSourceCount} ITEMS
                             </Text>
-                            <TouchableOpacity style={{ flex:1, backgroundColor: '#891c1c', borderRadius: 20, padding: 10, 
-                            marginLeft: 180, marginBottom: 20, alignItems: 'center', marginRight: 20}} onPress={() => Actions.AddProductPage()}>
-                                <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 12}}>+Add</Text>
+                            <TouchableOpacity style={{ backgroundColor: '#891c1c', borderRadius: 19, padding: 12, position: 'absolute', right:10, top:3 }}
+                            onPress={() => Actions.AddProductPage()}>
+                                <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 12 }}>+Add</Text>
                             </TouchableOpacity>
                         </View>
                         <View>

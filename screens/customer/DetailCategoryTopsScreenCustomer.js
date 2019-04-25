@@ -124,9 +124,10 @@ class DetailCategoryTopsScreenCustomer extends React.Component {
     render() {
         return (
             <ScrollView scrollEventThrottle={16}>
-                <View style={{ backgroundColor: '#fff' }}>
-                    <View  style={{ height: 400, marginBottom: 50 }}> 
-                        <View style={{  width: 300, height: 400, marginTop:20, marginLeft:32, backgroundColor: 'white'}}>
+
+                <View style={{ backgroundColor: '#fff', height: 450, marginBottom: 10 }}>
+                    <View style={{  alignItems: 'center' }}>
+                        <View style={{  width: 300, height: 400, marginTop:25 }}>
                             <Image
                             style={{flex:1, height: null, width: null, resizeMode: 'cover', borderRadius: 3, borderWidth: 1, borderColor: '#dddddd'}}
                             source={{uri : this.props.val.image1}} />
@@ -156,8 +157,8 @@ class DetailCategoryTopsScreenCustomer extends React.Component {
                     </TouchableOpacity>
 
 
-                    <View style={{flexDirection: 'row'}}>
-                        <View style={ {marginTop:21, backgroundColor: 'white', marginLeft: -3 }}>
+                    <View style={{flexDirection: 'row',justifyContent: 'center'}}>
+                        <View style={ {marginTop:21, backgroundColor: 'white'}}>
                             <TouchableOpacity onPress={() => { this.IncrementItemWow(); this.RecommendProduct()}}>
                                 <Image
                                 style={{flex:1, height: 80, width: 80, resizeMode: 'cover', borderRadius: 5, borderWidth: 1}}

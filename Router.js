@@ -246,7 +246,7 @@ export default class App extends React.Component {
                   <Scene
                   key="WishlistWowPage"
                   component={WishlistWow}
-                  title=""
+                  title="Wishlist Wow"
                   />
                   <Scene
                   key="DetailProductWishlistWowPage"
@@ -256,7 +256,7 @@ export default class App extends React.Component {
                   <Scene
                   key="WishlistHappyPage"
                   component={WishlistHappy}
-                  title=""
+                  title="Wishlist Happy"
                   />
                   <Scene
                   key="DetailProductWishlistHappyPage"
@@ -357,7 +357,7 @@ export default class App extends React.Component {
                 <Scene
                 key="TopTopsPage"
                 component={TopTopsScreen}
-                title=""
+                title="Ranked Tops"
                 />
                 <Scene
                 key="DetailTopTopsPage"
@@ -367,7 +367,7 @@ export default class App extends React.Component {
                 <Scene
                 key="TopPantsPage"
                 component={TopPantsScreen}
-                title=""
+                title="Ranked Pants"
                 />
                 <Scene
                 key="DetailTopPantsPage"
@@ -377,7 +377,7 @@ export default class App extends React.Component {
                 <Scene
                 key="TopSkirtsPage"
                 component={TopSkirtsScreen}
-                title=""
+                title="Ranked Skirt"
                 />
                 <Scene
                 key="DetailTopSkirtsPage"

@@ -33,7 +33,7 @@ class ChartScreen extends React.Component {
                 if (response.status === 200) {
                     Actions.visitor();
                 }
-    
+        Actions.replace()
     }
     
     
@@ -97,9 +97,9 @@ const data ={
     labels: ['Top', 'Pant', 'Skirt'],
     legend: ['Wow', 'Happy', 'Dislike'],
     data: [
-      [60, 60, 60],
-      [30,30,60],
-      [90,40,10], 
+      [10, 15, 5],
+      [16,10,10],
+      [20,7,9], 
     ],
     barColors: ['#891C1C', '#df6363', '#f3c5c5'],
    }
