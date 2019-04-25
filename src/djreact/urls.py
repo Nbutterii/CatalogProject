@@ -17,19 +17,27 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf.urls.static import static
 from django.conf import settings
-
+from accounts import views
 from shop import urls
-
+from accounts import urls
+from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
-    path('api/', include('articles.api.urls')),
+
     path('rest-auth/', include('rest_auth.urls')),
     
     path('rest-auth/registration/', include('rest_auth.registration.urls')),
     
     path('shop/', include('shop.urls')),
-    path('', include('django.contrib.auth.urls')),
+    path('emotion/', include('emotion.urls')),
+    # path('accounts/', include('accounts.urls')),
+    # path('accounts/', include('allauth.urls')),
+    # path('', views.Home.as_view(), name='home'),
+
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+
+
+
 

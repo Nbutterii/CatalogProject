@@ -1,6 +1,6 @@
 from django.urls import path,include
-
 from shop import views
+# from shop.views import Createproduct
 from rest_framework import routers
 
 
@@ -11,4 +11,16 @@ from rest_framework import routers
 router = routers.DefaultRouter()
 router.register(r'product', views.ProductViewSet)
 
-urlpatterns = router.urls
+urlpatterns = [
+    #path('createproduct/', Createproduct.as_view(),name='createproduct'),
+    # path('Happy/<int:pk>/', views.Happycreate.as_view(),name='Happyproduct'),
+
+
+] + router.urls
+
+
+# urlpatterns = [
+#     path('product/',ProductList.as_view(),name='product'),
+
+
+# ]

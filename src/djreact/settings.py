@@ -40,6 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+
+    'django_filters',
+    
+
     
 
 
@@ -54,8 +58,11 @@ INSTALLED_APPS = [
     'rest_auth.registration',
     
     'shop',
-    
-    'articles',
+    'emotion',
+    'accounts',
+
+    'keras',
+    # 'tensorflow'
     
 ]
 
@@ -83,7 +90,7 @@ ROOT_URLCONF = 'djreact.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -105,7 +112,9 @@ WSGI_APPLICATION = 'djreact.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME' : '/home/exe/ddjreact/backend/src/default.db',
     }
 }
 
@@ -134,7 +143,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Bangkok'
 
 USE_I18N = True
 
@@ -142,7 +151,14 @@ USE_L10N = True
 
 USE_TZ = True
 
+# AUTHENTICATION_BACKENDS = (
+#     "django.contrib.auth.backends.ModelBackend",
+#     "allauth.account.auth_backends.AuthenticationBackend",
+# )
+
 SITE_ID = 1
+
+# LOGIN_REDIRECT_URL = 'home'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
@@ -159,15 +175,38 @@ REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
-        #'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-        'rest_framework.permissions.AllowAny'
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+        'rest_framework.permissions.IsAuthenticated'
+    ],
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     ]
+    
+}
+
+REST_AUTH_SERIALIZERS = {
+    'USER_DETAIL_SERIALIZER': 'accounts.serializers.UserSerializer',
+    'TOKEN_SERIALIZER': 'accounts.serializers.TokenSerializer',
+   # 'REGISTER_SERIALIZER': 'accounts.serializers.RegisterSerializer',
 }
 
 
 
 CORS_ORIGIN_ALLOW_ALL = True
 
-ACCOUNT_EMAIL_VERIFICATION = 'none'
-ACCOUNT_AUTHENTICATION_METHOD = 'username'
+# ACCOUNT_EMAIL_VERIFICATION = 'none'
+# ACCOUNT_AUTHENTICATION_METHOD = 'username'
 ACCOUNT_EMAIL_REQUIRED = False
+ACCOUNT_ADAPTER = 'djreact.adapters.CustomUserAccountAdapter'
+REST_AUTH_REGISTER_SERIALIZERS = { 'REGISTER_SERIALIZER': 'accounts.serializers.RegisterSerializer' }
+# REST_AUTH_LOGIN_SERIALIZERS = { 'LOGIN_SERIALIZER': 'accounts.serializers.LoginSerializer' }
+# REST_AUTH_LOGIN_VIEWS = { 'LOGIN_VIEWS': 'accounts.views.LoginView' }
+
+AUTH_USER_MODEL = 'accounts.User'
+
+
+
+
