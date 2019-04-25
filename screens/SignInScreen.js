@@ -1,7 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, AsyncStorage, Alert } from 'react-native';
 import { Ionicons } from 'react-native-vector-icons'
 import * as firebase from 'firebase';
+import { Actions } from 'react-native-router-flux';
+import { GetTokenAction } from '../Action';
+import { connect } from 'react-redux'
 
 const firebaseConfig = {
       apiKey: "AIzaSyDY19gOHkaGHiTdE9eOG8w7zDMyArS8FDc",
@@ -12,60 +15,108 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 
-
-export default class SignInScreen extends React.Component {
+class SignInScreen extends React.Component {
     async loginWithFacebook() {
         const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('229312021285089', { permissions: ['public_profile'] })
-      
         if (type == 'success') {
-      
           const credential = firebase.auth.FacebookAuthProvider.credential(token)
-      
           firebase.auth().signInWithCredential(credential).catch((error) => {
             console.log(error)
           })
         }
+    }
+
+    constructor(props){
+      super(props);
+      this.state = {
+        username: 'NoeyO',
+        password: 'No123456',
       }
+    }
+
+    componentDidMount() {
+      this._loadInitialState().done();
+    }
+
+    _loadInitialState = async () => {
+      var value = await AsyncStorage.getItem('user');
+      if (value !== null) {
+      Actions.home();
+      }
+    }
+
+    async login() {
+      
+      let collection={}
+      collection.username=this.state.username,
+      collection.password=this.state.password,
+      console.log(collection);
+    
+      var url = 'http://10.66.4.239:8000/rest-auth/login/'
+    
+      fetch(url, {
+        method: 'POST', 
+        body: JSON.stringify(collection),
+        headers:{
+            'Content-Type': 'application/json' ,
+            // 'Authorization': 'Token ${this.state.getToken}',
+        }
+        }).then(res => res.json())
+        .then((responseData) => {
+          console.log(responseData)
+          this.props.GetTokenAction(responseData.key)
+          if (responseData.user.user_type === 'Owner') {
+            Actions.account_owner();
+          }
+          else if (responseData.user.user_type === 'Client') {
+              Actions.account_customer();
+            }
+          else{
+              Alert.alert("Please check your username and password.");
+            }
+        })
+    }
+
   render() {
     return (
         <View style={styles.container}>
-            <View style={styles.regform}>
-                <Text style={styles.header}>Sign In</Text>
+          <View style={styles.regform}>
+              <Text style={styles.header}>Sign In</Text>
 
-                    <View style={{flexDirection: 'row'}}>
-                        <Ionicons name="ios-mail"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
-                            <View style={{ flex: 1, marginLeft: 8}}>
-                                <TextInput style={styles.textinput} placeholder="Email Address"  />
-                            </View>
-                    </View>
+              <View style={{flexDirection: 'row'}}>
+                <Ionicons name="ios-contact"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
+                  <View style={{ flex: 1, marginLeft: 8}}>
+                    <TextInput style={styles.textinput} placeholder="Username" 
+                    onChangeText={ (username) => this.setState({username}) } />
+                  </View>
+              </View>
 
-                    <View style={{flexDirection: 'row'}}>
-                        <Ionicons name="ios-lock"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
-                            <View style={{ flex: 1, marginLeft: 8}}>
-                                <TextInput style={styles.textinput} placeholder="Password" secureTextEntry={true} underlineColorAndroid={'transparent'}/>
-                            </View>
-                    </View>
+              <View style={{flexDirection: 'row'}}>
+                <Ionicons name="ios-lock"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
+                  <View style={{ flex: 1, marginLeft: 8}}>
+                    <TextInput style={styles.textinput} placeholder="Password" secureTextEntry={true} 
+                    underlineColorAndroid={'transparent'} onChangeText={ (password) => this.setState({password}) }/>
+                  </View>
+              </View>
 
-                    <View>
-                    <Text style={{marginLeft: 230}}>Forgot Password?</Text>
-                    </View>
+              {/* <View>
+                <Text  style={{marginLeft: 230}} onPress={() => Actions.ForgotpasswordPage()} >Forgot Password?</Text>
+              </View> */}
 
-                    <TouchableOpacity style={styles.button}>
-                        <Text style={styles.btntext}>Sign In</Text>
-                    </TouchableOpacity>
+              <TouchableOpacity style={styles.button} onPress={() => this.login()}>
+                <Text style={styles.btntext}>Sign In</Text>
+              </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.buttonFacebook} onPress={ () => this.loginWithFacebook()}>
-                        <View style={{flexDirection: 'row'}}>
-                            <Ionicons name="logo-facebook"  style={styles.ColorIconFacebook} />
-                                <View style={{marginLeft: 8, marginTop: 2}}>
-                                    <Text style={styles.btntext}>Sign in with Facebook</Text>
-                                </View>
-                        </View>
-                    </TouchableOpacity>
-
-            </View>
+              {/* <TouchableOpacity style={styles.buttonFacebook} onPress={ () => this.loginWithFacebook()}>
+                <View style={{flexDirection: 'row'}}>
+                    <Ionicons name="logo-facebook"  style={styles.ColorIconFacebook} />
+                      <View style={{marginLeft: 8, marginTop: 2}}>
+                        <Text style={styles.btntext}>Sign in with Facebook</Text>
+                      </View>
+                </View>
+              </TouchableOpacity> */}
+          </View>
         </View>
-
     );
   }
 }
@@ -100,7 +151,7 @@ const styles = StyleSheet.create({
   button: {
     alignSelf: 'stretch',
     alignItems: 'center',
-    padding: 15,
+    padding: 8,
     backgroundColor: '#891c1c',
     marginTop: 30,
     borderRadius: 5
@@ -124,7 +175,6 @@ const styles = StyleSheet.create({
   },
   btntext: {
     fontSize: 18,
-    marginTop: 5,
     color: '#fff',
     fontWeight: 'bold'
   },
@@ -137,5 +187,6 @@ const styles = StyleSheet.create({
     color:'#a8a8a8',
     marginTop: 6
   }
-
 });
+
+export default connect(null, { GetTokenAction })(SignInScreen);
