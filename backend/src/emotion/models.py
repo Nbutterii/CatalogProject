@@ -20,8 +20,8 @@ from django.db.models import F
 #         return (self.User,self.Product,self.emotion)
 
 class Emotionproduct(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, related_name='Happyuserproduct',on_delete=models.SET_NULL,null=True)
-    product = models.ForeignKey(Product, related_name='emopro',on_delete=models.SET_NULL,null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, related_name='Happyuserproduct',on_delete=models.CASCADE,null=True)
+    product = models.ForeignKey(Product, related_name='emopro',on_delete=models.CASCADE,null=True)
 
     EMOTION_TYPES = (('Happy', 'Happy'),('Wow', 'Wow'),('Dislike', 'Dislike'),   )
     emotion = models.CharField(('emotion'), choices=EMOTION_TYPES, max_length=30, blank=True, null=True)
