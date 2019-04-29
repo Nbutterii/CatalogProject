@@ -179,6 +179,8 @@ class RegisterSerializer(serializers.Serializer):
         required=allauth_settings.USERNAME_REQUIRED
     )
     email = serializers.EmailField(required=allauth_settings.EMAIL_REQUIRED)
+    first_name = serializers.CharField()
+    last_name = serializers.CharField()
 
     user_type = serializers.ChoiceField(
     choices=(('Client', 'Client'),('Owner', 'Owner'),),
