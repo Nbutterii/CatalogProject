@@ -34,6 +34,7 @@ import WishlistWow from './screens/customer/WishlistWow';
 import DetailProductWishlistWow from './screens/customer/DetailProductWishlistWow';
 import WishlistHappy from './screens/customer/WishlistHappy';
 import DetailProductWishlistHappy from './screens/customer/DetailProductWishlistHappy';
+import Profile from './screens/customer/Profile';
 
 import HomeScreenOwner from './screens/owner/HomeScreenOwner';
 import HomeScreenDetailProductOwner from './screens/owner/HomeScreenDetailProductOwner';
@@ -263,6 +264,11 @@ export default class App extends React.Component {
                   component={DetailProductWishlistHappy}
                   title=""
                   />
+                  <Scene
+                  key="ProfilePage"
+                  component={Profile}
+                  title="Profile"
+                />
                 </Scene>
 
             </Scene>

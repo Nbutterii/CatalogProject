@@ -18,7 +18,7 @@ class DetailTopPantsScreen extends React.Component {
 
     componentDidMount() {
         try{
-            axios.get(`http://10.206.15.15:8000/shop/product/`)
+            axios.get(`http://10.66.4.239:8000/shop/product/`)
         .then(res => {
             console.log('pass',res.data)
             this.setState({ dataSource : res.data});

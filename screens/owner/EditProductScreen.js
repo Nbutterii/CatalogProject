@@ -59,7 +59,6 @@ class EditProductScreen extends React.Component {
                 image1: this.state.pickerResult.base64
                 }
             console.log(collection);
-            Actions.ProductOwnerPage()
             fetch(`http://10.66.4.239:8000/shop/product/${this.props.val.id}/`, {
                 method: 'PATCH',
                 body: JSON.stringify(collection),
@@ -67,7 +66,11 @@ class EditProductScreen extends React.Component {
                     'Content-Type': 'application/json',
                     Authorization : `Token ${this.props.token}`
                 }
-            }).then(res => res.json())
+            }).then((res) => {
+                if (res.ok == true) {
+                  Actions.ProductOwnerPage();
+                }
+              })
         }
     }
     
@@ -93,7 +96,6 @@ class EditProductScreen extends React.Component {
                 {
                     text: 'Yes', onPress: () => {
                         console.log('Agree')
-                        Actions.ProductOwnerPage()
                         return fetch(`http://10.66.4.239:8000/shop/product/${this.props.val.id}/`, {
                             method: 'delete',
                             headers: {
@@ -101,7 +103,11 @@ class EditProductScreen extends React.Component {
                                 Authorization : `Token ${this.props.token}`
                             }
                         })
-                        // .then(response => response.json());
+                        .then((res) => {
+                            if (res.ok == true) {
+                              Actions.ProductOwnerPage();
+                            }
+                          })
                     }
                 },
             ],
@@ -200,13 +206,13 @@ class EditProductScreen extends React.Component {
                 <TouchableOpacity style={{ flex: 1, marginTop:12, backgroundColor: '#891c1c', borderRadius: 5, 
                 marginBottom: 5, alignItems: 'center', padding: 10, marginLeft:50, marginRight:50}}
                 onPress={() => this.AddProduct()}>
-                        <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 15}}>Submit</Text>
+                        <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 15}}>Edit product</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={{ flex: 1, marginTop:5, backgroundColor: '#ffffff', borderRadius: 5, 
                 borderColor: '#891c1c', borderWidth: 1, marginBottom: 20, alignItems: 'center', padding: 10, marginLeft:50, marginRight:50}}
                 onPress={() => this.DeleteProduct()}>
-                        <Text style={{ color: '#891c1c', fontWeight: 'bold', fontSize: 15}}>Delete</Text>
+                        <Text style={{ color: '#891c1c', fontWeight: 'bold', fontSize: 15}}>Delete product</Text>
                 </TouchableOpacity>
 
             </ScrollView>

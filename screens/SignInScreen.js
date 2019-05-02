@@ -71,9 +71,13 @@ class SignInScreen extends React.Component {
           else if (responseData.user.user_type === 'Client') {
               Actions.account_customer();
             }
-          else{
-              Alert.alert("Please check your username and password.");
-            }
+          // else{
+          //     Alert.alert("Please check your username and password.");
+          //   }
+        })
+        .catch((err) => {
+          console.log(err)
+          Alert.alert("Please check your username and password.");
         })
     }
 

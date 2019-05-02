@@ -44,7 +44,6 @@ class CustomerScreen extends React.Component {
             if (response.status === 200) {
                 Actions.visitor();
             }
-    Actions.replace()
 }
   
     render() {
@@ -52,7 +51,13 @@ class CustomerScreen extends React.Component {
       return (
             <View style={styles.container}>
                 <ScrollView>
-            
+
+                    <TouchableOpacity  onPress={() => Actions.ProfilePage()} >
+                        <View header style={{ borderBottomWidth:1, borderBottomColor:'#dee0e2', flexDirection:'row' }}>
+                            <Text style={{ flex:1, fontSize: 20, marginLeft: 10, marginTop:20, marginBottom: 20}}>Profile</Text>
+                            <Icon name="ios-arrow-forward" style={{ fontSize: 25, paddingTop: 25, marginRight:15 }}/>
+                        </View>
+                    </TouchableOpacity>
                     <TouchableOpacity  onPress={() => Actions.WishlistWowPage()} >
                         <View header style={{ borderBottomWidth:1, borderBottomColor:'#dee0e2', flexDirection:'row' }}>
                             <Text style={{ flex:1, fontSize: 20, marginLeft: 10, marginTop:20, marginBottom: 20}}>Wishlist "Wow"</Text>
@@ -85,7 +90,7 @@ class CustomerScreen extends React.Component {
                     </View> */}
 
                     <TouchableOpacity style={{ alignSelf: 'stretch', alignItems: 'center', padding: 10, backgroundColor: '#891c1c', 
-                    marginTop: 300, borderRadius: 5, marginLeft:15, marginRight: 15, marginBottom: 10 }} onPress={() => this.Signout()} >
+                    marginTop: 300, borderRadius: 5, marginLeft:15, marginRight: 15, marginBottom: 20 }} onPress={() => this.Signout()} >
                         <Text style={{ fontSize: 18, marginTop: 5, color: '#fff', fontWeight: 'bold'}}>Sign out</Text>
                     </TouchableOpacity>
 

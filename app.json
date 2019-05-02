@@ -11,6 +11,11 @@
         },
         "android": {
           "package": "com.kmitl.Catalog"
+        },
+        "splash": {
+          "image": "./assets/SplashCatalog.png",
+          "resizeMode": "contain",
+          "backgroundColor": "#ffffff"
         }
       }
     }

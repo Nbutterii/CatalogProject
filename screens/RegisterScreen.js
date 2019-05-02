@@ -142,6 +142,22 @@ export default class RegisterScreen extends React.Component {
             <View style={styles.regform}>
               <Text style={styles.header}>Register</Text>
 
+              {/* <View style={{flexDirection: 'row'}}>
+                <Ionicons name="ios-contact"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
+                  <View style={{ flex: 1, marginLeft: 8}}>
+                    <TextInput style={[styles.textinput, !this.state.usernameValdate? styles.error:null]}
+                    onChangeText={ (text) => this.validate(text,'username')} placeholder="First name"/>
+                  </View>
+              </View>
+
+              <View style={{flexDirection: 'row'}}>
+                <Ionicons name="ios-contact"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
+                  <View style={{ flex: 1, marginLeft: 8}}>
+                    <TextInput style={[styles.textinput, !this.state.usernameValdate? styles.error:null]}
+                    onChangeText={ (text) => this.validate(text,'username')} placeholder="Last name"/>
+                  </View>
+              </View> */}
+
               <View style={{flexDirection: 'row'}}>
                 <Ionicons name="ios-contact"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
                   <View style={{ flex: 1, marginLeft: 8}}>

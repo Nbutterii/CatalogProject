@@ -5,6 +5,7 @@ import { Card } from "react-native-elements";
 import axios from 'axios';
 import { connect } from "react-redux";
 import { Actions } from 'react-native-router-flux';
+import Swiper from 'react-native-swiper'
 
 class DetailProductScreenOwner extends React.Component {
 
@@ -18,7 +19,7 @@ class DetailProductScreenOwner extends React.Component {
 
     componentDidMount() {
         try{
-            axios.get(`http://10.206.15.15:8000/shop/product/`)
+            axios.get(`http://10.66.4.239:8000/shop/product/`)
         .then(res => {
             console.log('pass',res.data)
             this.setState({ dataSource : res.data});
@@ -33,15 +34,42 @@ class DetailProductScreenOwner extends React.Component {
         return (
             <ScrollView scrollEventThrottle={16}>
 
-                <View style={{ backgroundColor: '#fff', height: 450, marginBottom: 10 }}>
+            <View style={{backgroundColor: '#fff', height: 450, marginBottom: 10}}>
+
+                    <Swiper>
+                        <View style={{flex:1}}>
+                            <Image
+                            style={{flex:1, height:null, width:null, resizeMode: 'contain'}}
+                            source={{uri : this.props.val.image1}} />
+                        </View>
+                        <View style={{flex:1}}>
+                        <Image
+                            style={{flex:1, height:null, width:null, resizeMode: 'contain'}}
+                            source={{uri : this.props.val.image2}} />
+                        </View>
+                        <View style={{flex:1}}>
+                        <Image
+                            style={{flex:1, height:null, width:null, resizeMode: 'contain'}}
+                            source={{uri : this.props.val.image3}} />
+                        </View>
+                        <View style={{flex:1}}>
+                        <Image
+                            style={{flex:1, height:null, width:null, resizeMode: 'contain'}}
+                            source={{uri : this.props.val.image4}} />
+                        </View>
+                    </Swiper> 
+            </View>
+
+                {/* <View style={{ backgroundColor: '#fff', height: 450, marginBottom: 10 }}>
                     <View style={{  alignItems: 'center' }}>
                         <View style={{  width: 300, height: 400, marginTop:25 }}>
                             <Image
                             style={{flex:1, height: null, width: null, resizeMode: 'cover', borderRadius: 3, borderWidth: 1, borderColor: '#dddddd'}}
                             source={{uri : this.props.val.image1}} />
+
                         </View>
                     </View>
-                </View>
+                </View> */}
 
                 <Card>
                     <View header style={{ borderBottomWidth: 1, borderBottomColor:'#dee0e2'}}>
