@@ -65,9 +65,9 @@ class ProductSerializer(serializers.ModelSerializer):
     
     #updated_at = serializers.DateTimeField(auto_now=True)
     image1 = Base64ImageField(max_length=None, use_url=True)
-    image2 = serializers.ImageField(required=False)
-    image3 = serializers.ImageField(required=False)
-    image4 = serializers.ImageField(required=False)
+    image2 = Base64ImageField(max_length=None, use_url=True)
+    image3 = Base64ImageField(max_length=None, use_url=True)
+    image4 = Base64ImageField(max_length=None, use_url=True)
 
     Owner = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
