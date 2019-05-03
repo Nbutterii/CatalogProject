@@ -29,8 +29,8 @@ class SignInScreen extends React.Component {
     constructor(props){
       super(props);
       this.state = {
-        username: 'admin',
-        password: 'adminzxcv',
+        username: 'NoeyO',
+        password: 'No123456',
       }
     }
 
@@ -52,7 +52,7 @@ class SignInScreen extends React.Component {
       collection.password=this.state.password,
       console.log(collection);
     
-      var url = 'http://10.66.4.239:8000/rest-auth/login/'
+      var url = 'http://161.246.4.226:8009/rest-auth/login/'
     
       fetch(url, {
         method: 'POST', 

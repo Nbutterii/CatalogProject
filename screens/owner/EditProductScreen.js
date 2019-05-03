@@ -17,21 +17,60 @@ class EditProductScreen extends React.Component {
             color: this.props.val.color,
             price: this.props.val.price,
             description: this.props.val.description,
-            pickerResult: this.props.val.image1,
+            pickerResult1: this.props.val.image1,
+            pickerResult2: this.props.val.image2,
+            pickerResult3: this.props.val.image3,
+            pickerResult4: this.props.val.image4,
             isLoading: false,
             dataSource: [],
         }
     }
 
-    _pickImg = async () => {
-        let pickerResult = await ImagePicker.launchImageLibraryAsync({
+    _pickImg1 = async () => {
+        let pickerResult1 = await ImagePicker.launchImageLibraryAsync({
           base64: true,
           allowsEditing: false,
           aspect: [3, 4],
         });
     
         this.setState({
-          pickerResult,
+          pickerResult1,
+        });
+    };
+
+    _pickImg2 = async () => {
+        let pickerResult2 = await ImagePicker.launchImageLibraryAsync({
+          base64: true,
+          allowsEditing: false,
+          aspect: [3, 4],
+        });
+    
+        this.setState({
+          pickerResult2,
+        });
+    };
+
+    _pickImg3 = async () => {
+        let pickerResult3 = await ImagePicker.launchImageLibraryAsync({
+          base64: true,
+          allowsEditing: false,
+          aspect: [3, 4],
+        });
+    
+        this.setState({
+          pickerResult3,
+        });
+    };
+
+    _pickImg4 = async () => {
+        let pickerResult4 = await ImagePicker.launchImageLibraryAsync({
+          base64: true,
+          allowsEditing: false,
+          aspect: [3, 4],
+        });
+    
+        this.setState({
+          pickerResult4,
         });
     };
     
@@ -43,9 +82,13 @@ class EditProductScreen extends React.Component {
         const { color }  = this.state ;
         const { price }  = this.state ;
         const { description }  = this.state ;
-        const { pickerResult }  = this.state ;
+        const { pickerResult1 }  = this.state ;
+        const { pickerResult2 }  = this.state ;
+        const { pickerResult3 }  = this.state ;
+        const { pickerResult4 }  = this.state ;
         
-        if(name == '' || category == '' || color == '' || price == '' || description == '' || pickerResult == null) {
+        if(name == '' || category == '' || color == '' || price == '' || description == '' || pickerResult1 == null
+        || pickerResult2 == null || pickerResult3 == null || pickerResult4 == null) {
             Alert.alert("Please fill up this form.");
         }
         else{
@@ -56,10 +99,13 @@ class EditProductScreen extends React.Component {
                 color: this.state.color,
                 price: this.state.price,
                 description: this.state.description,
-                image1: this.state.pickerResult.base64
+                image1: this.state.pickerResult1.base64,
+                image2: this.state.pickerResult2.base64,
+                image3: this.state.pickerResult3.base64,
+                image4: this.state.pickerResult4.base64
                 }
             console.log(collection);
-            fetch(`http://10.66.4.239:8000/shop/product/${this.props.val.id}/`, {
+            fetch(`http://161.246.4.226:8009/shop/product/${this.props.val.id}/`, {
                 method: 'PATCH',
                 body: JSON.stringify(collection),
                 headers:{
@@ -76,7 +122,7 @@ class EditProductScreen extends React.Component {
     
     componentDidMount() {
         try{
-            axios.get(`http://10.66.4.239:8000/shop/product/`)
+            axios.get(`http://161.246.4.226:8009/shop/product/`)
           .then(res => {
             console.log('pass',res.data)
             this.setState({ dataSource : res.data});
@@ -96,7 +142,7 @@ class EditProductScreen extends React.Component {
                 {
                     text: 'Yes', onPress: () => {
                         console.log('Agree')
-                        return fetch(`http://10.66.4.239:8000/shop/product/${this.props.val.id}/`, {
+                        return fetch(`http://161.246.4.226:8009/shop/product/${this.props.val.id}/`, {
                             method: 'delete',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -117,19 +163,53 @@ class EditProductScreen extends React.Component {
   render() {
     console.log('ON EditProductScreen', this.props.token)
 
-    let { pickerResult } = this.state;
-    let imageUri = pickerResult ? `data:image/jpg;base64,${pickerResult.base64}` : null;
-    imageUri && console.log({uri: imageUri.slice(0, 100)});
+    let { pickerResult1 } = this.state;
+    let imageUri1 = pickerResult1 ? `data:image/jpg;base64,${pickerResult1.base64}` : null;
+    imageUri1 && console.log({uri: imageUri1.slice(0, 100)});
+
+    let { pickerResult2 } = this.state;
+    let imageUri2 = pickerResult2 ? `data:image/jpg;base64,${pickerResult2.base64}` : null;
+    imageUri2 && console.log({uri: imageUri2.slice(0, 100)});
+
+    let { pickerResult3 } = this.state;
+    let imageUri3 = pickerResult3 ? `data:image/jpg;base64,${pickerResult3.base64}` : null;
+    imageUri3 && console.log({uri: imageUri3.slice(0, 100)});
+
+    let { pickerResult4 } = this.state;
+    let imageUri4 = pickerResult4 ? `data:image/jpg;base64,${pickerResult4.base64}` : null;
+    imageUri4 && console.log({uri: imageUri4.slice(0, 100)});
 
     return (
         <View style={styles.container}>
             <ScrollView>
 
-                <View style={{ alignItems: 'center' }} >{/* <View style= {{ flexDirection: 'row', flexWrap: 'wrap', marginLeft: 5 }}> */}
+                {/* <View style={{ alignItems: 'center' }} >
                     <Image source={{uri : this.props.val.image1}} style={{ width: 100, height: 100 }}/>
                     <Image source={{uri: imageUri}} style={{ width: 100, height: 100 , position: 'absolute'}}/>
                     <TouchableOpacity onPress={this._pickImg}>
                         <Image style={{ width: 120, height: 40, margin: 10, alignItems: 'center' }} source={require('../../assets/AddImage2.png')} />
+                    </TouchableOpacity>
+                </View> */}
+
+                <View style={{ flexDirection: 'row' }} >
+                    <TouchableOpacity onPress={this._pickImg1} style={{ marginLeft: 10 }}>
+                        <Image source={{uri : this.props.val.image1}} style={{ width: 80, height: 80 }}/>
+                        <Image source={{uri: imageUri1}} style={{ width: 80, height: 80, position: 'absolute' }}/>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={this._pickImg2} style={{ marginLeft: 10 }}>
+                        <Image source={{uri : this.props.val.image2}} style={{ width: 80, height: 80 }}/>
+                        <Image source={{uri: imageUri2}} style={{ width: 80, height: 80, position: 'absolute' }}/>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={this._pickImg3} style={{ marginLeft: 10 }}>
+                        <Image source={{uri : this.props.val.image3}} style={{ width: 80, height: 80 }}/>
+                        <Image source={{uri: imageUri3}} style={{ width: 80, height: 80, position: 'absolute' }}/>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={this._pickImg4} style={{ marginLeft: 10 }}>
+                        <Image source={{uri : this.props.val.image4}} style={{ width: 80, height: 80 }}/>
+                        <Image source={{uri: imageUri4}} style={{ width: 80, height: 80, position: 'absolute' }}/>
                     </TouchableOpacity>
                 </View>
 

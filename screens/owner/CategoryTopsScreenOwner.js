@@ -19,12 +19,12 @@ class CategoryTopsScreenOwner extends React.Component {
 
     componentDidMount() {
         try{
-            axios.get(`http://10.66.4.239:8000/shop/product/?category=Top`)
+            axios.get(`http://161.246.4.226:8009/shop/product/?category=Top`)
         .then(res => {
             console.log('pass',res.data)
             this.setState({ dataSource : res.data});
         }),
-        axios.get(`http://10.66.4.239:8000/shop/product/count/?category=Top`)
+        axios.get(`http://161.246.4.226:8009/shop/product/count/?category=Top`)
         .then(res => {
             console.log('pass',res.data)
             this.setState({ dataSourceCount : res.data});

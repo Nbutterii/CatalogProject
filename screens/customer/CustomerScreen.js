@@ -10,7 +10,7 @@ class CustomerScreen extends React.Component {
 
 //   async Signout() {
 
-//     var url = 'http://10.66.4.239:8000/rest-auth/logout/'
+//     var url = 'http://161.246.4.226:8009/rest-auth/logout/'
 
 //     try{
 //         const response = await fetch( url, {
@@ -30,7 +30,7 @@ class CustomerScreen extends React.Component {
 
   async Signout(token) {
     console.log(this.props.token)
-    const response = await fetch(`http://10.66.4.239:8000/rest-auth/logout/` , {
+    const response = await fetch(`http://161.246.4.226:8009/rest-auth/logout/` , {
         method: 'POST',
         headers: {
             Authorization : `Token ${this.props.token}`,

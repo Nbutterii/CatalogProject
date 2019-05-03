@@ -36,7 +36,7 @@ class Profile extends React.Component {
             last_name: this.state.last_name,
             }
         console.log(collection);
-        fetch(`http://10.66.4.239:8000/rest-auth/user/`, {
+        fetch(`http://161.246.4.226:8009/rest-auth/user/`, {
             method: 'PATCH',
             body: JSON.stringify(collection),
             headers:{
@@ -49,7 +49,7 @@ class Profile extends React.Component {
 
     componentDidMount() {
         try{
-            axios.get(`http://10.66.4.239:8000/rest-auth/user/`, {
+            axios.get(`http://161.246.4.226:8009/rest-auth/user/`, {
             headers:{
                 Authorization : `Token ${this.props.token}`
                 }

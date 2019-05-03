@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, Alert } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Actions } from 'react-native-router-flux';
 import { Card } from "react-native-elements";
@@ -21,8 +21,7 @@ class ProductScreenCustomer extends React.Component {
     }
 
     SearchProduct() {
-        Actions.SearchProductPageCustomer()
-        return fetch(`http://10.66.4.239:8000/shop/product/?search=${this.state.SearchInput}`, {
+        return fetch(`http://161.246.4.226:8009/shop/product/?search=${this.state.SearchInput}`, {
             method: 'GET',
             headers: {'Content-Type': 'application/json'},
         })
@@ -30,17 +29,23 @@ class ProductScreenCustomer extends React.Component {
         .then((responseData) => {
             console.log('===ProductScreenCustomer===',responseData)
             this.props.SearchProductAction(responseData)
+            if (responseData.length < 1 || responseData == null){
+                Alert.alert("Can't be found.");
+            }
+            else {
+                Actions.SearchProductPageCustomer()
+            }
           })
     }
 
     componentDidMount() {
         try{
-            axios.get(`http://10.66.4.239:8000/shop/product/`)
+            axios.get(`http://161.246.4.226:8009/shop/product/`)
         .then(res => {
             console.log('pass',res.data)
             this.setState({ dataSource : res.data});
         }),
-        axios.get(`http://10.66.4.239:8000/shop/product/count/`)
+        axios.get(`http://161.246.4.226:8009/shop/product/count/`)
         .then(res => {
             console.log('pass',res.data)
             this.setState({ dataSourceCount : res.data});

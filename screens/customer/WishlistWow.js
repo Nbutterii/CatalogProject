@@ -20,7 +20,7 @@ class WishlistWow extends React.Component {
     componentDidMount() {
         try{
             axios({ method: 'get', 
-            url: 'http://10.66.4.239:8000/shop/product/mywow/', 
+            url: 'http://161.246.4.226:8009/shop/product/mywow/', 
             headers: { Authorization: `Token ${this.props.token}` } })
         .then(res => {
             console.log('pass',res.data)

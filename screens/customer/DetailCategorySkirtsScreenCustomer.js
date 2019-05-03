@@ -9,6 +9,7 @@ import CardRecommend from '../components/Explore/CardRecommend'
 import { GetTokenAction } from '../../Action';
 import { RecommendProductAction } from '../../Action';
 import { Camera, Permissions, FaceDetector, DangerZone,ImageManipulator } from 'expo';
+import Swiper from 'react-native-swiper'
 // import CameraReview from '../components/Explore/CameraReview'
 
 class DetailCategorySkirtsScreenCustomer extends React.Component {
@@ -143,7 +144,7 @@ class DetailCategorySkirtsScreenCustomer extends React.Component {
           let photo = await this.camera.takePictureAsync();
           let uri = photo.uri
     
-          let apiUrl = 'http://10.66.4.239:8000/emotion/img/';
+          let apiUrl = 'http://161.246.4.226:8009/emotion/img/';
           let uriParts = uri.split('.');
           let fileType = uri[uri.length - 1];
     
@@ -234,7 +235,7 @@ class DetailCategorySkirtsScreenCustomer extends React.Component {
       }
 
     RecommendProduct() {
-        return fetch(`http://10.66.4.239:8000/shop/product/?category=${this.props.val.category}&color=${this.props.val.color}`, {
+        return fetch(`http://161.246.4.226:8009/shop/product/?category=${this.props.val.category}&color=${this.props.val.color}`, {
             method: 'GET',
             headers: {'Content-Type': 'application/json'},
         })
@@ -254,7 +255,7 @@ class DetailCategorySkirtsScreenCustomer extends React.Component {
             
         // }
 
-        fetch(url ='http://10.66.4.239:8000/emotion/express/', {
+        fetch(url ='http://161.246.4.226:8009/emotion/express/', {
           method: 'POST',
           body: JSON.stringify({
               'product_id' : this.props.val.id,
@@ -273,7 +274,7 @@ class DetailCategorySkirtsScreenCustomer extends React.Component {
             this.setState({ShowCardList : true})
         
     
-        fetch(url ='http://10.66.4.239:8000/emotion/express/', {
+        fetch(url ='http://161.246.4.226:8009/emotion/express/', {
           method: 'POST',
           body: JSON.stringify({
               'product_id' : this.props.val.id,
@@ -289,7 +290,7 @@ class DetailCategorySkirtsScreenCustomer extends React.Component {
     IncrementItemDislike = () => {
         // this.setState({ clickDislike: this.state.clickDislike + 1 });
 
-        fetch(url ='http://10.66.4.239:8000/emotion/express/', {
+        fetch(url ='http://161.246.4.226:8009/emotion/express/', {
           method: 'POST',
           body: JSON.stringify({
               'product_id' : this.props.val.id,
@@ -321,7 +322,7 @@ class DetailCategorySkirtsScreenCustomer extends React.Component {
             ],
         )
         try{
-            axios.get(`http://10.66.4.239:8000/shop/product/`)
+            axios.get(`http://161.246.4.226:8009/shop/product/`)
         .then(res => {
             console.log('pass',res.data)
             this.setState({ dataSource : res.data});
@@ -392,14 +393,29 @@ class DetailCategorySkirtsScreenCustomer extends React.Component {
         return (
             <ScrollView scrollEventThrottle={16}>
 
-                <View style={{ backgroundColor: '#fff', height: 450, marginBottom: 10 }}>
-                    <View style={{  alignItems: 'center' }}>
-                        <View style={{  width: 300, height: 400, marginTop:25 }}>
+                <View style={{backgroundColor: '#fff', height: 450, marginBottom: 10}}>
+                        <Swiper>
+                            <View style={{flex:1}}>
+                                <Image
+                                style={{flex:1, height:null, width:null, resizeMode: 'contain'}}
+                                source={{uri : this.props.val.image1}} />
+                            </View>
+                            <View style={{flex:1}}>
                             <Image
-                            style={{flex:1, height: null, width: null, resizeMode: 'cover', borderRadius: 3, borderWidth: 1, borderColor: '#dddddd'}}
-                            source={{uri : this.props.val.image1}} />
-                        </View>
-                    </View>
+                                style={{flex:1, height:null, width:null, resizeMode: 'contain'}}
+                                source={{uri : this.props.val.image2}} />
+                            </View>
+                            <View style={{flex:1}}>
+                            <Image
+                                style={{flex:1, height:null, width:null, resizeMode: 'contain'}}
+                                source={{uri : this.props.val.image3}} />
+                            </View>
+                            <View style={{flex:1}}>
+                            <Image
+                                style={{flex:1, height:null, width:null, resizeMode: 'contain'}}
+                                source={{uri : this.props.val.image4}} />
+                            </View>
+                        </Swiper> 
                 </View>
 
                 <Card>
@@ -424,11 +440,9 @@ class DetailCategorySkirtsScreenCustomer extends React.Component {
 
                     <View style={{flexDirection: 'row',justifyContent: 'center'}}>
                         <View style={ {marginTop:21, backgroundColor: 'white'}}>
-                            <TouchableOpacity>
-                                <Image
-                                style={{flex:1, height: 80, width: 80, resizeMode: 'cover', borderRadius: 5, borderWidth: 1}}
-                                    source={require('../../assets/emotionwow_icom.png')} />
-                            </TouchableOpacity>
+                            <Image
+                            style={{flex:1, height: 80, width: 80, resizeMode: 'cover', borderRadius: 5, borderWidth: 1}}
+                                source={require('../../assets/emotionwow_icom.png')} />
                         </View>
                         <View>
                             <Text style={{ fontSize: 35, fontWeight: '500', marginTop: 35 }}>{ this.state.clickWow }</Text>
@@ -436,11 +450,9 @@ class DetailCategorySkirtsScreenCustomer extends React.Component {
     
 
                         <View style={{ marginTop:25, backgroundColor: 'white' }}>
-                            <TouchableOpacity>
-                                <Image
-                                style={{flex:1, height: 80, width: 80, resizeMode: 'cover', borderRadius: 5, borderWidth: 1}}
-                                    source={require('../../assets/emotionhappy_icom.png')} />
-                            </TouchableOpacity>
+                            <Image
+                            style={{flex:1, height: 80, width: 80, resizeMode: 'cover', borderRadius: 5, borderWidth: 1}}
+                                source={require('../../assets/emotionhappy_icom.png')} />
                         </View>
                         <View>
                             <Text style={{ fontSize: 35, fontWeight: '500', marginTop: 35 }}>{ this.state.clickHappy }</Text>
@@ -448,11 +460,9 @@ class DetailCategorySkirtsScreenCustomer extends React.Component {
     
     
                         <View style={{ marginTop:22, backgroundColor: 'white' }}>
-                            <TouchableOpacity>
-                                <Image
-                                style={{flex:1, height: 80, width: 80, resizeMode: 'cover', borderRadius: 5, borderWidth: 1}}
-                                source={require('../../assets/emotionbad_icom.png')} />
-                            </TouchableOpacity>
+                            <Image
+                            style={{flex:1, height: 80, width: 80, resizeMode: 'cover', borderRadius: 5, borderWidth: 1}}
+                            source={require('../../assets/emotionbad_icom.png')} />
                         </View>
                         <View>
                             <Text style={{ fontSize: 35, fontWeight: '500', marginTop: 35 }}>{ this.state.clickDislike }</Text>

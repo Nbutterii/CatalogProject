@@ -156,7 +156,7 @@ class AddProductScreen extends React.Component {
                 }
             console.log(collection);
             // Actions.ProductOwnerPage()
-            var url = 'http://10.66.4.239:8000/shop/product/'
+            var url = 'http://161.246.4.226:8009/shop/product/'
     
             fetch(url, {
                 method: 'POST',
@@ -198,26 +198,26 @@ class AddProductScreen extends React.Component {
         <View style={styles.container}>
             <ScrollView>
 
-                <View style={{ flexDirection: 'row' }} >{/* <View style= {{ flexDirection: 'row', flexWrap: 'wrap', marginLeft: 5 }}> */}
+                <View style={{ flexDirection: 'row' }} >
                     
                     <TouchableOpacity onPress={this._pickImg1} style={{ marginLeft: 10 }}>
-                        <Image style={{ width: 90, height: 90}} source={require('../../assets/AddImage.png')} />
-                        <Image source={{uri: imageUri1}} style={{ width: 90, height: 90, position: 'absolute' }}/>
+                        <Image style={{ width: 80, height: 80}} source={require('../../assets/AddImage.png')} />
+                        <Image source={{uri: imageUri1}} style={{ width: 80, height: 80, position: 'absolute' }}/>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={this._pickImg2} style={{ marginLeft: 10 }}>
-                        <Image style={{ width: 90, height: 90}} source={require('../../assets/AddImage.png')} />
-                        <Image source={{uri: imageUri2}} style={{ width: 90, height: 90, position: 'absolute' }}/>
+                        <Image style={{ width: 80, height: 80}} source={require('../../assets/AddImage.png')} />
+                        <Image source={{uri: imageUri2}} style={{ width: 80, height: 80, position: 'absolute' }}/>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={this._pickImg3} style={{ marginLeft: 10 }}>
-                        <Image style={{ width: 90, height: 90}} source={require('../../assets/AddImage.png')} />
-                        <Image source={{uri: imageUri3}} style={{ width: 90, height: 90, position: 'absolute' }}/>
+                        <Image style={{ width: 80, height: 80}} source={require('../../assets/AddImage.png')} />
+                        <Image source={{uri: imageUri3}} style={{ width: 80, height: 80, position: 'absolute' }}/>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={this._pickImg4} style={{ marginLeft: 10 }}>
-                        <Image style={{ width: 90, height: 90}} source={require('../../assets/AddImage.png')} />
-                        <Image source={{uri: imageUri4}} style={{ width: 90, height: 90, position: 'absolute' }}/>
+                        <Image style={{ width: 80, height: 80}} source={require('../../assets/AddImage.png')} />
+                        <Image source={{uri: imageUri4}} style={{ width: 80, height: 80, position: 'absolute' }}/>
                     </TouchableOpacity>
 
                 </View>
@@ -452,7 +452,7 @@ export default connect(mapStateToProps)(AddProductScreen);
 //                 }
 //             console.log(collection);
 //             // Actions.ProductOwnerPage()
-//             var url = 'http://10.66.4.239:8000/shop/product/'
+//             var url = 'http://161.246.4.226:8009/shop/product/'
     
 //             fetch(url, {
 //                 method: 'POST',

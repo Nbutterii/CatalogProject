@@ -139,7 +139,7 @@ export default class CameraReview extends React.Component {
           product_id : '21'
           }
       console.log(collection);
-      var url = 'http://10.66.4.239:8000/emotion/img/'
+      var url = 'http://161.246.4.226:8009/emotion/img/'
 
       fetch(url, {
           method: 'POST',

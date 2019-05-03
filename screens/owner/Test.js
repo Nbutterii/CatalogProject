@@ -157,7 +157,7 @@
 //                 }
 //             console.log(collection);
 //             // Actions.ProductOwnerPage()
-//             var url = 'http://10.66.4.239:8000/shop/product/'
+//             var url = 'http://161.246.4.226:8009/shop/product/'
     
 //             fetch(url, {
 //                 method: 'POST',

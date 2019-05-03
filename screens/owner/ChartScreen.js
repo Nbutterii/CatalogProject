@@ -1,9 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from "react-native";
 import { Actions } from 'react-native-router-flux';
-import { GetTokenAction } from '../../Action';
 import { connect } from 'react-redux'
-import Category from '../components/Explore/Category'
 import { StackedBarChart } from 'react-native-chart-kit'
 import { Dimensions } from 'react-native'
 import axios from 'axios';
@@ -14,12 +12,14 @@ class ChartScreen extends React.Component {
         super(props);
         this.state = {
             EmotionTop: '',
+            EmotionPant: '',
+            EmotionSkirt: ''
         }
     }
 
     async Signout(token) {
         console.log(this.props.token)
-        const response = await fetch(`http://10.66.4.239:8000/rest-auth/logout/` , {
+        const response = await fetch(`http://161.246.4.226:8009/rest-auth/logout/` , {
             method: 'POST',
             headers: {
                 Authorization : `Token ${this.props.token}`,
@@ -34,14 +34,37 @@ class ChartScreen extends React.Component {
                     Actions.visitor();
                 }
     }
-    
+
+    DataChart () {
+    const DataEmotionTop = Object.values( this.state.EmotionTop );
+    const DataEmotionPant = Object.values( this.state.EmotionPant );
+    const DataEmotionSkirt = Object.values( this.state.EmotionSkirt );
+    const data ={
+        labels: ['Top', 'Pant', 'Skirt'],
+        legend: ['Wow', 'Happy', 'Dislike'],
+        data: [
+          DataEmotionTop,
+          DataEmotionPant,
+          DataEmotionSkirt, 
+        ],
+        barColors: ['#891C1C', '#df6363', '#f3c5c5'],
+       }
+    return data;
+    }
     
     componentDidMount() {
         try{
-            axios.get(`http://10.66.4.239:8000/shop/product/emotionall/?category=Top`)
+            axios.get(`http://161.246.4.226:8009/shop/product/emotionall/?category=Top`)
         .then(res => {
-            console.log('Happy',res.data)
             this.setState({ EmotionTop : res.data});
+        }),
+            axios.get(`http://161.246.4.226:8009/shop/product/emotionall/?category=Pant`)
+        .then(res => {
+            this.setState({ EmotionPant : res.data});
+        }),
+            axios.get(`http://161.246.4.226:8009/shop/product/emotionall/?category=Skirt`)
+        .then(res => {
+            this.setState({ EmotionSkirt : res.data});
         })
         }
         catch(err){
@@ -55,7 +78,7 @@ class ChartScreen extends React.Component {
             <View style={styles.container}>
                 <ScrollView>
                     <StackedBarChart
-                    data={data}
+                    data={this.DataChart()}
                     width={screenWidth}
                     height={220}
                     chartConfig={chartConfig}
@@ -91,17 +114,6 @@ class ChartScreen extends React.Component {
         );
     }
 }
-
-const data ={
-    labels: ['Top', 'Pant', 'Skirt'],
-    legend: ['Wow', 'Happy', 'Dislike'],
-    data: [
-      [10, 15, 5],
-      [16,10,10],
-      [20,7,9], 
-    ],
-    barColors: ['#891C1C', '#df6363', '#f3c5c5'],
-   }
 
 const screenWidth = Dimensions.get('window').width
 

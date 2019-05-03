@@ -9,6 +9,10 @@ export default class RegisterScreen extends React.Component {
   constructor(){
     super();
     this.state = {
+      first_name: '',
+      first_nameValdate:true,
+      last_name: '',
+      last_nameValdate:true,
       username: '',
       usernameValdate:true,
       email: '',
@@ -22,6 +26,7 @@ export default class RegisterScreen extends React.Component {
 
   validate(text,type)
     {
+    name=/^[a-zA-Z]+$/
     alph=/^[a-zA-Z0-9]+$/
     mail=/^[^\s@]+@[^\s@]+\.[^\s@]+$/
     num=/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
@@ -38,6 +43,38 @@ export default class RegisterScreen extends React.Component {
         {
           this.setState({
             usernameValdate:false,
+          })
+        }
+      }
+      else if(type == 'first_name') 
+      {
+        if(name.test(text))
+        {
+          this.setState({
+            first_nameValdate:true,
+            first_name: text
+          })
+        }
+        else
+        {
+          this.setState({
+            first_nameValdate:false,
+          })
+        }
+      }
+      else if(type == 'last_name') 
+      {
+        if(name.test(text))
+        {
+          this.setState({
+            last_nameValdate:true,
+            last_name: text
+          })
+        }
+        else
+        {
+          this.setState({
+            last_nameValdate:false,
           })
         }
       }
@@ -104,6 +141,8 @@ export default class RegisterScreen extends React.Component {
 
   async Register() {
     let collection={}
+    collection.first_name=this.state.first_name,
+    collection.last_name=this.state.last_name,
     collection.username=this.state.username,
     collection.email=this.state.email,
     collection.password1=this.state.password1,
@@ -111,7 +150,7 @@ export default class RegisterScreen extends React.Component {
     collection.user_type="Client"
     console.log(collection);
 
-    var url = 'http://10.66.4.239:8000/rest-auth/registration/'
+    var url = 'http://161.246.4.226:8009/rest-auth/registration/'
 
     try{
         const response = await fetch( url, {
@@ -142,21 +181,21 @@ export default class RegisterScreen extends React.Component {
             <View style={styles.regform}>
               <Text style={styles.header}>Register</Text>
 
-              {/* <View style={{flexDirection: 'row'}}>
+              <View style={{flexDirection: 'row'}}>
                 <Ionicons name="ios-contact"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
                   <View style={{ flex: 1, marginLeft: 8}}>
-                    <TextInput style={[styles.textinput, !this.state.usernameValdate? styles.error:null]}
-                    onChangeText={ (text) => this.validate(text,'username')} placeholder="First name"/>
+                    <TextInput style={[styles.textinput, !this.state.first_nameValdate? styles.error:null]}
+                    onChangeText={ (text) => this.validate(text,'first_name')} placeholder="First name"/>
                   </View>
               </View>
 
               <View style={{flexDirection: 'row'}}>
                 <Ionicons name="ios-contact"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
                   <View style={{ flex: 1, marginLeft: 8}}>
-                    <TextInput style={[styles.textinput, !this.state.usernameValdate? styles.error:null]}
-                    onChangeText={ (text) => this.validate(text,'username')} placeholder="Last name"/>
+                    <TextInput style={[styles.textinput, !this.state.last_nameValdate? styles.error:null]}
+                    onChangeText={ (text) => this.validate(text,'last_name')} placeholder="Last name"/>
                   </View>
-              </View> */}
+              </View>
 
               <View style={{flexDirection: 'row'}}>
                 <Ionicons name="ios-contact"  style={styles.ColorIcon} underlineColorAndroid={'transparent'}/>
