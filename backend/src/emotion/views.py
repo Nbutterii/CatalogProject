@@ -98,6 +98,18 @@ class Emotionimage(APIView):
         from emotion.emotiondetection.utils.inference import load_image
         from emotion.emotiondetection.utils.preprocessor import preprocess_input
 
+        
+        #gradient
+        from utils.grad_cam import compile_gradient_function
+        from utils.grad_cam import compile_saliency_function
+        from utils.grad_cam import register_gradient
+        from utils.grad_cam import modify_backprop
+        from utils.grad_cam import calculate_guided_gradient_CAM
+
+
+        task = 'emotion'
+
+
         product_id = request.data['product_id']
         image = request.data['image']
         product = get_object_or_404(Product, id=product_id)
@@ -151,8 +163,31 @@ class Emotionimage(APIView):
             emotion_label_arg = np.argmax(emotion_classifier.predict(gray_face))
             emotion_text = emotion_labels[emotion_label_arg]
 
+
+            #gradient
+            predicted_class = np.argmax(model.predict(gray_face))
+            label_text = labels[predicted_class]
+
+            gradient_function = compile_gradient_function(model,
+                                    predicted_class, 'conv2d_7')
+            register_gradient()
+            guided_model = modify_backprop(model, 'GuidedBackProp', task)
+            saliency_function = compile_saliency_function(guided_model, 'conv2d_7')
+
+            guided_gradCAM = calculate_guided_gradient_CAM(gray_face,
+                                gradient_function, saliency_function)
+            guided_gradCAM = cv2.resize(guided_gradCAM, (x2-x1, y2-y1))
+            rgb_guided_gradCAM = np.repeat(guided_gradCAM[:, :, np.newaxis], 3, axis=2)
+            rgb_image[y1:y2, x1:x2, :] = rgb_guided_gradCAM
+            draw_bounding_box((x1, y1, x2 - x1, y2 - y1), rgb_image, color)
+            #gradient
+
             # print(emotion_text)
             elabel = emotion_text
+
+
+        bgr_image = cv2.cvtColor(rgb_image, cv2.COLOR_RGB2BGR)
+        cv2.imwrite('/home/exe/Documents/friedvdo/surprise/'+image+'.jpg', bgr_image)
 
         K.clear_session()
         
