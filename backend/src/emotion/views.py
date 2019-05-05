@@ -100,11 +100,11 @@ class Emotionimage(APIView):
 
         
         #gradient
-        from utils.grad_cam import compile_gradient_function
-        from utils.grad_cam import compile_saliency_function
-        from utils.grad_cam import register_gradient
-        from utils.grad_cam import modify_backprop
-        from utils.grad_cam import calculate_guided_gradient_CAM
+        from emotion.emotiondetection.utils.grad_cam import compile_gradient_function
+        from emotion.emotiondetection.utils.grad_cam import compile_saliency_function
+        from emotion.emotiondetection.utils.grad_cam import register_gradient
+        from emotion.emotiondetection.utils.grad_cam import modify_backprop
+        from emotion.emotiondetection.utils.grad_cam import calculate_guided_gradient_CAM
 
 
         task = 'emotion'
@@ -187,7 +187,7 @@ class Emotionimage(APIView):
 
 
         bgr_image = cv2.cvtColor(rgb_image, cv2.COLOR_RGB2BGR)
-        cv2.imwrite('/home/exe/Documents/friedvdo/surprise/'+image+'.jpg', bgr_image)
+        cv2.imwrite('/home/Documents/surprise/'+image+'.jpg', bgr_image)
 
         K.clear_session()
         
