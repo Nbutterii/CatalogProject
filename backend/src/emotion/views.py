@@ -87,6 +87,8 @@ class Emotionimage(APIView):
         import numpy as np
         import base64
 
+        from keras import backend as K
+
         from emotion.emotiondetection.utils.datasets import get_labels
         from emotion.emotiondetection.utils.inference import detect_faces
         from emotion.emotiondetection.utils.inference import draw_text
@@ -152,6 +154,8 @@ class Emotionimage(APIView):
             # print(emotion_text)
             elabel = emotion_text
 
+        K.clear_session()
+        
         if elabel in {'surprise'}:
             emotion = 'Wow'
         elif elabel in {'happy','neutral'}:
