@@ -168,6 +168,7 @@ class Emotionimage(APIView):
         print(emotion)
         if emotion == 'null':
             data = 'Can not find your face'
+            # return Response( data,status=status.HTTP_200_OK)
 
         else:
             if Emotionproduct.objects.filter(product=product, user=user):
@@ -175,14 +176,18 @@ class Emotionimage(APIView):
                 Emotionproduct.objects.filter(user=user, product=product ).delete()
                 # data = 'unemotion'
                 Emotionproduct.objects.create(user=user, product=product,emotion=emotion)
-                data = {'newemotion': emotion}
+                # data = {'emotion': emotion}
+                data = emotion
+                # return Response(emotion,status=status.HTTP_200_OK)
 
             else:
             
                 Emotionproduct.objects.create(user=user, product=product,emotion=emotion)
-                data = {'emotion': emotion}
+                # data = {'emotion': emotion}
+                data = emotion
+                # return Response(emotion,status=status.HTTP_200_OK)
 
-        return Response(data,status=status.HTTP_200_OK) 
+        return Response(data,status=status.HTTP_200_OK)
 
 
 
