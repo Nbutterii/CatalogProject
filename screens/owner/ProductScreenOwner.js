@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, Alert } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, Alert, RefreshControl } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Actions } from 'react-native-router-flux';
 import { Card } from "react-native-elements";
@@ -16,7 +16,8 @@ class ProductScreenOwner extends React.Component {
         this.state = {
             isLoading: false,
             dataSource: [],
-            dataSourceCount: []
+            dataSourceCount: [],
+            refreshing: false,
         }
     }
 
@@ -30,7 +31,7 @@ class ProductScreenOwner extends React.Component {
             console.log('===ProductScreenOwner===',responseData)
             this.props.SearchProductAction(responseData)
             if (responseData.length < 1 || responseData == null){
-                Alert.alert("Can't be found.");
+                Actions.SearchNotFoundPageOwner()
             }
             else {
                 Actions.SearchProductPageOwner()
@@ -84,8 +85,37 @@ class ProductScreenOwner extends React.Component {
         }
     }
 
+    _onRefresh = () => {
+        this.setState({refreshing: true});
+        try{
+            axios.get(`http://161.246.4.226:8009/shop/product/`)
+        .then(res => {
+            console.log('pass',res.data)
+            this.setState({ dataSource : res.data});
+        }),
+        axios.get(`http://161.246.4.226:8009/shop/product/count/`)
+        .then(res => {
+            console.log('pass',res.data)
+            this.setState({ dataSourceCount : res.data});
+        })
+        }
+        catch(err){
+        console.log(err)
+        }
+        {this.renderText()}
+          this.setState({refreshing: false});
+        
+      }
+
     render() {
         return (
+            <ScrollView
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={this._onRefresh}
+              />
+            }>
             <View style={styles.container}>
                 <View  style={{ position: 'absolute', left:0, right:0, top:0, height:70, backgroundColor:'#891C1C',
                 flexDirection:'row', alignItems:'center', paddingHorizontal: 5, position: 'relative' }}>
@@ -123,6 +153,7 @@ class ProductScreenOwner extends React.Component {
                     </View>
                 </ScrollView>
             </View>
+        </ScrollView>
         );
     }
 }

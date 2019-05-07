@@ -31,7 +31,7 @@ class ProductScreenVisitor extends React.Component {
             console.log('===ProductScreenVisitor===',responseData)
             this.props.SearchProductAction(responseData)
             if (responseData.length < 1 || responseData == null){
-                Alert.alert("Can't be found.");
+                Actions.SearchNotFoundPageVisitor()
             }
             else {
                 Actions.SearchProductPageVisitor()

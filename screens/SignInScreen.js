@@ -29,8 +29,8 @@ class SignInScreen extends React.Component {
     constructor(props){
       super(props);
       this.state = {
-        username: 'NoeyO',
-        password: 'No123456',
+        username: 'admin',
+        password: 'adminzxcv',
       }
     }
 
@@ -66,10 +66,10 @@ class SignInScreen extends React.Component {
           console.log(responseData)
           this.props.GetTokenAction(responseData.key)
           if (responseData.user.user_type === 'Owner') {
-            Actions.account_owner();
+              Actions.replace('account_owner')
           }
           else if (responseData.user.user_type === 'Client') {
-              Actions.account_customer();
+              Actions.replace('account_customer')
             }
           // else{
           //     Alert.alert("Please check your username and password.");

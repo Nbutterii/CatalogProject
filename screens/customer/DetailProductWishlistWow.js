@@ -26,9 +26,9 @@ class DetailProductWishlistWow extends React.Component {
         this.state = {
             isLoading: false,
             dataSource: [],
-            clickWow:this.props.val.total_Wow,
-            clickHappy:this.props.val.total_Happy,
-            clickDislike:this.props.val.total_Dislike,
+            clickWow:'',
+            clickHappy:'',
+            clickDislike:'',
             show:true,
             ShowCardList : false,
             hasCameraPermission: null,
@@ -247,13 +247,9 @@ class DetailProductWishlistWow extends React.Component {
     }
 
     IncrementItemWow() {
-        // this.setState({ clickWow: this.state.clickWow + 1 });
-        // if(this.state.clickWow > -1)
-        // {
-            console.log("Wow");
-            this.setState({ShowCardList : true})
-            
-        // }
+        this.setState({ clickWow: this.state.clickWow + 1 });
+        console.log("Wow");
+        this.setState({ShowCardList : true})
 
         fetch(url ='http://161.246.4.226:8009/emotion/express/', {
           method: 'POST',
@@ -269,9 +265,9 @@ class DetailProductWishlistWow extends React.Component {
     }
 
     IncrementItemHappy = () => {
-            // this.setState({ clickHappy: this.state.clickHappy + 1 });
-            console.log("Happy");
-            this.setState({ShowCardList : true})
+        this.setState({ clickHappy: this.state.clickHappy + 1 });
+        console.log("Happy");
+        this.setState({ShowCardList : true})
         
     
         fetch(url ='http://161.246.4.226:8009/emotion/express/', {
@@ -288,7 +284,7 @@ class DetailProductWishlistWow extends React.Component {
     }
 
     IncrementItemDislike = () => {
-        // this.setState({ clickDislike: this.state.clickDislike + 1 });
+        this.setState({ clickDislike: this.state.clickDislike + 1 });
 
         fetch(url ='http://161.246.4.226:8009/emotion/express/', {
           method: 'POST',
@@ -322,21 +318,24 @@ class DetailProductWishlistWow extends React.Component {
             ],
         )
         try{
-            axios.get(`http://161.246.4.226:8009/shop/product/`)
+            axios.get(`http://161.246.4.226:8009/shop/product/${this.props.val.id}`)
         .then(res => {
-            console.log('pass',res.data)
-            this.setState({ dataSource : res.data});
+            console.log("====res data====",res.data)
+            this.setState({
+                clickWow: res.data.total_Wow,
+                clickHappy: res.data.total_Happy,
+                clickDislike: res.data.total_Dislike,
+              });
         })
         }
         catch(err){
-        console.log(err)
         }
     }
 
     CameraReview(){
         return (
           <Camera 
-          style={{ flex: 1, width: 120, height: 170, position: 'absolute', right:3, bottom:3}} 
+          style={{ flex: 1, width: 120, height: 170, position: 'absolute', right:3, bottom:70}} 
           type={this.props.cameraType} 
           onFacesDetected={this.state.faceDetecting ? this.handleFacesDetected : undefined }
           onFaceDetectionError={this.handleFaceDetectionError}

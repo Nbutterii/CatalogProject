@@ -169,7 +169,7 @@ class AddProductScreen extends React.Component {
             })
             .then((res) => {
               if (res.ok == true) {
-                Actions.ProductOwnerPage();
+                Actions.popTo('ProductOwnerPage'); 
               }
             })
         }
@@ -198,7 +198,7 @@ class AddProductScreen extends React.Component {
         <View style={styles.container}>
             <ScrollView>
 
-                <View style={{ flexDirection: 'row' }} >
+                <View style={{ flexDirection: 'row' ,  flexWrap: 'wrap'}} >
                     
                     <TouchableOpacity onPress={this._pickImg1} style={{ marginLeft: 10 }}>
                         <Image style={{ width: 80, height: 80}} source={require('../../assets/AddImage.png')} />

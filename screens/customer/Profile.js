@@ -44,7 +44,7 @@ class Profile extends React.Component {
                 Authorization : `Token ${this.props.token}`
             }
         }).then((res) => { console.log(res) })
-        Actions.CustomerPage();
+        Actions.pop();
     }
 
     componentDidMount() {

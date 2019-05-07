@@ -114,7 +114,9 @@ class EditProductScreen extends React.Component {
                 }
             }).then((res) => {
                 if (res.ok == true) {
-                  Actions.ProductOwnerPage();
+                // Actions.ProductOwnerPage();
+                // Actions.replace('ProductOwnerPage')
+                Actions.popTo('ProductOwnerPage'); 
                 }
               })
         }
@@ -151,7 +153,7 @@ class EditProductScreen extends React.Component {
                         })
                         .then((res) => {
                             if (res.ok == true) {
-                              Actions.ProductOwnerPage();
+                                Actions.popTo('ProductOwnerPage'); 
                             }
                           })
                     }
@@ -191,7 +193,7 @@ class EditProductScreen extends React.Component {
                     </TouchableOpacity>
                 </View> */}
 
-                <View style={{ flexDirection: 'row' }} >
+                <View style={{ flexDirection: 'row', flexWrap: 'wrap' }} >
                     <TouchableOpacity onPress={this._pickImg1} style={{ marginLeft: 10 }}>
                         <Image source={{uri : this.props.val.image1}} style={{ width: 80, height: 80 }}/>
                         <Image source={{uri: imageUri1}} style={{ width: 80, height: 80, position: 'absolute' }}/>

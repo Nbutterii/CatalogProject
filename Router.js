@@ -13,6 +13,7 @@ import DetailCategorySkirtsScreenVisitor from './screens/DetailCategorySkirtsScr
 import ProductScreenVisitor from './screens/ProductScreenVisitor';
 import DetailProductScreenVisitor from './screens/DetailProductScreenVisitor';
 import SearchProductScreenVisitor from './screens/SearchProductScreenVisitor';
+import SearchNotFoundVisitor from './screens/SearchNotFoundVisitor';
 import ContactScreen from './screens/ContactScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import SignInScreen from './screens/SignInScreen';
@@ -29,6 +30,7 @@ import DetailCategorySkirtsScreenCustomer from './screens/customer/DetailCategor
 import ProductScreenCustomer from './screens/customer/ProductScreenCustomer';
 import DetailProductScreenCustomer from './screens/customer/DetailProductScreenCustomer';
 import SearchProductScreenCustomer from './screens/customer/SearchProductScreenCustomer';
+import SearchNotFoundCustomer from './screens/customer/SearchNotFoundCustomer';
 import CustomerScreen from './screens/customer/CustomerScreen';
 import WishlistWow from './screens/customer/WishlistWow';
 import DetailProductWishlistWow from './screens/customer/DetailProductWishlistWow';
@@ -48,6 +50,7 @@ import ProductScreenOwner from './screens/owner/ProductScreenOwner';
 import DetailProductScreenOwner from './screens/owner/DetailProductScreenOwner';
 import EditProductScreen from './screens/owner/EditProductScreen';
 import SearchProductScreenOwner from './screens/owner/SearchProductScreenOwner';
+import SearchNotFoundOwner from './screens/owner/SearchNotFoundOwner';
 import AddProductScreen from './screens/owner/AddProductScreen';
 import ChartScreen from './screens/owner/ChartScreen';
 import TopTopsScreen from './screens/owner/TopTopsScreen';
@@ -130,6 +133,11 @@ export default class App extends React.Component {
                   <Scene
                   key="DetailProductPageVisitor"
                   component={DetailProductScreenVisitor}
+                  title=""
+                  />
+                  <Scene
+                  key="SearchNotFoundPageVisitor"
+                  component={SearchNotFoundVisitor}
                   title=""
                   />
                   <Scene
@@ -234,6 +242,11 @@ export default class App extends React.Component {
                   <Scene
                   key="SearchProductPageCustomer"
                   component={SearchProductScreenCustomer}
+                  title=""
+                  />
+                  <Scene
+                  key="SearchNotFoundPageCustomer"
+                  component={SearchNotFoundCustomer}
                   title=""
                   />
                   </Scene>
@@ -350,6 +363,11 @@ export default class App extends React.Component {
                 <Scene
                 key="SearchProductPageOwner"
                 component={SearchProductScreenOwner}
+                title=""
+                />
+                <Scene
+                key="SearchNotFoundPageOwner"
+                component={SearchNotFoundOwner}
                 title=""
                 />
               </Scene>

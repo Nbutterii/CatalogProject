@@ -30,7 +30,7 @@ class ProductScreenCustomer extends React.Component {
             console.log('===ProductScreenCustomer===',responseData)
             this.props.SearchProductAction(responseData)
             if (responseData.length < 1 || responseData == null){
-                Alert.alert("Can't be found.");
+                Actions.SearchNotFoundPageCustomer()
             }
             else {
                 Actions.SearchProductPageCustomer()

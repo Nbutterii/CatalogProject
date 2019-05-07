@@ -163,7 +163,8 @@ export default class RegisterScreen extends React.Component {
         });
         console.log(response)
         if (response.ok === true) {
-          Actions.account_customer();
+          Alert.alert("Your registration was successful!. Please Sign In");
+          Actions.pop();
         }
         else if (response.ok === false)  {
           Alert.alert("Please check your information.");

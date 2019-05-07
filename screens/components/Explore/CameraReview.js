@@ -159,7 +159,7 @@ export default class CameraReview extends React.Component {
     render(){
         return (
           <Camera 
-          style={{ flex: 1, width: 120, height: 170, position: 'absolute', right:3, bottom:3}} 
+          style={{ flex: 1, width: 120, height: 170, position: 'absolute', right:3, bottom:70}} 
           type={this.props.cameraType} 
           onFacesDetected={this.state.faceDetecting ? this.handleFacesDetected : undefined }
           onFaceDetectionError={this.handleFaceDetectionError}
