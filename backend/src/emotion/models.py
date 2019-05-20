@@ -25,8 +25,9 @@ class Emotionproduct(models.Model):
 
     EMOTION_TYPES = (('Happy', 'Happy'),('Wow', 'Wow'),('Dislike', 'Dislike'),   )
     emotion = models.CharField(('emotion'), choices=EMOTION_TYPES, max_length=30, blank=True, null=True)
+    image =  models.ImageField(upload_to='emotions/%Y_%m_%d', blank=True)
+   
     
-    # total_happy = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     
 

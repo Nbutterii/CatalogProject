@@ -152,9 +152,11 @@ class Emotionimage(APIView):
             emotion_text = emotion_labels[emotion_label_arg]
 
             # print(emotion_text)
-            elabel = emotion_text
+        elabel = emotion_text
 
         K.clear_session()
+        print(elabel)
+        
         
         if elabel in {'surprise'}:
             emotion = 'Wow'
@@ -167,6 +169,7 @@ class Emotionimage(APIView):
             
         print(emotion)
         if emotion == 'null':
+            Emotionproduct.objects.create(user=user, product=product,emotion=emotion,image = image)
             data = 'Can not find your face'
             # return Response( data,status=status.HTTP_200_OK)
 
@@ -175,19 +178,19 @@ class Emotionimage(APIView):
             
                 Emotionproduct.objects.filter(user=user, product=product ).delete()
                 # data = 'unemotion'
-                Emotionproduct.objects.create(user=user, product=product,emotion=emotion)
+                Emotionproduct.objects.create(user=user, product=product,emotion=emotion,image = image)
                 # data = {'emotion': emotion}
                 data = emotion
                 # return Response(emotion,status=status.HTTP_200_OK)
 
             else:
             
-                Emotionproduct.objects.create(user=user, product=product,emotion=emotion)
+                Emotionproduct.objects.create(user=user, product=product,emotion=emotion,image = image)
                 # data = {'emotion': emotion}
                 data = emotion
                 # return Response(emotion,status=status.HTTP_200_OK)
 
-        return Response(data,status=status.HTTP_200_OK)
+        return Response(data,status=status.HTTP_200_OK) 
 
 
 
