@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, RefreshControl } from "react-native";
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux'
 import { StackedBarChart } from 'react-native-chart-kit'
@@ -13,7 +13,8 @@ class ChartScreen extends React.Component {
         this.state = {
             EmotionTop: '',
             EmotionPant: '',
-            EmotionSkirt: ''
+            EmotionSkirt: '',
+            refreshing: false,
         }
     }
 
@@ -72,11 +73,39 @@ class ChartScreen extends React.Component {
         }
     }
 
+    _onRefresh = () => {
+        this.setState({refreshing: true});
+        try{
+            axios.get(`http://161.246.4.226:8009/shop/product/emotionall/?category=Top`)
+        .then(res => {
+            this.setState({ EmotionTop : res.data});
+        }),
+            axios.get(`http://161.246.4.226:8009/shop/product/emotionall/?category=Pant`)
+        .then(res => {
+            this.setState({ EmotionPant : res.data});
+        }),
+            axios.get(`http://161.246.4.226:8009/shop/product/emotionall/?category=Skirt`)
+        .then(res => {
+            this.setState({ EmotionSkirt : res.data});
+        })
+        }
+        catch(err){
+        console.log(err)
+        }
+          this.setState({refreshing: false});
+      }
+
     render() {
         console.log('ON ChartScreen', this.props.token)
         return (
             <View style={styles.container}>
-                <ScrollView>
+                <ScrollView 
+                refreshControl={
+                <RefreshControl
+                    refreshing={this.state.refreshing}
+                    onRefresh={this._onRefresh}
+                />
+                }>
                     <StackedBarChart
                     data={this.DataChart()}
                     width={screenWidth}

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, Alert } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, Alert, RefreshControl } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Actions } from 'react-native-router-flux';
 import { Card } from "react-native-elements";
@@ -18,6 +18,7 @@ class ProductScreenVisitor extends React.Component {
             dataSource: [],
             SearchInput: '',
             dataSourceCount: [],
+            refreshing: false,
         }
     }
 
@@ -86,41 +87,69 @@ class ProductScreenVisitor extends React.Component {
         }
     }
 
+    _onRefresh = () => {
+        this.setState({refreshing: true});
+        try{
+            axios.get(`http://161.246.4.226:8009/shop/product/`)
+        .then(res => {
+            console.log('pass',res.data)
+            this.setState({ dataSource : res.data});
+        }),
+        axios.get(`http://161.246.4.226:8009/shop/product/count/`)
+        .then(res => {
+            console.log('pass',res.data)
+            this.setState({ dataSourceCount : res.data});
+        })
+        }
+        catch(err){
+        console.log(err)
+        }
+          this.setState({refreshing: false});
+      }
+
     render() {
         return (
-            <View style={styles.container}>
-                <View  style={{ position: 'absolute', left:0, right:0, top:0, height:70, backgroundColor:'#891C1C',
-                flexDirection:'row', alignItems:'center', paddingHorizontal: 5, position: 'relative' }}>
-                    <View style={{ flex: 1, height: "100%", marginLeft: 5, justifyContent: 'center' }}>
-                        <View style={{ backgroundColor: 'white',paddingHorizontal: 10, borderRadius: 4, flexDirection: 'row', height:50}}>
-                            <Icon name="ios-search" style={{ fontSize: 20, paddingTop: 15}}/>
-                            <SearchInput 
-                            onChangeText={ (SearchInput) => this.setState({SearchInput}) } 
-                            style={styles.searchInput}
-                            maxLength = {35}
-                            placeholder="Type a message to search..                        "
-                            />
-                            <TouchableOpacity style={{ backgroundColor: '#891c1c', borderRadius: 5, padding: 12, position: 'absolute', right:3, top:3 }}
-                            onPress={() => this.SearchProduct()}>
-                                <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 15 }}>Search</Text>
-                            </TouchableOpacity>
+            <ScrollView
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={this._onRefresh}
+              />
+            }>
+                <View style={styles.container}>
+                    <View  style={{ position: 'absolute', left:0, right:0, top:0, height:70, backgroundColor:'#891C1C',
+                    flexDirection:'row', alignItems:'center', paddingHorizontal: 5, position: 'relative' }}>
+                        <View style={{ flex: 1, height: "100%", marginLeft: 5, justifyContent: 'center' }}>
+                            <View style={{ backgroundColor: 'white',paddingHorizontal: 10, borderRadius: 4, flexDirection: 'row', height:50}}>
+                                <Icon name="ios-search" style={{ fontSize: 20, paddingTop: 15}}/>
+                                <SearchInput 
+                                onChangeText={ (SearchInput) => this.setState({SearchInput}) } 
+                                style={styles.searchInput}
+                                maxLength = {35}
+                                placeholder="Type a message to search..                        "
+                                />
+                                <TouchableOpacity style={{ backgroundColor: '#891c1c', borderRadius: 5, padding: 12, position: 'absolute', right:3, top:3 }}
+                                onPress={() => this.SearchProduct()}>
+                                    <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 15 }}>Search</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     </View>
+            
+                    <ScrollView> 
+                        <View style={{ marginLeft: 5, marginRight: 5, marginTop: 15 }}>
+                            <View header style={{borderBottomWidth:1,borderBottomColor:'#dee0e2'}}>
+                                <Text style={{fontSize: 20, marginLeft: 10, marginBottom: 20, marginTop: 10, fontWeight: 'bold'}}>
+                                    {this.state.dataSourceCount} ITEMS
+                                </Text>
+                            </View>
+                            <View>
+                                { this.renderText() }
+                            </View>
+                        </View>
+                    </ScrollView>
                 </View>
-        
-                <ScrollView>
-                    <View style={{ marginLeft: 5, marginRight: 5, marginTop: 15 }}>
-                        <View header style={{borderBottomWidth:1,borderBottomColor:'#dee0e2'}}>
-                            <Text style={{fontSize: 20, marginLeft: 10, marginBottom: 20, marginTop: 10, fontWeight: 'bold'}}>
-                                {this.state.dataSourceCount} ITEMS
-                            </Text>
-                        </View>
-                        <View>
-                            { this.renderText() }
-                        </View>
-                    </View>
-                </ScrollView>
-            </View>
+            </ScrollView>
         );
     }
 }

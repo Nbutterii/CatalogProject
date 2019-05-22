@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, RefreshControl } from "react-native";
 import Swiper from 'react-native-swiper'
 import Category from './components/Explore/Category'
 import { Card } from "react-native-elements";
@@ -16,6 +16,7 @@ class HomeScreenVisitor extends React.Component {
         this.state = {
             isLoading: false,
             dataSource: [],
+            refreshing: false,
         }
     }
 
@@ -60,11 +61,32 @@ class HomeScreenVisitor extends React.Component {
         }
     }
 
+    _onRefresh = () => {
+        this.setState({refreshing: true});
+        try{
+            axios.get(`http://161.246.4.226:8009/shop/product/top5/`)
+        .then(res => {
+            console.log('pass',res.data)
+            this.setState({ dataSource : res.data});
+        })
+    }
+    catch(err){
+    console.log(err)
+    }
+          this.setState({refreshing: false});
+      }
+
     render() {
         console.log('ON HomescreenVisitor', this.props.token)
         return (
             <View style={styles.container}>
-                <ScrollView scrollEventThrottle={16}>
+                <ScrollView scrollEventThrottle={16}
+                refreshControl={
+                    <RefreshControl
+                      refreshing={this.state.refreshing}
+                      onRefresh={this._onRefresh}
+                    />
+                  }>
 
                     <Swiper autoplay={true} style={{height:100}}>
                         <View style={{flex:1}}>

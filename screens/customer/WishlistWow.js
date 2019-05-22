@@ -57,6 +57,13 @@ class WishlistWow extends React.Component {
                 </Card>
             );
         }
+        else {
+            return(
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#f7f7f7'}}>
+                    <Image style={{flex:1, height:500, width:500, resizeMode: 'contain'}} source={require('../../assets/Search.png')} />
+                </View>
+            )
+        }
     }
 
     render() {
@@ -78,7 +85,7 @@ class WishlistWow extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff'
+        backgroundColor: '#f7f7f7'
     }
 });
 

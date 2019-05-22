@@ -104,7 +104,6 @@ class ProductScreenOwner extends React.Component {
         }
         {this.renderText()}
           this.setState({refreshing: false});
-        
       }
 
     render() {
