@@ -64,6 +64,7 @@ class HomeScreenVisitor extends React.Component {
     _onRefresh = () => {
         this.setState({refreshing: true});
         try{
+            
             axios.get(`http://161.246.4.226:8009/shop/product/top5/`)
         .then(res => {
             console.log('pass',res.data)
