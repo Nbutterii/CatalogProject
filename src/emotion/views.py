@@ -163,6 +163,7 @@ class Emotionimage(APIView):
             
         print(emotion)
         if emotion == 'null':
+            Emotionproduct.objects.create(user=user, product=product,emotion=emotion,image=image)
             data = 'Can not find your face'
 
         else:
@@ -170,12 +171,12 @@ class Emotionimage(APIView):
             
                 Emotionproduct.objects.filter(user=user, product=product ).delete()
                 # data = 'unemotion'
-                Emotionproduct.objects.create(user=user, product=product,emotion=emotion)
+                Emotionproduct.objects.create(user=user, product=product,emotion=emotion,image=image)
                 data = {'newemotion': emotion}
 
             else:
             
-                Emotionproduct.objects.create(user=user, product=product,emotion=emotion)
+                Emotionproduct.objects.create(user=user, product=product,emotion=emotion,image=image)
                 data = {'emotion': emotion}
 
         return Response(data,status=status.HTTP_200_OK) 

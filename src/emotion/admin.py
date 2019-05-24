@@ -7,7 +7,7 @@ from .models import Emotionproduct
 class EmotionproductAdmin(admin.ModelAdmin):
     
     # list_display = [field.attname for field in User._meta.fields]
-    list_display = ['id', 'user','product','emotion', 'created_at']
+    list_display = ['id', 'user','product','emotion','image', 'created_at']
     list_filter = ('user', 'product','emotion')
     
 admin.site.register(Emotionproduct, EmotionproductAdmin)
