@@ -172,12 +172,12 @@ class Emotionimage(APIView):
                 Emotionproduct.objects.filter(user=user, product=product ).delete()
                 # data = 'unemotion'
                 Emotionproduct.objects.create(user=user, product=product,emotion=emotion,image=image)
-                data = {'newemotion': emotion}
+                data =  emotion
 
             else:
             
                 Emotionproduct.objects.create(user=user, product=product,emotion=emotion,image=image)
-                data = {'emotion': emotion}
+                data = emotion
 
         return Response(data,status=status.HTTP_200_OK) 
 
